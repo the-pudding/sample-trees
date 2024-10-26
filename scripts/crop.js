@@ -70,7 +70,7 @@ async function main() {
 
   try {
     let jsonData = await csvToJson(filePath);
-    jsonData = jsonData.slice(0,1);
+    jsonData = jsonData.slice(0,7);
 
     console.log('JSON Output:', jsonData);
 
