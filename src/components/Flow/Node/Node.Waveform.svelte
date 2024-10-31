@@ -2,7 +2,7 @@
 	import { onMount } from "svelte";
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
-	import { activeController, crossfaders } from "$stores/misc.js";
+	import { activeController, crossfades } from "$stores/misc.js";
 
 	export let id;
     export let waveColor;
@@ -16,7 +16,7 @@
 			container: `#waveform-${id}`,
 			waveColor: waveColor,
 			progressColor: progressColor,
-			url: `${base}/assets/mp3/${id}.mp3`,
+			url: `${base}/assets/audio/${id}.mp3`,
 			height: 50 // Set the height in the WaveSurfer configuration
 		});
 
@@ -32,7 +32,7 @@
 
 	$: if (wavesurfer) {
 		if (play) {
-            // wavesurfer.setScrollTime($crossfaders[$activeController.component?.id].currentTime)
+            // wavesurfer.setScrollTime($crossfades[$activeController.component?.id].currentTime)
 			wavesurfer.play();
 		} else {
 			wavesurfer.pause();

@@ -1,8 +1,8 @@
 <script>
-	import { base } from "$app/paths";
 	import { Handle, Position } from "@xyflow/svelte";
 	import Waveform from "./Node.Waveform.svelte";
-	import { activeController, crossfaders } from "$stores/misc.js";
+	import CoverArt from "./Node.CoverArt.svelte";
+	import { activeController } from "$stores/misc.js";
 
 	export let data;
 	export let isConnectable = false;
@@ -24,8 +24,6 @@
 	$: waveformProps = isCrossfadeTarget
 		? { waveColor: "#a3c69b", progressColor: "#517D45" }
 		: { waveColor: "#fefbd7", progressColor: "#CBB600" };
-
-		
 </script>
 
 <Handle
@@ -41,15 +39,15 @@
 	class:target={isCrossfadeTarget}
 	class:focus={$activeController.focusNode == data.id}
 >
-	<div class="text">
-		<!-- <div>{data.id}</div> -->
-		<div class="title">{data.title}</div>
-		<div class="artist">{data.primary_artist}</div>
-	</div>
+	{#if !data.eventText}
+		<div class="text">
+			<div>{data.id}</div>
+			<div class="title">{data.title}</div>
+			<div class="artist">{data.primary_artist}</div>
+		</div>
+	{/if}
 
-	<div class="cover-art">
-		<img src="{base}/assets/cover_art/{data.id}.png" alt={data.title} />
-	</div>
+	<CoverArt {data} />
 
 	{#if showWaveform}
 		<Waveform
@@ -71,15 +69,15 @@
 <style lang="scss">
 	.node {
 		font-size: 12px;
-		border-radius: 5px;
+
 		text-align: center;
-		// height: 200px;
 		display: flex;
 		opacity: 1;
 		filter: drop-shadow(0px 0px 10px #ddd);
-
+		// border: 1px solid red;
 		// transform: scale(0.7);
 		transition: transform 0.25s;
+		flex-direction: column;
 
 		&.source {
 			flex-direction: column;

@@ -8,7 +8,7 @@
 
 	import { scaleLinear } from "d3-scale";
 
-	import { activeController, crossfaders } from "$stores/misc.js";
+	import { activeController, crossfades } from "$stores/misc.js";
 
 	export let source;
 	export let target;
@@ -41,7 +41,7 @@
 		.range([sourceY, targetY])
 		.clamp(true);
 
-	$: progressY = progressScale($crossfaders[`${source}_${target}`]?.progress);
+	$: progressY = progressScale($crossfades[`${source}_${target}`]?.progress);
 </script>
 
 <!-- <BaseEdge path={edgePath} {markerEnd} {style} /> -->

@@ -1,5 +1,6 @@
 <script>
 	import { writable } from "svelte/store";
+	import previous from "$stores/previous.js";
 	import ELK from "elkjs/lib/elk.bundled.js";
 	import {
 		SvelteFlow,
@@ -18,11 +19,21 @@
 
 	import { activeController } from "$stores/misc.js";
 
+	export let initController;
+
+	console.log(initController);
+
+	const { viewport } = useSvelteFlow();
+
+	// Create the "previous" store based on `count`
+	let previousIndex = $activeController.index;
+
 	// Stores for nodes and edges
 	const nodes = writable([]);
 	const edges = writable([]);
 
-	const nodeWidth = 200;
+	// const nodeWidth = window.innerHeight / 5;
+	const nodeWidth = 150;
 
 	const { fitView } = useSvelteFlow();
 	let flowRef; // Reference to the SvelteFlow instance
@@ -66,7 +77,7 @@
 	}
 
 	// Function to handle layout changes
-	function onLayout(direction, useInitialNodes = false) {
+	function onLayout(direction, useInitialNodes = false, init) {
 		const opts = { "elk.direction": direction, ...elkOptions };
 		const ns = useInitialNodes ? initialNodes : $nodes;
 		const es = useInitialNodes ? initialEdges : $edges;
@@ -76,7 +87,12 @@
 				$nodes = layoutedNodes;
 				$edges = layoutedEdges;
 
-				updateLayout();
+				setTimeout(
+					() => {
+						updateLayout();
+					},
+					init ? 10 : 0
+				);
 				window.requestAnimationFrame(() => fitView());
 			}
 		);
@@ -84,28 +100,29 @@
 
 	// Initial layout on mount
 	onMount(() => {
-		onLayout("DOWN", true);
+		onLayout("DOWN", true, true);
 	});
 
 	function updateLayout() {
 		let visibleNodes = $activeController.visibleNodes
 			.split(",")
 			.map((id) => id.trim());
-		let fadedNodes = $activeController?.fadedNodes
-			?.split(",")
-			.map((id) => id.trim());
-		updateNodeVisibility(visibleNodes, fadedNodes);
 
+		let fadedNodes = [];
+		// let fadedNodes = $activeController?.fadedNodes
+		// 	?.split(",")
+		// 	.map((id) => id.trim());
+
+		updateNodeVisibility(visibleNodes, fadedNodes);
 		// Use fitView to fit the view to the visible nodes
+
 		fitView({
-			nodes: visibleNodes.map((id) => ({ id })), // Specify the nodes to zoom to by ID
-			padding: 0.25,
-			duration: 100
+			nodes: $activeController.focusNode.split(",").map((id) => ({ id })),
+			// nodes: visibleNodes.map((id) => ({ id })), // Specify the nodes to zoom to by ID
+			padding: 1,
+			duration: 500
 		});
 	}
-
-	// Update node visibility based on controller.visibleNodes
-	$: if ($activeController) updateLayout();
 
 	// Function to update the visibility and opacity of nodes
 	function updateNodeVisibility(visibleNodeIds, fadedNodeIds) {
@@ -126,10 +143,7 @@
 			const targetIsFaded = fadedNodeIds?.includes(edge.target);
 
 			const isVisible =
-				sourceIsFaded ||
-				targetIsFaded ||
-				visibleNodeIds?.includes(edge.source) ||
-				visibleNodeIds?.includes(edge.target);
+				sourceIsFaded || targetIsFaded || visibleNodeIds?.includes(edge.source);
 			const isFaded = sourceIsFaded || targetIsFaded;
 
 			return {
@@ -149,10 +163,50 @@
 	};
 
 	const getHeightFromAR = (width) => {
-		const aspectRatio = 441 / 294;
+		const aspectRatio = 444 / 300;
 		const height = width * aspectRatio;
 		return height;
 	};
+
+	const events = {
+		2: {
+			"64739": { text: "Great Great Great Grandparent", position: "top" },
+			"253610": { text: "Great Great Grandparent", position: "right" },
+			"234958": { text: "Great Grandparent", position: "right" },
+			"234780": { text: "Grandparent", position: "right" },
+			"234899": { text: "Parent", position: "right" },
+			"233667": { text: "1996", position: "bottom" }
+		}
+	};
+
+	let eventContent;
+
+	// Update node visibility based on controller.visibleNodes
+	$: if (previousIndex != $activeController.index) {
+		updateLayout();
+		previousIndex = $activeController.index;
+
+		eventContent = events[$activeController.index];
+		console.log(eventContent);
+
+		if (eventContent) {
+			$nodes.forEach((node) => {
+				node.data = {
+					...node.data,
+					eventText: eventContent[node.id]?.text || "",
+					eventTextPosition: eventContent[node.id]?.position || ""
+				};
+			});
+		} else {
+			$nodes.forEach((node) => {
+				node.data = {
+					...node.data,
+					eventText: "",
+					eventTextPosition: ""
+				};
+			});
+		}
+	}
 </script>
 
 <!-- Flow visualization layout -->

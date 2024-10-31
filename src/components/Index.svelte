@@ -1,7 +1,6 @@
 <script>
 	import { getContext } from "svelte";
 
-
 	import { SvelteFlowProvider } from "@xyflow/svelte";
 	import Flow from "$components/Flow/Flow.svelte";
 	import "@xyflow/svelte/dist/style.css";
@@ -12,30 +11,28 @@
 
 	import Scroller from "@sveltejs/svelte-scroller";
 
-	import { activeController, crossfaders } from "$stores/misc.js";
+	import { activeController, crossfades } from "$stores/misc.js";
 	import viewport from "../stores/viewport";
 
 	let index, offset, progress;
-
 
 	$: activeSlideContent = copy.slides[index];
 
 	$: $activeController = { ...activeSlideContent?.controller, index, progress };
 
-	$: $crossfaders = copy.crossfaders;
+	$: $crossfades = copy.crossfades;
 
 	$: if ($activeController.component?.type == "crossfade") {
-		$crossfaders[$activeController.component?.id].progress =
+		$crossfades[$activeController.component?.id].progress =
 			$activeController.focusNode ==
-			$crossfaders[$activeController.component?.id].source
+			$crossfades[$activeController.component?.id].source
 				? offset / 2
 				: offset + 0.5;
 	}
 
-
-
 	let startExperience = false;
-	
+
+
 </script>
 
 <div class="content">
@@ -70,6 +67,8 @@
 	<button on:click={() => (startExperience = true)}>Click to start</button>
 </div>
 
+<div class="debug-box">Index: {index}</div>
+
 {#if startExperience}
 	<Scroller
 		top={0}
@@ -82,7 +81,7 @@
 		<div slot="background">
 			{#if activeSlideContent}
 				<SvelteFlowProvider>
-					<Flow />
+					<Flow initController={copy.slides[0].controller} />
 				</SvelteFlowProvider>
 			{/if}
 		</div>
@@ -98,6 +97,18 @@
 {/if}
 
 <style lang="scss">
+	.debug-box {
+		position: fixed;
+		top: 0;
+		left: 0;
+		padding: 5px;
+		background: #00000050;
+		color: white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 10000;
+	}
 	.content {
 		margin: 0 auto;
 		max-width: 700px;
@@ -109,6 +120,7 @@
 		justify-content: center;
 		align-items: center;
 		border: 1px solid red;
+		pointer-events: none;
 		p {
 			background: white;
 			width: 100%;
