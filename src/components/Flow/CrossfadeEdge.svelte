@@ -20,7 +20,8 @@
 	export let targetY;
 	export let targetPosition;
 	export let markerEnd = undefined;
-	export let style = undefined;
+
+	let style = "stroke: purple; stroke-width: 5px";
 
 	$: [edgePath, labelX, labelY] = getBezierPath({
 		sourceX,
@@ -31,51 +32,58 @@
 		targetPosition
 	});
 
+	$: console.log(targetPosition);
+
 	const edges = useEdges();
 
 	const progressScale = scaleLinear()
-		.domain([0, 1.5])
-		.range([sourceY, targetY]);
+		.domain([0, 1])
+		.range([sourceY, targetY])
+		.clamp(true);
 
 	$: progressY = progressScale($crossfaders[`${source}_${target}`]?.progress);
 </script>
 
-<BaseEdge path={edgePath} {markerEnd} {style} />
+<!-- <BaseEdge path={edgePath} {markerEnd} {style} /> -->
 <EdgeLabelRenderer>
 	<div
-		class="edgeButtonContainer nodrag nopan"
+		class="bar"
+		style:transform="translate(-50%, 0%) translate({labelX}px, {sourceY}px)"
+		style:height="{targetY - sourceY + 4}px"
+	></div>
+
+	<div
+		class="crossfader"
 		style:transform="translate(-50%, -50%) translate({labelX}px,{progressY}px)"
 	>
-		<div class="crossfader-circle" data-sample=""></div>
+		<div class="crossfader__playhead" data-sample=""></div>
 	</div>
 </EdgeLabelRenderer>
 
-<style>
-	.edgeButtonContainer {
+<style lang="scss">
+	.bar {
+		width: 4px;
+		background: #cbb600;
+		background: linear-gradient(0deg, #517d45 0%, #cbb600 100%);
+		position: absolute;
+	}
+	.crossfader {
 		position: absolute;
 		font-size: 12pt;
 		pointer-events: all;
-	}
 
-	.edgeButton {
-		width: 20px;
-		height: 20px;
-		background: #eee;
-		border: 1px solid #fff;
-		cursor: pointer;
-		border-radius: 50%;
-		font-size: 12px;
-		line-height: 1;
-	}
-
-	.edgeButton:hover {
-		box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.08);
-	}
-
-	.crossfader-circle {
-		border-radius: 50%;
-		width: 10px;
-		height: 10px;
-		background: red;
+		&__playhead {
+			width: 30px;
+			height: 10px;
+			background: linear-gradient(
+				to bottom,
+				#5d5d5d 45%,
+				#ffffff 45%,
+				#ffffff 60%,
+				#5d5d5d 60%
+			);
+			border-radius: 2px;
+			filter: drop-shadow(0px 0px 4px #ddd);
+		}
 	}
 </style>

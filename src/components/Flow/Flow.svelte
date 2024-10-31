@@ -13,7 +13,7 @@
 	import { initialNodes, initialEdges } from "./nodes-and-edges.js";
 
 	import { onMount } from "svelte";
-	import CustomNode from "./CustomNode.svelte";
+	import CustomNode from "./Node/Node.svelte";
 	import CrossfadeEdge from "./CrossfadeEdge.svelte";
 
 	import { activeController } from "$stores/misc.js";
@@ -21,6 +21,8 @@
 	// Stores for nodes and edges
 	const nodes = writable([]);
 	const edges = writable([]);
+
+	const nodeWidth = 200;
 
 	const { fitView } = useSvelteFlow();
 	let flowRef; // Reference to the SvelteFlow instance
@@ -31,8 +33,8 @@
 	// ELK layout configuration options
 	const elkOptions = {
 		"elk.algorithm": "mrtree",
-		"elk.layered.spacing.nodeNodeBetweenLayers": "100",
-		"elk.spacing.nodeNode": "200"
+		"elk.layered.spacing.nodeNodeBetweenLayers": nodeWidth,
+		"elk.spacing.nodeNode": nodeWidth / 2
 	};
 
 	// Function to get layouted elements (nodes and edges)
@@ -45,8 +47,8 @@
 				...node,
 				targetPosition: isHorizontal ? Position.Left : Position.Top,
 				sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
-				width: 200,
-				height: 300
+				width: nodeWidth,
+				height: getHeightFromAR(nodeWidth)
 			})),
 			edges: edges
 		};
@@ -89,7 +91,9 @@
 		let visibleNodes = $activeController.visibleNodes
 			.split(",")
 			.map((id) => id.trim());
-		let fadedNodes = $activeController?.fadedNodes?.split(",").map((id) => id.trim());
+		let fadedNodes = $activeController?.fadedNodes
+			?.split(",")
+			.map((id) => id.trim());
 		updateNodeVisibility(visibleNodes, fadedNodes);
 
 		// Use fitView to fit the view to the visible nodes
@@ -142,6 +146,12 @@
 
 	const edgeTypes = {
 		crossfade: CrossfadeEdge
+	};
+
+	const getHeightFromAR = (width) => {
+		const aspectRatio = 441 / 294;
+		const height = width * aspectRatio;
+		return height;
 	};
 </script>
 

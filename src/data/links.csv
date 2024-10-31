@@ -1,50 +1,106 @@
-~id,~start_node_id,~end_node_id,~relationship_type,tree,remove,S_NAME,E_NAME
-223,234899,232157,SAMPLES,hit em up,,Player’s Anthem,La-Di-Da-Di
-385,232157,247603,INTERPOLATES,hit em up,,La-Di-Da-Di,The Magic Mirror
-386,232157,247604,INTERPOLATES,hit em up,,La-Di-Da-Di,Sukiyaki
-526,232162,234099,SAMPLES,hit em up,,Get Money,You Can’t Turn Me Away
-560,232162,234129,INTERPOLATES,hit em up,,Get Money,Warning
-561,233667,232162,INTERPOLATES,hit em up,TRUE,Hit ’Em Up,Get Money
-826,234818,232211,SAMPLES,hit em up,TRUE,C.R.E.A.M.,As Long As I’ve Got You
-917,234818,232350,INTERPOLATES,hit em up,TRUE,C.R.E.A.M.,"Money (Dollar Bill, Y’all)"
-918,232360,237321,SAMPLES,hit em up,TRUE,Who Shot Ya?,I’m Afraid The Masquerade is Over
-919,232360,237322,SAMPLES,hit em up,TRUE,Who Shot Ya?,I’m Gettin’ Ready
-988,232360,234818,INTERPOLATES,hit em up,TRUE,Who Shot Ya?,C.R.E.A.M.
-989,232360,237383,INTERPOLATES,hit em up,TRUE,Who Shot Ya?,Disco Inferno
-1007,233667,232360,INTERPOLATES,hit em up,TRUE,Hit ’Em Up,Who Shot Ya?
-1208,234129,232485,SAMPLES,hit em up,,Warning,Walk on By
-3819,269830,233585,SAMPLES,hit em up,TRUE,Down To The Grissle,N.T.
-3944,233667,233659,SAMPLES,hit em up,,Hit ’Em Up,Don’t Look Any Further
-3945,234148,233659,SAMPLES,hit em up,,Gettin’ Money (Get Money Remix),Don’t Look Any Further
-3946,233659,240512,INTERPOLATES,hit em up,,Don’t Look Any Further,Blind Man Can See It
-3962,233663,244364,SAMPLES,hit em up,,Brooklyn’s In The House,Planetary Citizen
-3963,233663,235060,SAMPLES,hit em up,,Brooklyn’s In The House,Rock Box
-3967,241514,233663,SAMPLES,hit em up,,Go Stetsa I,Brooklyn’s In The House
-3969,234148,233663,INTERPOLATES,hit em up,,Gettin’ Money (Get Money Remix),Brooklyn’s In The House
-4047,233667,234899,INTERPOLATES,hit em up,,Hit ’Em Up,Player’s Anthem
-4048,233667,234148,INTERPOLATES,hit em up,,Hit ’Em Up,Gettin’ Money (Get Money Remix)
-4049,233667,236794,INTERPOLATES,hit em up,,Hit ’Em Up,10% Dis
-8956,234780,234014,SAMPLES,hit em up,,Big Poppa,Between the Sheets
-12820,234780,234896,SAMPLES,hit em up,,Big Poppa,Dolly My Baby (Remix)
-12823,234899,234780,SAMPLES,hit em up,,Player’s Anthem,Big Poppa
-12882,234780,234958,INTERPOLATES,hit em up,,Big Poppa,Bad Boys
-13320,234896,266670,SAMPLES,hit em up,TRUE,Dolly My Baby (Remix),Watermelon Man
-13409,234899,237786,SAMPLES,hit em up,,Player’s Anthem,You Are What I’m All About
-13410,234899,249260,SAMPLES,hit em up,,Player’s Anthem,Zungguzungguguzungguzeng
-13411,234899,243446,SAMPLES,hit em up,,Player’s Anthem,Here We Go (Live at the Funhouse)
-13421,234899,249267,INTERPOLATES,hit em up,TRUE,Player’s Anthem,Remix for P is Free
-13504,234958,253610,SAMPLES,hit em up,,Bad Boys,Inspector Gadget
-18433,236794,236091,SAMPLES,hit em up,,10% Dis,Impeach The President
-18497,236469,236091,SAMPLES,hit em up,,Top Billin’,Impeach The President
-20492,236469,254404,SAMPLES,hit em up,TRUE,Top Billin’,Top Billin’ [Instrumental]
-20493,236469,241514,SAMPLES,hit em up,,Top Billin’,Go Stetsa I
-20584,236794,236469,SAMPLES,hit em up,,10% Dis,Top Billin’
-23588,237383,302797,INTERPOLATES,hit em up,TRUE,Disco Inferno,Up Above My Head There’s Music in the Air
-28039,243446,238398,SAMPLES,hit em up,,Here We Go (Live at the Funhouse),The Big Beat
-37938,241514,269830,SAMPLES,hit em up,TRUE,Go Stetsa I,Down To The Grissle
-37939,241514,244481,SAMPLES,hit em up,,Go Stetsa I,Scratchin’
-58018,249260,303879,SAMPLES,hit em up,,Zungguzungguguzungguzeng,Mad Mad
-58022,249267,249260,SAMPLES,hit em up,TRUE,Remix for P is Free,Zungguzungguguzungguzeng
-67872,253610,64739,INTERPOLATES,hit em up,,Inspector Gadget,In the Hall of the Mountain King
-1218,232485,271914,COVERS,hit em up,,Walk on By,Walk on By
-88888888001,241514,999999999001,SAMPLES,hit em up,,Go Stetsa I,Looking Out My Window
+~id,~start_node_id,~end_node_id,~relationship_type,tree,remove,S_NAME,E_NAME,type
+223,234899,232157,SAMPLES,hit em up,,Player’s Anthem,La-Di-Da-Di,
+385,232157,247603,INTERPOLATES,hit em up,,La-Di-Da-Di,The Magic Mirror,
+386,232157,247604,INTERPOLATES,hit em up,,La-Di-Da-Di,Sukiyaki,
+526,232162,234099,SAMPLES,hit em up,,Get Money,You Can’t Turn Me Away,
+560,232162,234129,INTERPOLATES,hit em up,,Get Money,Warning,
+561,233667,232162,INTERPOLATES,hit em up,TRUE,Hit ’Em Up,Get Money,
+826,234818,232211,SAMPLES,hit em up,TRUE,C.R.E.A.M.,As Long As I’ve Got You,
+917,234818,232350,INTERPOLATES,hit em up,TRUE,C.R.E.A.M.,"Money (Dollar Bill, Y’all)",
+918,232360,237321,SAMPLES,hit em up,TRUE,Who Shot Ya?,I’m Afraid The Masquerade is Over,
+919,232360,237322,SAMPLES,hit em up,TRUE,Who Shot Ya?,I’m Gettin’ Ready,
+988,232360,234818,INTERPOLATES,hit em up,TRUE,Who Shot Ya?,C.R.E.A.M.,
+989,232360,237383,INTERPOLATES,hit em up,TRUE,Who Shot Ya?,Disco Inferno,
+1007,233667,232360,INTERPOLATES,hit em up,TRUE,Hit ’Em Up,Who Shot Ya?,
+1208,234129,232485,SAMPLES,hit em up,,Warning,Walk on By,
+3819,269830,233585,SAMPLES,hit em up,TRUE,Down To The Grissle,N.T.,
+3944,233667,233659,SAMPLES,hit em up,,Hit ’Em Up,Don’t Look Any Further,
+3945,234148,233659,SAMPLES,hit em up,,Gettin’ Money (Get Money Remix),Don’t Look Any Further,
+3946,233659,240512,INTERPOLATES,hit em up,,Don’t Look Any Further,Blind Man Can See It,
+3962,233663,244364,SAMPLES,hit em up,,Brooklyn’s In The House,Planetary Citizen,
+3963,233663,235060,SAMPLES,hit em up,,Brooklyn’s In The House,Rock Box,
+3967,241514,233663,SAMPLES,hit em up,,Go Stetsa I,Brooklyn’s In The House,
+3969,234148,233663,INTERPOLATES,hit em up,,Gettin’ Money (Get Money Remix),Brooklyn’s In The House,
+4047,233667,234899,INTERPOLATES,hit em up,,Hit ’Em Up,Player’s Anthem,
+4048,233667,234148,INTERPOLATES,hit em up,,Hit ’Em Up,Gettin’ Money (Get Money Remix),
+4049,233667,236794,INTERPOLATES,hit em up,,Hit ’Em Up,10% Dis,
+8956,234780,234014,SAMPLES,hit em up,,Big Poppa,Between the Sheets,
+12820,234780,234896,SAMPLES,hit em up,,Big Poppa,Dolly My Baby (Remix),
+12823,234899,234780,SAMPLES,hit em up,,Player’s Anthem,Big Poppa,
+12882,234780,234958,INTERPOLATES,hit em up,,Big Poppa,Bad Boys,
+13320,234896,266670,SAMPLES,hit em up,TRUE,Dolly My Baby (Remix),Watermelon Man,
+13409,234899,237786,SAMPLES,hit em up,,Player’s Anthem,You Are What I’m All About,
+13410,234899,249260,SAMPLES,hit em up,,Player’s Anthem,Zungguzungguguzungguzeng,
+13411,234899,243446,SAMPLES,hit em up,,Player’s Anthem,Here We Go (Live at the Funhouse),
+13421,234899,249267,INTERPOLATES,hit em up,TRUE,Player’s Anthem,Remix for P is Free,
+13504,234958,253610,SAMPLES,hit em up,,Bad Boys,Inspector Gadget,
+18433,236794,236091,SAMPLES,hit em up,,10% Dis,Impeach The President,
+18497,236469,236091,SAMPLES,hit em up,,Top Billin’,Impeach The President,
+20492,236469,254404,SAMPLES,hit em up,TRUE,Top Billin’,Top Billin’ [Instrumental],
+20493,236469,241514,SAMPLES,hit em up,,Top Billin’,Go Stetsa I,
+20584,236794,236469,SAMPLES,hit em up,,10% Dis,Top Billin’,
+23588,237383,302797,INTERPOLATES,hit em up,TRUE,Disco Inferno,Up Above My Head There’s Music in the Air,
+28039,243446,238398,SAMPLES,hit em up,,Here We Go (Live at the Funhouse),The Big Beat,
+37938,241514,269830,SAMPLES,hit em up,TRUE,Go Stetsa I,Down To The Grissle,
+37939,241514,244481,SAMPLES,hit em up,,Go Stetsa I,Scratchin’,
+58018,249260,303879,SAMPLES,hit em up,,Zungguzungguguzungguzeng,Mad Mad,
+58022,249267,249260,SAMPLES,hit em up,TRUE,Remix for P is Free,Zungguzungguguzungguzeng,
+67872,253610,64739,INTERPOLATES,hit em up,,Inspector Gadget,In the Hall of the Mountain King,crossfade
+1218,232485,271914,COVERS,hit em up,,Walk on By,Walk on By,
+88888888001,241514,999999999001,SAMPLES,hit em up,,Go Stetsa I,Looking Out My Window,
+88888888002,234958,292940,,hit em up,,Bad Boys,Do or Die Bed Sty,
+88888888003,292940,999999999002,,hit em up,,Do or Die Bed Sty,Change the Beat (Female Version),
+88888888004,234896,318725,,hit em up,,Dolly My Baby (Remix),Ring a Ring o’ Roses,
+88888888005,234896,999999999003,,hit em up,,Dolly My Baby (Remix),Maddy Maddy Cry,
+88888888006,234896,243911,,hit em up,,Dolly My Baby (Remix),Papa Was Too,
+88888888007,234896,241743,,hit em up,,Dolly My Baby (Remix),Blues and Pants,
+88888888008,234896,232553,,hit em up,,Dolly My Baby (Remix),Long Red,
+88888888009,232157,266746,,hit em up,,La-Di-Da-Di,8 Million Stories,
+88888888010,247604,233253,,hit em up,,Sukiyaki,Sukiyaki,
+88888888011,266746,999999999004,,hit em up,,8 Million Stories,Ending,
+88888888012,266746,243196,,hit em up,,8 Million Stories,Living for the City,
+88888888013,243446,236385,,hit em up,,Here We Go (Live at the Funhouse),AJ Scratch,
+88888888014,243446,999999999005,,hit em up,,Here We Go (Live at the Funhouse),"Hand, Hand, Fingers, Thumb",
+88888888015,243446,258263,,hit em up,,Here We Go (Live at the Funhouse),Jam Master Jay,
+88888888016,243446,247291,,hit em up,,Here We Go (Live at the Funhouse),Hollis Crew (Krush-Groove 2),
+88888888017,247291,236659,,hit em up,,Hollis Crew (Krush-Groove 2),Sucker M.C.’s (Krush-Groove 1),
+88888888018,258263,244481,,hit em up,,Jam Master Jay,Scratchin’,
+88888888019,258263,234154,,hit em up,,Jam Master Jay,Rocket in the Pocket (Live in Paris),
+88888888020,236385,238256,,hit em up,,AJ Scratch,Take Me to the Mardi Gras,
+88888888021,236385,264583,,hit em up,,AJ Scratch,I Can’t Stop,
+88888888022,236385,246278,,hit em up,,AJ Scratch,Kool is Back,
+88888888023,236385,242993,,hit em up,,AJ Scratch,"Bounce, Rock, Skate, Roll Parts 1 & 2",
+88888888024,236385,250567,,hit em up,,AJ Scratch,Adventures of Super Rhyme (Rap),
+88888888025,236385,246050,,hit em up,,AJ Scratch,The Breaks,
+88888888026,236385,999999999010,,hit em up,,AJ Scratch,And You Know That,
+88888888027,238256,76897,,hit em up,,Take Me to the Mardi Gras,Rise and Shine,
+88888888028,238256,265857,,hit em up,,Take Me to the Mardi Gras,The Candy Man,
+88888888029,250567,233860,,hit em up,,Adventures of Super Rhyme (Rap),Blue Suede Shoes,
+88888888030,250567,179284,,hit em up,,Adventures of Super Rhyme (Rap),This Old Man,
+88888888031,250567,242994,,hit em up,,Adventures of Super Rhyme (Rap),Super Sporm,
+88888888032,250567,999999999008,,hit em up,,Adventures of Super Rhyme (Rap),Superman Theme,
+88888888033,250567,235853,,hit em up,,Adventures of Super Rhyme (Rap),Funk You Up,
+88888888034,250567,243003,,hit em up,,Adventures of Super Rhyme (Rap),Rapper’s Delight,
+88888888035,246050,243003,,hit em up,,The Breaks,Rapper’s Delight,
+88888888036,999999999010,243003,,hit em up,,And You Know That,Rapper’s Delight,
+88888888037,999999999010,999999999009,,hit em up,,And You Know That,Nobody Can Do It Like McDonald’s Can,
+88888888038,243003,999999999007,,hit em up,,Rapper’s Delight,Fun Loving Rapping,
+88888888039,243003,238056,,hit em up,,Rapper’s Delight,Good Times,
+88888888040,243003,999999999006,,hit em up,,Rapper’s Delight,Here Comes That Sound Again,
+88888888041,258263,236659,,hit em up,,Jam Master Jay,Sucker M.C.’s (Krush-Groove 1),
+88888888042,999999999015,238398,,hit em up,,Roxanne Roxanne,The Big Beat,
+88888888043,236794,264173,,hit em up,,10% Dis,Super Bad,
+88888888044,236794,273548,,hit em up,,10% Dis,Roxanne’s Revenge,
+88888888045,273548,999999999015,,hit em up,,Roxanne’s Revenge,Roxanne Roxanne,
+88888888046,999999999015,999999999002,,hit em up,,Roxanne Roxanne,Change the Beat (Female Version),
+88888888047,241514,999999999001,,hit em up,,Go Stetsa I,Looking Out My Window,
+88888888048,241514,233765,,hit em up,,Go Stetsa I,It’s Yours,
+88888888049,233663,999999999011,,hit em up,,Brooklyn’s In The House,Hey Good Lookin’,
+88888888050,233663,999999999012,,hit em up,,Brooklyn’s In The House,Brooklyn Style,
+88888888051,235060,236659,,hit em up,,Rock Box,Sucker M.C.’s (Krush-Groove 1),
+88888888052,233765,249977,,hit em up,,It’s Yours,I Believe in Music,
+88888888053,233765,255945,,hit em up,,It’s Yours,I Like Funky Music,
+88888888054,233765,265762,,hit em up,,It’s Yours,The Wildstyle (Rap),
+88888888055,233765,242920,,hit em up,,It’s Yours,Daisy Lady,
+88888888056,234148,999999999014,,hit em up,,Gettin’ Money (Get Money Remix),Don’t Test Me,
+88888888057,232485,271914,,hit em up,,Walk on By,Walk on By,

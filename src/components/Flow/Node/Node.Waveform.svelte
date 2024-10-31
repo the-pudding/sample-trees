@@ -32,7 +32,6 @@
 
 	$: if (wavesurfer) {
 		if (play) {
-            console.log($crossfaders[$activeController.component?.id].currentTime)
             // wavesurfer.setScrollTime($crossfaders[$activeController.component?.id].currentTime)
 			wavesurfer.play();
 		} else {

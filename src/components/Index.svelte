@@ -1,6 +1,6 @@
 <script>
 	import { getContext } from "svelte";
-	import Demo from "$components/demo/Demo.svelte";
+
 
 	import { SvelteFlowProvider } from "@xyflow/svelte";
 	import Flow from "$components/Flow/Flow.svelte";
@@ -15,14 +15,8 @@
 	import { activeController, crossfaders } from "$stores/misc.js";
 	import viewport from "../stores/viewport";
 
-	let index, offset, progress, innerProgress;
+	let index, offset, progress;
 
-	$: innerProgress = getInnerStepProgress({
-		totalSteps: copy.slides.length,
-		stepHeight: $viewport.height,
-		scrollProgress: progress,
-		currentIndex: index
-	});
 
 	$: activeSlideContent = copy.slides[index];
 
@@ -34,33 +28,14 @@
 		$crossfaders[$activeController.component?.id].progress =
 			$activeController.focusNode ==
 			$crossfaders[$activeController.component?.id].source
-				? innerProgress / 2
-				: innerProgress + 0.5;
+				? offset / 2
+				: offset + 0.5;
 	}
 
-	function getInnerStepProgress({
-		totalSteps,
-		stepHeight,
-		scrollProgress,
-		currentIndex
-	}) {
-		console.log();
 
-		// Calculate the total scrollable height
-		const totalHeight = totalSteps * stepHeight;
-
-		// Calculate the start and end positions of the current step
-		const start = currentIndex * stepHeight;
-		const end = start + stepHeight;
-
-		// Calculate the relative scroll position within the current step
-		const relativeScroll = scrollProgress * totalHeight - start;
-
-		// Return the progress within the current step, clamped between 0 and 1
-		return Math.max(0, Math.min(1, relativeScroll / stepHeight));
-	}
 
 	let startExperience = false;
+	
 </script>
 
 <div class="content">
@@ -133,12 +108,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		border-bottom: 1px solid red;
+		border: 1px solid red;
 		p {
 			background: white;
 			width: 100%;
 			max-width: 400px;
-			box-shadow: 5px 5px 15px #00000050;
+			box-shadow: 5px 5px 15px #ddd;
 			padding: 1rem;
 		}
 	}

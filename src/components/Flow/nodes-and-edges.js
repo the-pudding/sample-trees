@@ -1,8 +1,10 @@
 const position = { x: 0, y: 0 };
-const edgeType = "crossfade";
+
 
 import nodes from "$data/nodes.csv";
 import edges from "$data/links.csv";
+
+const crossfaders = ['']
 
 export const initialNodes = nodes.map((d) => ({
 	id: d["~id"],
@@ -23,7 +25,7 @@ export const initialEdges = edges.map((d) => ({
 	id: `e-${d["~start_node_id"]}-${d["~end_node_id"]}`,
 	source: d["~end_node_id"],
 	target: d["~start_node_id"],
-	type: edgeType
+	type: d.type || 'default'
 }));
 
 // export const initialNodes = [
