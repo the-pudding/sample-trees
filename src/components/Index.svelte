@@ -20,9 +20,21 @@
 
 	$: $activeController = { ...activeSlideContent?.controller, index, progress };
 
-	$: $crossfades = copy.crossfades;
+	$: $crossfades = copy.slides
+		.filter((d) => d?.controller.component?.type == "crossfade")
+		.reduce((acc, item) => {
+			const { id } = item.controller.component;
+			const [source, target] = id.split("_");
 
-	$: if ($activeController.component?.type == "crossfade") {
+			acc[id] = {
+				source,
+				target
+			};
+
+			return acc;
+		}, {});
+
+	$: if ($activeController?.component?.type == "crossfade") {
 		$crossfades[$activeController.component?.id].progress =
 			$activeController.focusNode ==
 			$crossfades[$activeController.component?.id].source
@@ -30,9 +42,7 @@
 				: offset + 0.5;
 	}
 
-	let startExperience = false;
-
-
+	let startExperience = true;
 </script>
 
 <div class="content">

@@ -10,12 +10,12 @@ export default [
 	},
 	{
 		"id": "1_mo6m8ue4KuNpuDrQLV5-r-jCc4gpyEJD1Te8_Hsffw",
-		"gid": "443640710",
+		"gid": "854146832",
 		"filepath": "src/data/links.csv"
 	},
 	{
 		"id": "1_mo6m8ue4KuNpuDrQLV5-r-jCc4gpyEJD1Te8_Hsffw",
-		"gid": "116287331",
+		"gid": "656037742",
 		"filepath": "src/data/nodes.csv"
 	}
 ]

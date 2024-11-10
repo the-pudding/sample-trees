@@ -1,6 +1,9 @@
 <script>
 	import { writable } from "svelte/store";
 	import previous from "$stores/previous.js";
+
+	import viewport from "$stores/viewport.js";
+
 	import ELK from "elkjs/lib/elk.bundled.js";
 	import {
 		SvelteFlow,
@@ -14,16 +17,12 @@
 	import { initialNodes, initialEdges } from "./nodes-and-edges.js";
 
 	import { onMount } from "svelte";
-	import CustomNode from "./Node/Node.svelte";
-	import CrossfadeEdge from "./CrossfadeEdge.svelte";
+	import Node from "./Node/Node.svelte";
+	import Edge from "./Edge/Edge.svelte";
 
 	import { activeController } from "$stores/misc.js";
 
 	export let initController;
-
-	console.log(initController);
-
-	const { viewport } = useSvelteFlow();
 
 	// Create the "previous" store based on `count`
 	let previousIndex = $activeController.index;
@@ -32,8 +31,11 @@
 	const nodes = writable([]);
 	const edges = writable([]);
 
-	// const nodeWidth = window.innerHeight / 5;
-	const nodeWidth = 150;
+	const textHeight = 30;
+	const waveformHeight = 30;
+
+	const nodeHeight = $viewport.height / 2 - textHeight - waveformHeight;
+	const nodeWidth = nodeHeight * (3 / 4);
 
 	const { fitView } = useSvelteFlow();
 	let flowRef; // Reference to the SvelteFlow instance
@@ -44,8 +46,8 @@
 	// ELK layout configuration options
 	const elkOptions = {
 		"elk.algorithm": "mrtree",
-		"elk.layered.spacing.nodeNodeBetweenLayers": nodeWidth,
-		"elk.spacing.nodeNode": nodeWidth / 2
+		"elk.layered.spacing.nodeNodeBetweenLayers": 0,
+		"elk.spacing.nodeNode": nodeHeight * 0.75
 	};
 
 	// Function to get layouted elements (nodes and edges)
@@ -59,7 +61,7 @@
 				targetPosition: isHorizontal ? Position.Left : Position.Top,
 				sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
 				width: nodeWidth,
-				height: getHeightFromAR(nodeWidth)
+				height: nodeHeight
 			})),
 			edges: edges
 		};
@@ -86,7 +88,6 @@
 			({ nodes: layoutedNodes, edges: layoutedEdges }) => {
 				$nodes = layoutedNodes;
 				$edges = layoutedEdges;
-
 				setTimeout(
 					() => {
 						updateLayout();
@@ -108,64 +109,65 @@
 			.split(",")
 			.map((id) => id.trim());
 
-		let fadedNodes = [];
-		// let fadedNodes = $activeController?.fadedNodes
-		// 	?.split(",")
-		// 	.map((id) => id.trim());
-
-		updateNodeVisibility(visibleNodes, fadedNodes);
+		updateNodeVisibility(visibleNodes);
 		// Use fitView to fit the view to the visible nodes
 
 		fitView({
-			nodes: $activeController.focusNode.split(",").map((id) => ({ id })),
+			nodes: $activeController.fitViewNodes.split(",").map((id) => ({ id })),
 			// nodes: visibleNodes.map((id) => ({ id })), // Specify the nodes to zoom to by ID
-			padding: 1,
+			padding: 0.05,
 			duration: 500
 		});
+
+		// $nodes.forEach((node) => {
+		// 	node.data = {
+		// 		...node.data,
+		// 		activeSource: $activeController?.component.id.split("_")[0],
+		// 		activeTarget: $activeController?.component.id.split("_")[1]
+		// 	};
+		// });
+
+		// $edges.forEach((edge) => {
+		// 	edge.data = {
+		// 		...edge.data
+		// 	};
+		// });
 	}
 
 	// Function to update the visibility and opacity of nodes
-	function updateNodeVisibility(visibleNodeIds, fadedNodeIds) {
+	function updateNodeVisibility(visibleNodeIds) {
 		$nodes = $nodes.map((node) => {
-			const isVisible =
-				visibleNodeIds?.includes(node.id) || fadedNodeIds?.includes(node.id);
-			const isFaded = fadedNodeIds?.includes(node.id);
+			const isVisible = visibleNodeIds?.includes(node.id);
 
 			return {
 				...node,
-				hidden: !isVisible,
-				style: isFaded ? "opacity: 0.5;" : ""
+				hidden: !isVisible
 			};
 		});
 
-		$edges = $edges.map((edge) => {
-			const sourceIsFaded = fadedNodeIds?.includes(edge.source);
-			const targetIsFaded = fadedNodeIds?.includes(edge.target);
+		const visibleEdges = visibleNodeIds.reduce((acc, curr, index, arr) => {
+			if (index < arr.length - 1) {
+				acc.push(`e-${curr}-${arr[index + 1]}`);
+			}
+			return acc;
+		}, []);
 
-			const isVisible =
-				sourceIsFaded || targetIsFaded || visibleNodeIds?.includes(edge.source);
-			const isFaded = sourceIsFaded || targetIsFaded;
+		$edges = $edges.map((edge) => {
+			const isVisible = visibleEdges?.includes(edge.id);
 
 			return {
 				...edge,
-				hidden: !isVisible,
-				style: isFaded ? "opacity: 0.5;" : ""
+				hidden: !isVisible
 			};
 		});
 	}
 
 	const nodeTypes = {
-		custom: CustomNode
+		custom: Node
 	};
 
 	const edgeTypes = {
-		crossfade: CrossfadeEdge
-	};
-
-	const getHeightFromAR = (width) => {
-		const aspectRatio = 444 / 300;
-		const height = width * aspectRatio;
-		return height;
+		crossfade: Edge
 	};
 
 	const events = {
@@ -185,32 +187,37 @@
 	$: if (previousIndex != $activeController.index) {
 		updateLayout();
 		previousIndex = $activeController.index;
+		console.log("HERE");
 
-		eventContent = events[$activeController.index];
-		console.log(eventContent);
+		// eventContent = events[$activeController.index];
+		// console.log(eventContent);
 
-		if (eventContent) {
-			$nodes.forEach((node) => {
-				node.data = {
-					...node.data,
-					eventText: eventContent[node.id]?.text || "",
-					eventTextPosition: eventContent[node.id]?.position || ""
-				};
-			});
-		} else {
-			$nodes.forEach((node) => {
-				node.data = {
-					...node.data,
-					eventText: "",
-					eventTextPosition: ""
-				};
-			});
-		}
+		// if (eventContent) {
+		// 	$nodes.forEach((node) => {
+		// 		node.data = {
+		// 			...node.data,
+		// 			eventText: eventContent[node.id]?.text || "",
+		// 			eventTextPosition: eventContent[node.id]?.position || ""
+		// 		};
+		// 	});
+		// } else {
+		// 	$nodes.forEach((node) => {
+		// 		node.data = {
+		// 			...node.data,
+		// 			eventText: "",
+		// 			eventTextPosition: ""
+		// 		};
+		// 	});
+		// }
 	}
 </script>
 
 <!-- Flow visualization layout -->
-<div id="flow">
+<div
+	id="flow"
+	style:--node-width="{nodeWidth}px"
+	style:--node-height="{nodeHeight}px"
+>
 	<SvelteFlow
 		bind:this={flowRef}
 		{nodes}
@@ -228,7 +235,7 @@
 <style lang="scss">
 	#flow {
 		top: 0px;
-		height: 100lvh;
+		height: 100svh;
 		width: 100%;
 	}
 

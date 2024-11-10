@@ -1,29 +1,19 @@
 <script>
 	import { Handle, Position } from "@xyflow/svelte";
-	import Waveform from "./Node.Waveform.svelte";
 	import CoverArt from "./Node.CoverArt.svelte";
 	import { activeController } from "$stores/misc.js";
 
 	export let data;
 	export let isConnectable = false;
 
+	$: console.log(data);
+
 	$$restProps;
 
-	// Helper function to determine if node is part of active crossfade
-	$: isCrossfadeSource =
-		$activeController?.component?.type === "crossfade" &&
-		$activeController?.component.id.split("_")[0] === data.id;
+	// Helper function to determine if node is part of active
+	$: isSource = $activeController?.component?.id.split("_")[0] === data.id;
 
-	$: isCrossfadeTarget =
-		$activeController?.component?.type === "crossfade" &&
-		$activeController?.component.id.split("_")[1] === data.id;
-
-	$: showWaveform = isCrossfadeSource || isCrossfadeTarget;
-
-	// Waveform props based on crossfade role
-	$: waveformProps = isCrossfadeTarget
-		? { waveColor: "#a3c69b", progressColor: "#517D45" }
-		: { waveColor: "#fefbd7", progressColor: "#CBB600" };
+	$: isTarget = $activeController?.component?.id.split("_")[1] === data.id;
 </script>
 
 <Handle
@@ -35,27 +25,19 @@
 
 <div
 	class="node"
-	class:source={isCrossfadeSource}
-	class:target={isCrossfadeTarget}
+	class:source={isSource}
+	class:target={isTarget}
 	class:focus={$activeController.focusNode == data.id}
 >
 	{#if !data.eventText}
 		<div class="text">
-			<div>{data.id}</div>
+			<!-- <div>{data.id}</div> -->
 			<div class="title">{data.title}</div>
 			<div class="artist">{data.primary_artist}</div>
 		</div>
 	{/if}
 
 	<CoverArt {data} />
-
-	{#if showWaveform}
-		<Waveform
-			id={data.id}
-			{...waveformProps}
-			play={$activeController.focusNode == data.id}
-		/>
-	{/if}
 </div>
 
 <Handle
@@ -75,7 +57,9 @@
 		opacity: 1;
 		filter: drop-shadow(0px 0px 10px #ddd);
 		// border: 1px solid red;
-		// transform: scale(0.7);
+		height: 100%;
+		width: 100%;
+		// transform: scale(1.8);
 		transition: transform 0.25s;
 		flex-direction: column;
 
@@ -106,6 +90,14 @@
 
 		.text {
 			font-family: var(--sans);
+			text-align: center;
+
+			* {
+				white-space: nowrap;
+				text-align: center;
+				margin-left: -100%;
+				margin-right: -100%;
+			}
 		}
 	}
 </style>
