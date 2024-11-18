@@ -2,7 +2,7 @@
 	import { onMount } from "svelte";
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
-	import { activeController, crossfades } from "$stores/misc.js";
+	import { activeController, crossfades, playerTimes } from "$stores/misc.js";
 
 	export let position;
 	export let id;
@@ -37,6 +37,11 @@
 			wavesurfer.play();
 		});
 
+		wavesurfer.on("timeupdate", (currentTime) => {
+			// $playerTimes[id] = currentTime;
+			// console.log($playerTimes[id])
+		});
+
 		return () => {
 			wavesurfer.destroy();
 		};
@@ -48,10 +53,13 @@
 		clearTimeout(playPauseTimeout);
 		playPauseTimeout = setTimeout(() => {
 			if (play && !wavesurfer.isPlaying()) {
-				console.log("Playing:", id);
+				// console.log("Playing:", id);
+				wavesurfer.setTime($playerTimes[id] || 0);
+
 				wavesurfer.play();
 			} else if (!play && wavesurfer.isPlaying()) {
-				console.log("Pausing:", id);
+				// console.log("Pausing:", id);
+				$playerTimes[id] = wavesurfer.getCurrentTime();
 				wavesurfer.pause();
 			}
 		}, 100); // Adjust delay if needed
@@ -62,7 +70,7 @@
 	class="wrapper"
 	style:transform="translate(-50%, 0%) {position == 'top'
 		? `translate(${labelX}px, ${sourceY - height}px)`
-		: `translate(${labelX}px, ${targetY + 5}px)`}"
+		: `translate(${labelX}px, ${targetY + 4}px)`}"
 >
 	<div id="waveform-{id}" style:--bg="{progressColor}30" class="waveform">
 		<!-- The waveform will be rendered here -->

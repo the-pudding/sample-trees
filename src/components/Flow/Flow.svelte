@@ -34,8 +34,21 @@
 	const textHeight = 30;
 	const waveformHeight = 30;
 
-	const nodeHeight = $viewport.height / 2 - textHeight - waveformHeight;
-	const nodeWidth = nodeHeight * (3 / 4);
+	const nodeHeight = Math.min(
+		$viewport.height / 2 - textHeight - waveformHeight,
+		260
+	);
+
+	const nodeWidth = nodeHeight * 0.75;
+
+	$: layout = {
+		"elk.direction": "DOWN",
+		"elk.algorithm": "mrtree",
+		// "elk.layered.spacing.nodeNodeBetweenLayers": 0,
+		"elk.spacing.nodeNode": $activeController.nodeHorizontalGap ?? nodeWidth
+	};
+
+	let previousLayout = layout;
 
 	const { fitView } = useSvelteFlow();
 	let flowRef; // Reference to the SvelteFlow instance
@@ -44,11 +57,6 @@
 	const elk = new ELK();
 
 	// ELK layout configuration options
-	const elkOptions = {
-		"elk.algorithm": "mrtree",
-		"elk.layered.spacing.nodeNodeBetweenLayers": 0,
-		"elk.spacing.nodeNode": nodeHeight * 0.75
-	};
 
 	// Function to get layouted elements (nodes and edges)
 	function getLayoutedElements(nodes, edges, options = {}) {
@@ -80,11 +88,11 @@
 
 	// Function to handle layout changes
 	function onLayout(direction, useInitialNodes = false, init) {
-		const opts = { "elk.direction": direction, ...elkOptions };
+		console.log("--onLayout--");
 		const ns = useInitialNodes ? initialNodes : $nodes;
 		const es = useInitialNodes ? initialEdges : $edges;
 
-		getLayoutedElements(ns, es, opts).then(
+		getLayoutedElements(ns, es, layout).then(
 			({ nodes: layoutedNodes, edges: layoutedEdges }) => {
 				$nodes = layoutedNodes;
 				$edges = layoutedEdges;
@@ -109,39 +117,43 @@
 			.split(",")
 			.map((id) => id.trim());
 
-		updateNodeVisibility(visibleNodes);
+		updateNodes(visibleNodes);
 		// Use fitView to fit the view to the visible nodes
 
-		fitView({
-			nodes: $activeController.fitViewNodes.split(",").map((id) => ({ id })),
-			// nodes: visibleNodes.map((id) => ({ id })), // Specify the nodes to zoom to by ID
-			padding: 0.05,
-			duration: 500
-		});
-
-		// $nodes.forEach((node) => {
-		// 	node.data = {
-		// 		...node.data,
-		// 		activeSource: $activeController?.component.id.split("_")[0],
-		// 		activeTarget: $activeController?.component.id.split("_")[1]
-		// 	};
-		// });
-
-		// $edges.forEach((edge) => {
-		// 	edge.data = {
-		// 		...edge.data
-		// 	};
-		// });
+		window.setTimeout(() => {
+			fitView({
+				nodes: $activeController.fitViewNodes.split(",").map((id) => ({ id })),
+				// nodes: visibleNodes.map((id) => ({ id })), // Specify the nodes to zoom to by ID
+				padding: 0.05,
+				includeHiddenNodes: true,
+				duration: 500
+			});
+		}, 10);
 	}
 
 	// Function to update the visibility and opacity of nodes
-	function updateNodeVisibility(visibleNodeIds) {
+	function updateNodes(visibleNodeIds) {
 		$nodes = $nodes.map((node) => {
 			const isVisible = visibleNodeIds?.includes(node.id);
 
+			// let secondaryLabelConfig;
+			// if (node.id == "64739") {
+			// 	console.log(node);
+			// }
+
+			// if (node.data.secondaryLabelConfig) {
+			// 	secondaryLabelConfig = parseSecondaryLabelConfig(
+			// 		node.data.secondaryLabelConfig
+			// 	)[$activeController.secondaryLabelAccessor];
+			// 	console.log(secondaryLabelConfig, "here?");
+			// }
+
 			return {
 				...node,
-				hidden: !isVisible
+				hidden: !isVisible,
+				// data: {
+				// 	...node.data
+				// }
 			};
 		});
 
@@ -170,24 +182,15 @@
 		crossfade: Edge
 	};
 
-	const events = {
-		2: {
-			"64739": { text: "Great Great Great Grandparent", position: "top" },
-			"253610": { text: "Great Great Grandparent", position: "right" },
-			"234958": { text: "Great Grandparent", position: "right" },
-			"234780": { text: "Grandparent", position: "right" },
-			"234899": { text: "Parent", position: "right" },
-			"233667": { text: "1996", position: "bottom" }
-		}
-	};
-
-	let eventContent;
-
 	// Update node visibility based on controller.visibleNodes
 	$: if (previousIndex != $activeController.index) {
+		if (JSON.stringify(previousLayout) != JSON.stringify(layout)) {
+			onLayout();
+			previousLayout = layout;
+		}
+
 		updateLayout();
 		previousIndex = $activeController.index;
-		console.log("HERE");
 
 		// eventContent = events[$activeController.index];
 		// console.log(eventContent);
@@ -210,6 +213,8 @@
 		// 	});
 		// }
 	}
+
+
 </script>
 
 <!-- Flow visualization layout -->

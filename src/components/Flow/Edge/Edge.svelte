@@ -37,7 +37,7 @@
 	const edges = useEdges();
 
 	const progressScale = scaleLinear()
-		.domain([-0.5, 1.5])
+		.domain([0, 1])
 		.range([sourceY, targetY])
 		.clamp(true);
 
@@ -46,6 +46,8 @@
 	$: isSource = $activeController?.component?.id.split("_")[0] == source;
 
 	$: isTarget = $activeController?.component?.id.split("_")[1]== target;
+
+
 
 </script>
 

@@ -39,10 +39,12 @@
 			$activeController.focusNode ==
 			$crossfades[$activeController.component?.id].source
 				? offset / 2
-				: offset + 0.5;
+				: offset / 2 + 0.5;
 	}
 
 	let startExperience = true;
+
+	let debugging = false;
 </script>
 
 <div class="content">
@@ -80,30 +82,42 @@
 <div class="debug-box">Index: {index}</div>
 
 {#if startExperience}
-	<Scroller
-		top={0}
-		bottom={1}
-		threshold={0.5}
-		bind:index
-		bind:offset
-		bind:progress
-	>
-		<div slot="background">
-			{#if activeSlideContent}
+	{#if debugging}
+
+			<div style="width:100%; height: 100vh">
 				<SvelteFlowProvider>
 					<Flow initController={copy.slides[0].controller} />
 				</SvelteFlowProvider>
-			{/if}
-		</div>
+			</div>
 
-		<div class="foreground" slot="foreground">
-			{#each copy.slides as slide}
-				<section class="slide">
-					<p>{slide.text}</p>
-				</section>
-			{/each}
-		</div>
-	</Scroller>
+	{:else}
+		<Scroller
+			top={0}
+			bottom={1}
+			threshold={0.5}
+			bind:index
+			bind:offset
+			bind:progress
+		>
+			<div slot="background">
+				{#if activeSlideContent}
+					<SvelteFlowProvider>
+						<Flow initController={copy.slides[0].controller} />
+					</SvelteFlowProvider>
+				{/if}
+			</div>
+
+			<div class="foreground" slot="foreground">
+				{#each copy.slides as slide}
+					<section class="slide" class:spacer={!slide.text}>
+						{#if slide.text}
+							<p>{slide.text}</p>
+						{/if}
+					</section>
+				{/each}
+			</div>
+		</Scroller>
+	{/if}
 {/if}
 
 <style lang="scss">
@@ -128,9 +142,13 @@
 		height: 100vh;
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		align-items: start;
 		border: 1px solid red;
 		pointer-events: none;
+
+		&.spacer {
+			height: 25vh;
+		}
 		p {
 			background: white;
 			width: 100%;

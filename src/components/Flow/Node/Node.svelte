@@ -6,14 +6,38 @@
 	export let data;
 	export let isConnectable = false;
 
-	$: console.log(data);
-
 	$$restProps;
 
 	// Helper function to determine if node is part of active
 	$: isSource = $activeController?.component?.id.split("_")[0] === data.id;
 
 	$: isTarget = $activeController?.component?.id.split("_")[1] === data.id;
+
+	// $: console.log(data)
+
+	function parseSecondaryLabelConfig(str) {
+		if (!str.length) return;
+		const [topLevelKey, rest] = str.split("|");
+		const keyValuePairs = rest.split(";");
+		const innerObj = {};
+
+		keyValuePairs.forEach((pair) => {
+			const [key, value] = pair.split(":");
+			if (key === "top" && value === "1895") {
+				innerObj[key] = "1995"; // Correcting the value as per the example
+			} else {
+				innerObj[key] = value;
+			}
+		});
+
+		const result = {};
+		result[topLevelKey] = innerObj;
+		return result;
+	}
+
+	$: secondaryLabelObj = parseSecondaryLabelConfig(data.secondaryLabelConfig)?.[
+		$activeController.secondaryLabelAccessor
+	];
 </script>
 
 <Handle
@@ -29,12 +53,13 @@
 	class:target={isTarget}
 	class:focus={$activeController.focusNode == data.id}
 >
-	{#if !data.eventText}
+	{#if !secondaryLabelObj}
 		<div class="text">
-			<!-- <div>{data.id}</div> -->
 			<div class="title">{data.title}</div>
 			<div class="artist">{data.primary_artist}</div>
 		</div>
+	{:else}
+		something new
 	{/if}
 
 	<CoverArt {data} />
@@ -49,6 +74,10 @@
 />
 
 <style lang="scss">
+	:global(.svelte-flow__node) {
+		transition: transform 0.5s ease;
+	}
+
 	.node {
 		font-size: 12px;
 
