@@ -5,11 +5,11 @@ import path from 'path';
 import csvParser from 'csv-parser';
 
 function timeToSeconds(time) {
-const parts = time.split(':').map(Number);
-const hours = parts[0] || 0;
-const minutes = parts[1] || 0;
-const seconds = parts[2] || 0;
-return hours * 3600 + minutes * 60 + seconds;
+  const parts = time.split(':').map(Number);
+  const hours = parts[0] || 0;
+  const minutes = parts[1] || 0;
+  const seconds = parts[2] || 0;
+  return hours * 3600 + minutes * 60 + seconds;
 }
 
 function csvToJson(filePath) {
@@ -36,8 +36,9 @@ async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp) {
     const startInSeconds = timeToSeconds(startTimestamp);
     const endInSeconds = timeToSeconds(endTimestamp);
     const duration = endInSeconds - startInSeconds;
-  
+    
     if (duration <= 0) {
+      console.log(startInSeconds,endInSeconds,inputPath)
       throw new Error('Invalid timestamps: End timestamp must be greater than start timestamp');
     }
   
@@ -47,7 +48,7 @@ async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp) {
         .setDuration(duration)            // Duration in seconds
         .output(outputPath)
         .on('end', () => {
-          console.log(`Successfully cropped ${inputPath} to ${outputPath}`);
+          // console.log(`Successfully cropped ${inputPath} to ${outputPath}`);
           resolve();
         })
         .on('error', (err) => {
@@ -70,16 +71,21 @@ async function main() {
 
   try {
     let jsonData = await csvToJson(filePath);
-    jsonData = jsonData.slice(0,7);
+    jsonData = jsonData.filter(d => {
+      return d.audio_input_saved;
+    })//
 
-    console.log('JSON Output:', jsonData);
+    console.log(jsonData.length)
+
+
+    // console.log('JSON Output:', jsonData);
 
     for (let song of jsonData){
         const inputFileP = path.resolve(`./audio_inputs/${song.p_id}.mp3`);  // Path to input file
-        const outputFileP = path.resolve(`./${song.link_id}-${song.p_id}.mp3`); // Path to output file
+        const outputFileP = path.resolve(`./audio_outputs/${song.link_id}-${song.p_id}.mp3`); // Path to output file
 
         const inputFileC = path.resolve(`./audio_inputs/${song.c_id}.mp3`);  // Path to input file
-        const outputFileC = path.resolve(`./${song.link_id}-${song.c_id}.mp3`); // Path to output file
+        const outputFileC = path.resolve(`./audio_outputs/${song.link_id}-${song.c_id}.mp3`); // Path to output file
 
         const startTimestampP = song.p_time_start; // Example: start cropping at 10 seconds
         const endTimestampP = song.p_time_end;   // Example: stop cropping at 20 seconds
@@ -89,7 +95,9 @@ async function main() {
         const endTimestampC = song.c_time_end;   // Example: stop cropping at 20 seconds
 
         try {
+            console.log(outputFileP)
             cropMp3(inputFileP, outputFileP, startTimestampP, endTimestampP);
+            console.log(outputFileC)
             cropMp3(inputFileC, outputFileC, startTimestampC, endTimestampC);
 
         } catch (err) {
