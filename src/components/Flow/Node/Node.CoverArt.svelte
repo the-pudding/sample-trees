@@ -22,7 +22,8 @@
 	{#if imageExists}
 		<img src="{base}/assets/cover_art/{data.id}.png" alt={data.title} />
 	{:else}
-		<div class="placeholder"></div>
+	
+		<img src="{base}/assets/cover_art/missing.png" alt={data.title} />
 	{/if}
 	<!-- <div class="placeholder"></div> -->
 	{#if data.eventText}
@@ -41,6 +42,7 @@
 	.placeholder {
 		width: 100%;
 		height: 100%;
+		aspect-ratio: 1/1;
 		background-color: gray;
 	}
 

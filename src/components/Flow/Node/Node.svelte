@@ -2,6 +2,7 @@
 	import { Handle, Position } from "@xyflow/svelte";
 	import CoverArt from "./Node.CoverArt.svelte";
 	import { activeController } from "$stores/misc.js";
+	import viewport from "$stores/viewport";
 
 	export let data;
 	export let isConnectable = false;
@@ -12,8 +13,6 @@
 	$: isSource = $activeController?.component?.id.split("_")[0] === data.id;
 
 	$: isTarget = $activeController?.component?.id.split("_")[1] === data.id;
-
-	// $: console.log(data)
 
 	function parseSecondaryLabelConfig(str) {
 		if (!str.length) return;
@@ -35,9 +34,20 @@
 		return result;
 	}
 
-	$: secondaryLabelObj = parseSecondaryLabelConfig(data.secondaryLabelConfig)?.[
-		$activeController.secondaryLabelAccessor
-	];
+	// $: secondaryLabelObj = parseSecondaryLabelConfig(data.secondaryLabelConfig)?.[
+	// 	$activeController.secondaryLabelAccessor
+	// ];
+
+	const textHeight = 30;
+	const waveformHeight = 30;
+
+	const nodeHeight = Math.min(
+		$viewport.height / 2 - textHeight - waveformHeight,
+		260
+	);
+
+	const nodeWidth = nodeHeight * 0.75;
+
 </script>
 
 <Handle
@@ -52,16 +62,21 @@
 	class:source={isSource}
 	class:target={isTarget}
 	class:focus={$activeController.focusNode == data.id}
+	class:faded={$activeController?.fadedNodes?.split(",").includes(data.id)}
+	style:--node-height="{nodeHeight}px"
+	style:--node-width="{nodeWidth}px"
+	data-id={data.id}
 >
-	{#if !secondaryLabelObj}
-		<div class="text">
-			<div class="title">{data.title}</div>
-			<div class="artist">{data.primary_artist}</div>
-		</div>
-	{:else}
-		something new
+	{#if $activeController.tree != $activeController.links}
+		<!-- {#if !secondaryLabelObj} -->
+			<div class="text">
+				<div class="title">{data.title}</div>
+				<div class="artist">{data.primary_artist}</div>
+			</div>
+		<!-- {:else}
+			something new
+		{/if} -->
 	{/if}
-
 	<CoverArt {data} />
 </div>
 
@@ -74,13 +89,20 @@
 />
 
 <style lang="scss">
+	:global(.svelte-flow__nodes) {
+		z-index: 100;
+	}
+
 	:global(.svelte-flow__node) {
 		transition: transform 0.5s ease;
 	}
 
 	.node {
+		max-width: var(--node-width);
+		max-height: var(--node-height);
+		position: relative;
 		font-size: 12px;
-
+		z-index: 1000;
 		text-align: center;
 		display: flex;
 		opacity: 1;
@@ -88,9 +110,8 @@
 		// border: 1px solid red;
 		height: 100%;
 		width: 100%;
-		// transform: scale(1.8);
-		transition: transform 0.25s;
 		flex-direction: column;
+		transition: opacity 0.5s;
 
 		&.source {
 			flex-direction: column;
@@ -102,6 +123,10 @@
 
 		&.focus {
 			transform: scale(1);
+		}
+
+		&.faded {
+			opacity: 0.25;
 		}
 
 		.title {

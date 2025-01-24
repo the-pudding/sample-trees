@@ -7,8 +7,8 @@
 
 <div
 	class="bar"
-	style:transform="translate(-50%, 0%) translate({labelX}px, {sourceY}px)"
-	style:height="{targetY - sourceY + 4}px"
+	style:transform="translate(-50%, 0%) translate({labelX}px, {sourceY + 30}px)"
+	style:height="{targetY - sourceY - 30 + 4}px"
 ></div>
 
 <div

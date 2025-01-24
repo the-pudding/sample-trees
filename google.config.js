@@ -10,12 +10,17 @@ export default [
 	},
 	{
 		"id": "1_mo6m8ue4KuNpuDrQLV5-r-jCc4gpyEJD1Te8_Hsffw",
-		"gid": "854146832",
+		"gid": "443640710",
 		"filepath": "src/data/links.csv"
 	},
 	{
 		"id": "1_mo6m8ue4KuNpuDrQLV5-r-jCc4gpyEJD1Te8_Hsffw",
-		"gid": "656037742",
+		"gid": "116287331",
 		"filepath": "src/data/nodes.csv"
+	},
+	{
+		"id": "1_mo6m8ue4KuNpuDrQLV5-r-jCc4gpyEJD1Te8_Hsffw",
+		"gid": "1845913332",
+		"filepath": "src/data/slides.csv"
 	}
 ]

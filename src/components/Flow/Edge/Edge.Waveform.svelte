@@ -3,7 +3,7 @@
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
 	import { activeController, crossfades, playerTimes } from "$stores/misc.js";
-
+	import viewport from "$stores/viewport";
 	export let position;
 	export let id;
 	export let waveColor;
@@ -18,9 +18,11 @@
 	let wavesurfer;
 	let isReady = false;
 
+	let waveformRef;
+
 	onMount(() => {
 		wavesurfer = WaveSurfer.create({
-			container: `#waveform-${id}`,
+			container: waveformRef,
 			waveColor: waveColor,
 			progressColor: progressColor,
 			url: `${base}/assets/audio/${id}.mp3`,
@@ -64,15 +66,26 @@
 			}
 		}, 100); // Adjust delay if needed
 	}
+
+	const textHeight = 30;
+	const waveformHeight = 30;
+	const nodeHeight = Math.min(
+		$viewport.height / 2 - textHeight - waveformHeight,
+		260
+	);
+
+	const nodeWidth = nodeHeight * 0.75;
 </script>
 
 <div
 	class="wrapper"
 	style:transform="translate(-50%, 0%) {position == 'top'
-		? `translate(${labelX}px, ${sourceY - height}px)`
+		? `translate(${labelX}px, ${sourceY }px)`
 		: `translate(${labelX}px, ${targetY + 4}px)`}"
+	style:--node-height="{nodeHeight}px"
+	style:--node-width="{nodeWidth}px"
 >
-	<div id="waveform-{id}" style:--bg="{progressColor}30" class="waveform">
+	<div bind:this={waveformRef} id="waveform-{id}" style:--bg="{progressColor}30" class="waveform">
 		<!-- The waveform will be rendered here -->
 	</div>
 </div>

@@ -13,6 +13,7 @@
 	import Waveform from "./Edge.Waveform.svelte";
 	import Crossfade from "./Edge.Crossfade.svelte";
 
+	export let id;
 	export let source;
 	export let target;
 	export let sourceX;
@@ -34,24 +35,15 @@
 		targetPosition
 	});
 
-	const edges = useEdges();
-
 	const progressScale = scaleLinear()
 		.domain([0, 1])
 		.range([sourceY, targetY])
 		.clamp(true);
 
-	$: progressY = progressScale($crossfades[`${source}_${target}`]?.progress);
-
-	$: isSource = $activeController?.component?.id.split("_")[0] == source;
-
-	$: isTarget = $activeController?.component?.id.split("_")[1]== target;
-
-
-
+	$: progressY = progressScale($crossfades[`${id}`]?.progress);
 </script>
 
-{#if isSource && isTarget}
+{#if $activeController?.component?.type && $activeController?.component?.id == id}
 	<EdgeLabelRenderer>
 		<Waveform
 			position="top"

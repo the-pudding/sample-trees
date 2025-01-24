@@ -1,0 +1,9 @@
+text,tree,controller.focusNode,controller.fitViewNodes,controller.visibleNodes,controller.nodeHorizontalGap,controller.secondaryLabelAccessor,controller.component.id,controller.component.type
+"Some samples and interpolations offer instantly recognizable riffs and phrases, such as the bass from “Under Pressure” that appears in “Ice Ice Baby.”",intro,252744,"252744,243164","252744,243164",,,252744_243164,crossfade
+This is a project about the shared DNA in music. ,intro,243164,"252744,243164","252744,243164",,,,
+Orchestral music for a play in 1875 can become electronic music for a cartoon in 1983.,hit,64739,"64739,253610","64739,253610",,,64739_253610,crossfade
+Which can be transformed by a minor rap group…,hit,253610,"64739,253610","64739,253610",,,64739_253610,crossfade
+,hit,253610,"253610,234958","64739,253610,253610,234958",,,253610_234958,crossfade
+…and then influence the breakout hit of a rap giant….,hit,234958,"253610,234958","64739,253610,253610,234958",,,253610_234958,crossfade
+We can see the full impact of sampling if we look at how sound is passed down and forms a musical lineage.,hit,,"64739,253610,234958,234780,234899,233667","64739,253610,234958,234780,234899,233667",0,lineage,,
+Hit Em Up has more lineages...,hit,234958,"64739,253610,234958,234780,234899,233667,232157","64739,253610,234958,234780,234899,233667,232157",0,lineage2,,

@@ -1,14 +1,11 @@
+import groupBy from "../groupBy";
+
 const position = { x: 0, y: 0 };
+
 
 import nodes from "$data/nodes.csv";
 import edges from "$data/links.csv";
 
-const groupBy = function (xs, key) {
-	return xs.reduce(function (rv, x) {
-		(rv[x[key]] = rv[x[key]] || []).push(x);
-		return rv;
-	}, {});
-};
 
 const groupedEdges = groupBy(edges, "tree");
 
@@ -55,7 +52,7 @@ Object.keys(groupedEdges).forEach((key) => {
  * @param {string} key - The key to retrieve nodes and edges for
  * @returns {[Array, Array]} - An array containing initialNodes and initialEdges
  */
-export function getInitialNodesAndEdges(key) {
+export default function getInitialNodesAndEdges(key) {
 	const initialNodes = groupedNodes[key] || [];
 	const initialEdges = groupedEdges[key] || [];
 	return [initialNodes, initialEdges];

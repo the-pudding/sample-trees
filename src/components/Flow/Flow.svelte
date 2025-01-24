@@ -14,7 +14,9 @@
 	} from "@xyflow/svelte";
 
 	import "@xyflow/svelte/dist/style.css";
-	import { initialNodes, initialEdges } from "./nodes-and-edges.js";
+	import { getInitialNodesAndEdges } from "./nodes-and-edges.js";
+
+	// import { initialNodes, initialEdges } from "./nodes-and-edges.js";
 
 	import { onMount } from "svelte";
 	import Node from "./Node/Node.svelte";
@@ -23,6 +25,12 @@
 	import { activeController } from "$stores/misc.js";
 
 	export let initController;
+	export let tree;
+
+	$: treeIsVisible = tree == $activeController.tree;
+
+	const [initialNodes, initialEdges] = getInitialNodesAndEdges(tree);
+
 
 	// Create the "previous" store based on `count`
 	let previousIndex = $activeController.index;
@@ -74,6 +82,7 @@
 			edges: edges
 		};
 
+
 		return elk
 			.layout(graph)
 			.then((layoutedGraph) => ({
@@ -89,8 +98,9 @@
 	// Function to handle layout changes
 	function onLayout(direction, useInitialNodes = false, init) {
 		console.log("--onLayout--");
-		const ns = useInitialNodes ? initialNodes : $nodes;
-		const es = useInitialNodes ? initialEdges : $edges;
+
+		const ns = $nodes;
+		const es = $edges;
 
 		getLayoutedElements(ns, es, layout).then(
 			({ nodes: layoutedNodes, edges: layoutedEdges }) => {
@@ -98,7 +108,15 @@
 				$edges = layoutedEdges;
 				setTimeout(
 					() => {
-						updateLayout();
+						window.setTimeout(() => {
+							fitView({
+								nodes: $nodes,
+								// nodes: visibleNodes.map((id) => ({ id })), // Specify the nodes to zoom to by ID
+								padding: 0.05,
+								includeHiddenNodes: true,
+								duration: 500
+							});
+						}, 10);
 					},
 					init ? 10 : 0
 				);
@@ -107,72 +125,14 @@
 		);
 	}
 
+
+
 	// Initial layout on mount
 	onMount(() => {
 		onLayout("DOWN", true, true);
 	});
 
-	function updateLayout() {
-		let visibleNodes = $activeController.visibleNodes
-			.split(",")
-			.map((id) => id.trim());
 
-		updateNodes(visibleNodes);
-		// Use fitView to fit the view to the visible nodes
-
-		window.setTimeout(() => {
-			fitView({
-				nodes: $activeController.fitViewNodes.split(",").map((id) => ({ id })),
-				// nodes: visibleNodes.map((id) => ({ id })), // Specify the nodes to zoom to by ID
-				padding: 0.05,
-				includeHiddenNodes: true,
-				duration: 500
-			});
-		}, 10);
-	}
-
-	// Function to update the visibility and opacity of nodes
-	function updateNodes(visibleNodeIds) {
-		$nodes = $nodes.map((node) => {
-			const isVisible = visibleNodeIds?.includes(node.id);
-
-			// let secondaryLabelConfig;
-			// if (node.id == "64739") {
-			// 	console.log(node);
-			// }
-
-			// if (node.data.secondaryLabelConfig) {
-			// 	secondaryLabelConfig = parseSecondaryLabelConfig(
-			// 		node.data.secondaryLabelConfig
-			// 	)[$activeController.secondaryLabelAccessor];
-			// 	console.log(secondaryLabelConfig, "here?");
-			// }
-
-			return {
-				...node,
-				hidden: !isVisible,
-				// data: {
-				// 	...node.data
-				// }
-			};
-		});
-
-		const visibleEdges = visibleNodeIds.reduce((acc, curr, index, arr) => {
-			if (index < arr.length - 1) {
-				acc.push(`e-${curr}-${arr[index + 1]}`);
-			}
-			return acc;
-		}, []);
-
-		$edges = $edges.map((edge) => {
-			const isVisible = visibleEdges?.includes(edge.id);
-
-			return {
-				...edge,
-				hidden: !isVisible
-			};
-		});
-	}
 
 	const nodeTypes = {
 		custom: Node
@@ -182,14 +142,38 @@
 		crossfade: Edge
 	};
 
+	function handleUpdate() {
+		let visibleNodes = $activeController.visibleNodes
+			.split(",")
+			.map((id) => id.trim());
+
+		const visibleEdges = visibleNodes.reduce((acc, curr, index, arr) => {
+			if (index < arr.length - 1) {
+				acc.push(`e-${curr}-${arr[index + 1]}`);
+			}
+			return acc;
+		}, []);
+
+		$nodes = initialNodes.filter((node) => visibleNodes?.includes(node.id));
+
+		$edges = initialEdges.filter((edge) => visibleEdges?.includes(edge.id));
+
+		onLayout("DOWN", true, true);
+
+
+	}
+
 	// Update node visibility based on controller.visibleNodes
 	$: if (previousIndex != $activeController.index) {
-		if (JSON.stringify(previousLayout) != JSON.stringify(layout)) {
-			onLayout();
-			previousLayout = layout;
-		}
+		// if (JSON.stringify(previousLayout) != JSON.stringify(layout)) {
+		// 	onLayout();
+		// 	previousLayout = layout;
+		// }
+		// onLayout();
+		// updateLayout();
 
-		updateLayout();
+		handleUpdate();
+
 		previousIndex = $activeController.index;
 
 		// eventContent = events[$activeController.index];
@@ -213,13 +197,13 @@
 		// 	});
 		// }
 	}
-
-
 </script>
 
 <!-- Flow visualization layout -->
 <div
-	id="flow"
+	id="flow-{tree}"
+	class="flow"
+	class:treeIsVisible
 	style:--node-width="{nodeWidth}px"
 	style:--node-height="{nodeHeight}px"
 >
@@ -238,10 +222,18 @@
 </div>
 
 <style lang="scss">
-	#flow {
+	.flow {
 		top: 0px;
 		height: 100svh;
 		width: 100%;
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		&.treeIsVisible {
+			opacity: 1;
+		}
 	}
 
 	:global(.svelte-flow__edges) {

@@ -1,29 +1,82 @@
 <script>
 	import { getContext } from "svelte";
-
+	import { onMount } from "svelte";
 	import { SvelteFlowProvider } from "@xyflow/svelte";
 	import Flow from "$components/Flow/Flow.svelte";
 	import "@xyflow/svelte/dist/style.css";
+
+	import Example from "./Flow/Example.svelte";
 	// import Footer from "$components/Footer.svelte";
 
-	const copy = getContext("copy");
+	import generateFlow from "$utils/flow/generateFlow";
+	import groupBy from "$utils/groupBy";
+	// const copy = getContext("copy");
+
+	import flatSlides from "$data/slides.csv";
 	// const data = getContext("data");
 
 	import Scroller from "@sveltejs/svelte-scroller";
 
-	import { activeController, crossfades } from "$stores/misc.js";
+	import { activeController, activeTree, crossfades } from "$stores/misc.js";
 	import viewport from "../stores/viewport";
+
+	function flattenToNested(jsonArray) {
+		return jsonArray.map((flatObject) => {
+			const nestedObject = {};
+
+			Object.keys(flatObject).forEach((key) => {
+				const value = flatObject[key];
+				if (value === "") return; // Skip empty string values
+
+				if (key.includes(".")) {
+					const keyParts = key.split(".");
+					let current = nestedObject;
+					keyParts.forEach((part, index) => {
+						if (index === keyParts.length - 1) {
+							current[part] = value; // Set the value at the last key part
+						} else {
+							current[part] = current[part] || {}; // Ensure intermediate levels exist
+							current = current[part];
+						}
+					});
+				} else {
+					nestedObject[key] = value; // Direct assignment for non-nested keys
+				}
+			});
+
+			return nestedObject;
+		});
+	}
+
+	const nestedSlides = flattenToNested(flatSlides);
+
+	// console.log(nestedSlides)
+
+	let isReady = false;
+	let render;
+
+	onMount(async () => {
+		render = await Promise.all(
+			nestedSlides.map((slide, i) => generateFlow(slide))
+		);
+
+		isReady = true;
+	});
 
 	let index, offset, progress;
 
-	$: activeSlideContent = copy.slides[index];
+	$: activeSlideContent = nestedSlides[index];
 
 	$: $activeController = { ...activeSlideContent?.controller, index, progress };
 
-	$: $crossfades = copy.slides
-		.filter((d) => d?.controller.component?.type == "crossfade")
+	$: if (isReady) {
+		$activeTree = render[index];
+	}
+
+	$: $crossfades = nestedSlides
+		.filter((d) => d?.controller?.component?.type == "crossfade")
 		.reduce((acc, item) => {
-			const { id } = item.controller.component;
+			const { id } = item.controller?.component;
 			const [source, target] = id.split("_");
 
 			acc[id] = {
@@ -35,7 +88,7 @@
 		}, {});
 
 	$: if ($activeController?.component?.type == "crossfade") {
-		$crossfades[$activeController.component?.id].progress =
+		$crossfades[$activeController?.component?.id].progress =
 			$activeController.focusNode ==
 			$crossfades[$activeController.component?.id].source
 				? offset / 2
@@ -81,15 +134,13 @@
 
 <div class="debug-box">Index: {index}</div>
 
-{#if startExperience}
-	{#if debugging}
-
-			<div style="width:100%; height: 100vh">
-				<SvelteFlowProvider>
-					<Flow initController={copy.slides[0].controller} />
-				</SvelteFlowProvider>
-			</div>
-
+{#await render then renderContent}
+	{#if debugging && render}
+		<!-- <div style="width:100%; height: 100vh">
+	<SvelteFlowProvider>
+		<Flow initController={render[0].controller} tree="intro" />
+	</SvelteFlowProvider>
+</div> -->
 	{:else}
 		<Scroller
 			top={0}
@@ -101,14 +152,23 @@
 		>
 			<div slot="background">
 				{#if activeSlideContent}
-					<SvelteFlowProvider>
-						<Flow initController={copy.slides[0].controller} />
-					</SvelteFlowProvider>
+					<!-- <SvelteFlowProvider>
+						<Flow initController={nestedSlides[0].controller} tree="intro" />
+					</SvelteFlowProvider> -->
+
+					<!-- <SvelteFlowProvider>
+						<Flow initController={nestedSlides[0].controller} tree="hit" />
+					</SvelteFlowProvider> -->
+					{#if $activeTree}
+						<SvelteFlowProvider>
+							<Example {index} />
+						</SvelteFlowProvider>
+					{/if}
 				{/if}
 			</div>
 
 			<div class="foreground" slot="foreground">
-				{#each copy.slides as slide}
+				{#each nestedSlides as slide}
 					<section class="slide" class:spacer={!slide.text}>
 						{#if slide.text}
 							<p>{slide.text}</p>
@@ -118,7 +178,7 @@
 			</div>
 		</Scroller>
 	{/if}
-{/if}
+{/await}
 
 <style lang="scss">
 	.debug-box {
@@ -142,8 +202,8 @@
 		height: 100vh;
 		display: flex;
 		justify-content: center;
-		align-items: start;
-		border: 1px solid red;
+		align-items: center;
+		// border: 1px solid red;
 		pointer-events: none;
 
 		&.spacer {
