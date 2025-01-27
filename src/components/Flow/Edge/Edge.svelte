@@ -40,7 +40,11 @@
 		.range([sourceY, targetY])
 		.clamp(true);
 
-	$: progressY = progressScale($crossfades[`${id}`]?.progress);
+	$: progressPercentage = $crossfades[`${id}`]?.progress
+
+	$: progressY = progressScale(progressPercentage);
+
+	$: console.log($crossfades[`${id}`]?.progress)
 </script>
 
 {#if $activeController?.component?.type && $activeController?.component?.id == id}
@@ -50,7 +54,7 @@
 			id={source}
 			waveColor="#fefbd7"
 			progressColor="#CBB600"
-			play={$activeController.focusNode == source}
+			play={progressPercentage >= 0.5 && progressPercentage < 0.75}
 			{labelX}
 			{sourceY}
 		/>
@@ -62,7 +66,7 @@
 			id={target}
 			waveColor="#a3c69b"
 			progressColor="#517D45"
-			play={$activeController.focusNode == target}
+			play={progressPercentage >= 0.75 && progressPercentage < 1}
 			{labelX}
 			{targetY}
 		/>

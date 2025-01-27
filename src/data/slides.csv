@@ -1,8 +1,8 @@
 text,notes,controller.tree,controller.links,controller.fitViewNodes,controller.fadedNodes,controller.nodeHorizontalGap,controller.secondaryLabelAccessor,controller.component.id,controller.component.type
 "Some samples and interpolations offer instantly recognizable riffs and phrases, such as the bass from “Under Pressure” that appears in “Ice Ice Baby.”",,intro,88888888057,,,,,88888888057-intro,crossfade
-This is a project about the shared DNA in music. ,,intro,88888888057,,,,,,
+This is a project about the shared DNA in music. ,,intro,88888888057,,"243164,252744",,,,
 Orchestral music for a play in 1875 can become electronic music for a cartoon in 1983.,,hit,67872,,,,,67872-hit,crossfade
-Which can be transformed by a minor rap group…,,hit,"13504,67872",,,,,13504-hit,crossfade
+Which can be transformed by a minor rap group…,,hit,"13504,67872","234958,253610",,,,13504-hit,crossfade
 …and then influence the breakout hit of a rap giant….,,hit,"12882,13504,67872",,,,,12882-hit,crossfade
 ...and eventually end up in the back-and-forth of diss tracks that defined the rap rivalry between the east coast and Biggie Smalls and the west coast of Tupac Shakur.,,hit,"4047,12823,12882,13504,67872","233667,234899,234780,234780",234780,,,12823-hit,crossfade
 "We can see the full impact of sampling if we look at how sound is passed down between generations, forming a musical lineage that spans over 100 years.",,hit,"4047,12823,12882,13504,67872",,,,,,

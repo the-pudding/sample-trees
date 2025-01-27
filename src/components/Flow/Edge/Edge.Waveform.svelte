@@ -21,6 +21,7 @@
 	let waveformRef;
 
 	onMount(() => {
+	
 		wavesurfer = WaveSurfer.create({
 			container: waveformRef,
 			waveColor: waveColor,
@@ -57,7 +58,7 @@
 			if (play && !wavesurfer.isPlaying()) {
 				// console.log("Playing:", id);
 				wavesurfer.setTime($playerTimes[id] || 0);
-
+				console.log("PLAY")
 				wavesurfer.play();
 			} else if (!play && wavesurfer.isPlaying()) {
 				// console.log("Pausing:", id);
