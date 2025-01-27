@@ -44,7 +44,6 @@
 
 	$: progressY = progressScale(progressPercentage);
 
-	$: console.log($crossfades[`${id}`]?.progress)
 </script>
 
 {#if $activeController?.component?.type && $activeController?.component?.id == id}

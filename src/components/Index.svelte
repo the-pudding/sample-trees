@@ -2,10 +2,10 @@
 	import { getContext } from "svelte";
 	import { onMount } from "svelte";
 	import { SvelteFlowProvider } from "@xyflow/svelte";
-	import Flow from "$components/Flow/Flow.svelte";
+
 	import "@xyflow/svelte/dist/style.css";
 
-	import Example from "./Flow/Example.svelte";
+	import Flow from "./Flow/Flow.svelte";
 	// import Footer from "$components/Footer.svelte";
 
 	import generateFlow from "$utils/flow/generateFlow";
@@ -161,7 +161,7 @@
 					</SvelteFlowProvider> -->
 					{#if $activeTree}
 						<SvelteFlowProvider>
-							<Example {index} />
+							<Flow {index} />
 						</SvelteFlowProvider>
 					{/if}
 				{/if}
