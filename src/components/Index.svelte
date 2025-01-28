@@ -65,42 +65,33 @@
 
 	let index, offset, progress;
 
-	$: activeSlideContent = nestedSlides[index];
 
-	$: $activeController = { ...activeSlideContent?.controller, index, progress };
 
-	$: if (isReady) {
-		$activeTree = render[index];
-	}
+	// $: $crossfades = nestedSlides
+	// 	.filter((d) => d?.controller?.component?.type == "crossfade")
+	// 	.reduce((acc, item) => {
+	// 		const { id } = item.controller?.component;
+	// 		const [source, target] = id.split("_");
 
-	$: $crossfades = nestedSlides
-		.filter((d) => d?.controller?.component?.type == "crossfade")
-		.reduce((acc, item) => {
-			const { id } = item.controller?.component;
-			const [source, target] = id.split("_");
+	// 		acc[id] = {
+	// 			source,
+	// 			target
+	// 		};
 
-			acc[id] = {
-				source,
-				target
-			};
+	// 		return acc;
+	// 	}, {});
 
-			return acc;
-		}, {});
-
-	$: if ($activeController?.component?.type == "crossfade") {
-		$crossfades[$activeController?.component?.id].progress =
-			$activeController.focusNode ==
-			$crossfades[$activeController.component?.id].source
-				? offset / 2
-				: offset / 2 + 0.5;
-	}
-
+	// $: if ($activeController?.component?.type == "crossfade") {
+	// 	$crossfades[$activeController?.component?.id].progress =
+	// 		$activeController.focusNode ==
+	// 		$crossfades[$activeController.component?.id].source
+	// 			? offset / 2
+	// 			: offset / 2 + 0.5;
+	// }
 </script>
 
-<div class="debug-box">Index: {index}</div>
-
-{#each Object.entries(groupedSlides) as [key, content]}
-	<Section {key} {content} />
+{#each Object.entries(groupedSlides) as [tree, content], i}
+	<Section {tree} {content} />
 {/each}
 
 <!-- {#await render then renderContent}

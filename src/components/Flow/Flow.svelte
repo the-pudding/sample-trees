@@ -8,21 +8,22 @@
 	} from "@xyflow/svelte";
 	import "@xyflow/svelte/dist/style.css";
 
-	import { activeController, activeTree } from "$stores/misc.js";
 	import Node from "./Node/Node.svelte";
 	import Edge from "./Edge/Edge.svelte";
 	import SimpleNode from "./Node/SimpleNode.svelte";
 
 	const { fitView } = useSvelteFlow();
 
+	export let activeTree
+	export let activeController
 	export let index;
 
 	let flowRef;
-	let previousIndex = $activeController.index;
+	let previousIndex = activeController.index;
 
 	// Initialize nodes and edges as writable stores
-	const nodes = writable($activeTree.nodes);
-	const edges = writable($activeTree.edges);
+	const nodes = writable(activeTree.nodes);
+	const edges = writable(activeTree.edges);
 
 	// Define node and edge types
 	const nodeTypes = {
@@ -31,32 +32,29 @@
 	};
 
 	const edgeTypes = {
-		custom: Edge
+		// custom: Edge
 	};
 
 	// Reactive key to force re-render
 	let flowKey = 0;
 
 	// Watch for changes in activeTree and update nodes and edges accordingly
-	$: if ($activeTree) {
-		nodes.set($activeTree.nodes);
-		edges.set($activeTree.edges);
+	$: if (activeTree) {
+		nodes.set(activeTree.nodes);
+		edges.set(activeTree.edges);
 	}
 
 	// Handle fitView when activeController index changes
-	$: if (previousIndex !== $activeController.index) {
+	$: if (previousIndex !== activeController.index) {
 		let fitToNodes;
-		if ($activeController?.fitViewNodes) {
-			fitToNodes = $activeController.fitViewNodes
+		if (activeController?.fitViewNodes) {
+			fitToNodes = activeController.fitViewNodes
 				.split(",")
 				.map((id) => id.trim())
 				.map((id) => ({ id }));
 		} else {
-			fitToNodes = $activeTree.nodes;
+			fitToNodes = activeTree.nodes;
 		}
-
-		
-		console.log($activeTree.nodes.map(d => d.id))
 
 		window.setTimeout(() => {
 			fitView({
@@ -67,11 +65,11 @@
 		}, 0);
 
 		// Watch for changes in the specific condition and update flowKey
-		if ($activeController.links === $activeController.tree) {
+		if (activeController.links === activeController.tree) {
 			flowKey += 1; // Increment key to force re-render
 		}
 
-		previousIndex = $activeController.index;
+		previousIndex = activeController.index;
 	}
 </script>
 
