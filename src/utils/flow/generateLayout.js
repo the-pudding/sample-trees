@@ -29,17 +29,14 @@ export default async function generateLayout(
   const viewportHeight = get(viewport).height;
 
   if (method === "dagreTwo") {
-    const method = options?.["method"] || "dagre";
-    const direction = "TB";
-    const isHorizontal = false;
-  
-    const viewportWidth = get(viewport).width;
-    const viewportHeight = get(viewport).height;
-  
-    // Slightly larger circles for better visibility
-    const circleSize = 20;
-    const minSpacing = 30;
-    
+    const dagreGraph = new dagre.graphlib.Graph();
+    dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+    // Use minimal padding
+    const padding = 20;
+    const availableWidth = viewportWidth - padding * 2;
+    const availableHeight = viewportHeight - padding * 2;
+
     // Calculate tree structure
     const nodeMap = new Map(inputNodes.map(node => [node.id, { ...node, children: [] }]));
     const rootNodes = new Set(inputNodes.map(node => node.id));
@@ -51,8 +48,8 @@ export default async function generateLayout(
         parentNode.children.push(edge.target);
       }
     });
-  
-    // Calculate tree depth and width at each level
+
+    // Calculate tree depth and width
     let maxWidth = 0;
     let maxDepth = 0;
     const levels = new Map();
@@ -73,79 +70,110 @@ export default async function generateLayout(
     }
     
     [...rootNodes].forEach(rootId => traverseTree(rootId));
-  
-    // Calculate spacing to fill viewport height
-    const availableHeight = viewportHeight - 100; // Subtract padding
-    const availableWidth = viewportWidth - 100;
-    
-    // Calculate ranksep to distribute nodes vertically
-    const ranksep = Math.max(
-      minSpacing,
-      (availableHeight / maxDepth) - circleSize
+
+    // Adjust circle size to be slightly smaller
+    const maxCircleSize = 20;
+    const minCircleSize = 12;
+
+    // const circleSize = 1;
+    const circleSize = Math.max(
+      minCircleSize,
+      Math.min(maxCircleSize, availableHeight / (maxDepth + 1) / 4)
     );
-    
-    // Calculate nodesep based on width
-    const nodesep = Math.max(
-      minSpacing,
-      Math.min(80, availableWidth / maxWidth - circleSize)
+
+    // Calculate spacings to fill width and height
+    const verticalSpacing = Math.max(
+      circleSize * 3,
+      (availableHeight - (maxDepth + 1) * circleSize) / (maxDepth * 0.7)
     );
-  
-    const nodeHeight = circleSize;
-    const nodeWidth = circleSize;
-    const dagreGraph = new dagre.graphlib.Graph();
-    dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+    // Increase horizontal spacing to fill width
+    const minHorizontalSpacing = circleSize * 2;
+    const desiredWidth = availableWidth * 0.95; // Use more width
+    const horizontalSpacing = Math.max(
+      minHorizontalSpacing,
+      // Distribute nodes evenly across available width
+      (desiredWidth - (maxWidth * circleSize)) / Math.max(1, maxWidth - 1)
+    );
 
     dagreGraph.setGraph({ 
-      rankdir: direction,
-      nodesep: nodesep,
-      ranksep: ranksep,
-      align: 'UL',
-      ranker: 'network-simplex', // Changed back to network-simplex for better distribution
-      marginx: 40,
-      marginy: 40
+      rankdir: 'TB',
+      nodesep: horizontalSpacing,
+      ranksep: verticalSpacing,
+      marginx: padding,
+      marginy: padding * 2,
+      ranker: 'network-simplex', // Changed to network-simplex for better distribution
+      align: 'UL', // Changed to UL for better width distribution
+      acyclicer: 'greedy'
     });
 
+    // Add nodes with calculated dimensions
     inputNodes.forEach((node) => {
-      dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
+      dagreGraph.setNode(node.id, {
+        width: circleSize,
+        height: circleSize,
+        level: nodeMap.get(node.id).level
+      });
     });
 
     inputEdges.forEach((edge) => {
-      dagreGraph.setEdge(edge.source, edge.target, { weight: 1 });
+      dagreGraph.setEdge(edge.source, edge.target);
     });
 
     try {
       dagre.layout(dagreGraph);
 
-      const graphWidth = dagreGraph.graph().width || 0;
-      const graphHeight = dagreGraph.graph().height || 0;
-      
-      // Calculate scaling to fit viewport while maintaining aspect ratio
-      const scaleX = graphWidth > availableWidth ? availableWidth / graphWidth : 1;
-      const scaleY = graphHeight > availableHeight ? availableHeight / graphHeight : 1;
-      const scale = Math.min(scaleX, scaleY);
+      // Calculate bounds
+      let minX = Infinity, maxX = -Infinity;
+      let minY = Infinity, maxY = -Infinity;
 
-      // Center the graph
-      const xOffset = (viewportWidth - graphWidth * scale) / 2;
-      const yOffset = (viewportHeight - graphHeight * scale) / 2;
+      inputNodes.forEach(node => {
+        const dagreNode = dagreGraph.node(node.id);
+        minX = Math.min(minX, dagreNode.x);
+        maxX = Math.max(maxX, dagreNode.x);
+        minY = Math.min(minY, dagreNode.y);
+        maxY = Math.max(maxY, dagreNode.y);
+      });
+
+      const graphWidth = maxX - minX + circleSize;
+      const graphHeight = maxY - minY + circleSize;
+
+      // Adjust scaling to use full width
+      const scaleX = availableWidth / graphWidth;
+      const scaleY = (availableHeight * 1.1) / graphHeight;
       
+      // Prioritize width filling while maintaining aspect ratio
+      const scale = Math.min(scaleX * 0.95, scaleY * 0.8);
+      
+      // Center the graph horizontally
+      const xOffset = (viewportWidth - (graphWidth * scale)) / 2;
+      const yOffset = padding / 2;
+
       return {
-        nodes: inputNodes.map((node) => {
+        nodes: inputNodes.map(node => {
           const dagreNode = dagreGraph.node(node.id);
+          const level = nodeMap.get(node.id).level;
+          const nodesInLevel = levels.get(level);
+          
+          const x = (dagreNode.x - minX) * scale + xOffset;
+          const y = (dagreNode.y - minY) * (scaleY * 0.9) + yOffset;
+
           return {
             ...node,
-            type: 'simple',  // Set node type to simple
-            position: {
-              x: dagreNode.x * scale + xOffset,
-              y: dagreNode.y * scale + yOffset,
-            },
+            type: 'simple',
+            position: { x, y },
             targetPosition: Position.Top,
             sourcePosition: Position.Bottom,
+            data: {
+              ...node.data,
+              circleSize: circleSize  // Pass the size through data
+            }
           };
         }),
-        edges: inputEdges,
+        edges: inputEdges
       };
     } catch (error) {
-      console.error("Error during Dagre layout:", error);
+      console.error("Error during DagreTwo layout:", error);
       return null;
     }
   } else if (method === "dagre") {
@@ -196,23 +224,40 @@ export default async function generateLayout(
     // ELK Layout
     const elk = new ELK();
     
-    // Calculate padding
-    const padding = 100;
+    const padding = 5;
     const availableWidth = viewportWidth - padding * 2;
     const availableHeight = viewportHeight - padding * 2;
+
+    // Calculate aspect ratio to determine if we're in desktop mode
+    const isDesktop = availableWidth / availableHeight > 1.2;
+
+    // Adjust spacing based on aspect ratio
+    const baseNodeSpacing = isDesktop ? 60 : 40;
+    const baseLayerSpacing = isDesktop ? 250 : 200;
+    const horizontalModifier = isDesktop ? 1.5 : 1.0;
 
     const elkOptions = {
       "elk.direction": direction === "TB" ? "DOWN" : "RIGHT",
       "elk.algorithm": "layered",
-      "elk.spacing.nodeNode": 50,
-      "elk.spacing.componentComponent": 50,
-      "elk.layered.spacing.nodeNodeBetweenLayers": 100,
-      "elk.layered.spacing.edgeNodeBetweenLayers": 50,
+      // Adjust spacing based on screen shape
+      "elk.spacing.nodeNode": baseNodeSpacing * horizontalModifier,  // More horizontal space on desktop
+      "elk.spacing.componentComponent": baseNodeSpacing,
+      "elk.layered.spacing.nodeNodeBetweenLayers": baseLayerSpacing,
+      "elk.layered.spacing.edgeNodeBetweenLayers": baseLayerSpacing * 0.5,
+      // Layout options
+      "elk.layered.nodePlacement.bk.fixedAlignment": "BALANCED",
       "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
-      "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
+      "elk.layered.nodePlacement.strategy": "BRANDES_KOEPF",
       "elk.layered.layering.strategy": "NETWORK_SIMPLEX",
-      "elk.aspectRatio": availableWidth / availableHeight,
-      "elk.padding": `[top=${padding}, left=${padding}, bottom=${padding}, right=${padding}]`
+      // Adjust aspect ratio based on screen shape
+      "elk.aspectRatio": isDesktop 
+        ? (availableWidth * 0.85) / availableHeight  // Use more width on desktop
+        : (availableWidth * 0.7) / availableHeight,
+      "elk.padding": `[top=${padding}, left=${padding}, bottom=${padding}, right=${padding}]`,
+      // Additional spacing options
+      "elk.layered.spacing.baseValue": isDesktop ? 120 : 100,
+      "elk.layered.considerModelOrder": true,
+      "elk.layered.spacing.modifier": isDesktop ? 1.2 : 1.0
     };
 
     const graph = {
@@ -231,7 +276,7 @@ export default async function generateLayout(
     try {
       const layoutedGraph = await elk.layout(graph);
 
-      // Calculate graph bounds
+      // Calculate bounds
       let minX = Infinity, maxX = -Infinity;
       let minY = Infinity, maxY = -Infinity;
       
@@ -245,14 +290,17 @@ export default async function generateLayout(
       const graphWidth = maxX - minX;
       const graphHeight = maxY - minY;
 
-      // Calculate scaling to fit viewport
+      // Adjust scaling based on aspect ratio
       const scaleX = availableWidth / graphWidth;
-      const scaleY = availableHeight / graphHeight;
-      const scale = Math.min(scaleX, scaleY);
+      const scaleY = (availableHeight * 1.1) / graphHeight;
+      
+      // Different scaling for desktop vs mobile
+      const scale = isDesktop
+        ? Math.min(scaleX * 0.95, scaleY * 0.85)  // More horizontal spread on desktop
+        : Math.min(scaleX, scaleY * 0.9);
 
-      // Calculate centering offsets
       const xOffset = (viewportWidth - graphWidth * scale) / 2;
-      const yOffset = (viewportHeight - graphHeight * scale) / 2;
+      const yOffset = padding * 2;
 
       return {
         nodes: layoutedGraph.children.map((node) => ({
