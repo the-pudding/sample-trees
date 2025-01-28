@@ -29,122 +29,123 @@ export default async function generateLayout(
   const viewportHeight = get(viewport).height;
 
   if (method === "dagreTwo") {
-    const dagreGraph = new dagre.graphlib.Graph();
-    dagreGraph.setDefaultEdgeLabel(() => ({}));
-
-    // Calculate optimal spacing based on viewport and number of nodes
-    const padding = 80;
-    const availableWidth = viewportWidth - padding * 2;
-    const availableHeight = viewportHeight - padding * 2;
-
-    // Estimate the tree depth and max width
-    const nodeMap = new Map();
-    const levels = new Map();
-    let maxLevel = 0;
-
-    // Build node map and find roots
-    inputNodes.forEach(node => nodeMap.set(node.id, { ...node, level: 0, children: [] }));
+    const method = options?.["method"] || "dagre";
+    const direction = "TB";
+    const isHorizontal = false;
+  
+    const viewportWidth = get(viewport).width;
+    const viewportHeight = get(viewport).height;
+  
+    // Slightly larger circles for better visibility
+    const circleSize = 20;
+    const minSpacing = 30;
+    
+    // Calculate tree structure
+    const nodeMap = new Map(inputNodes.map(node => [node.id, { ...node, children: [] }]));
+    const rootNodes = new Set(inputNodes.map(node => node.id));
+    
     inputEdges.forEach(edge => {
-      const source = nodeMap.get(edge.source);
-      const target = nodeMap.get(edge.target);
-      if (source && target) {
-        source.children.push(target);
+      rootNodes.delete(edge.target);
+      const parentNode = nodeMap.get(edge.source);
+      if (parentNode) {
+        parentNode.children.push(edge.target);
       }
     });
-
-    // Calculate levels
-    function assignLevels(node, level = 0) {
-      const nodeData = nodeMap.get(node.id);
-      nodeData.level = level;
-      maxLevel = Math.max(maxLevel, level);
+  
+    // Calculate tree depth and width at each level
+    let maxWidth = 0;
+    let maxDepth = 0;
+    const levels = new Map();
+    
+    function traverseTree(nodeId, level = 0) {
+      const node = nodeMap.get(nodeId);
+      if (!node) return;
+      
+      maxDepth = Math.max(maxDepth, level);
       
       if (!levels.has(level)) {
         levels.set(level, 0);
       }
       levels.set(level, levels.get(level) + 1);
-
-      const children = nodeData.children || [];
-      children.forEach(child => assignLevels(child, level + 1));
+      maxWidth = Math.max(maxWidth, levels.get(level));
+      
+      node.children.forEach(childId => traverseTree(childId, level + 1));
     }
-
-    // Find root nodes and assign levels
-    const roots = inputNodes.filter(node => 
-      !inputEdges.some(edge => edge.target === node.id)
+    
+    [...rootNodes].forEach(rootId => traverseTree(rootId));
+  
+    // Calculate spacing to fill viewport height
+    const availableHeight = viewportHeight - 100; // Subtract padding
+    const availableWidth = viewportWidth - 100;
+    
+    // Calculate ranksep to distribute nodes vertically
+    const ranksep = Math.max(
+      minSpacing,
+      (availableHeight / maxDepth) - circleSize
     );
-    roots.forEach(root => assignLevels(root));
+    
+    // Calculate nodesep based on width
+    const nodesep = Math.max(
+      minSpacing,
+      Math.min(80, availableWidth / maxWidth - circleSize)
+    );
+  
+    const nodeHeight = circleSize;
+    const nodeWidth = circleSize;
+    const dagreGraph = new dagre.graphlib.Graph();
+    dagreGraph.setDefaultEdgeLabel(() => ({}));
 
-    // Calculate optimal spacing
-    const maxNodesInLevel = Math.max(...Array.from(levels.values()));
-    const verticalSpacing = Math.min(100, availableHeight / (maxLevel + 1));
-    const horizontalSpacing = Math.min(120, availableWidth / maxNodesInLevel);
-
-    dagreGraph.setGraph({
+    dagreGraph.setGraph({ 
       rankdir: direction,
-      nodesep: horizontalSpacing,
-      ranksep: verticalSpacing,
-      marginx: padding,
-      marginy: padding,
-      ranker: 'network-simplex',
-      align: 'DL'
+      nodesep: nodesep,
+      ranksep: ranksep,
+      align: 'UL',
+      ranker: 'network-simplex', // Changed back to network-simplex for better distribution
+      marginx: 40,
+      marginy: 40
     });
 
-    // Add nodes and edges
-    inputNodes.forEach(node => {
-      dagreGraph.setNode(node.id, { 
-        width: nodeWidth,
-        height: nodeHeight,
-        level: nodeMap.get(node.id).level
-      });
+    inputNodes.forEach((node) => {
+      dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
     });
 
-    inputEdges.forEach(edge => {
+    inputEdges.forEach((edge) => {
       dagreGraph.setEdge(edge.source, edge.target, { weight: 1 });
     });
 
     try {
       dagre.layout(dagreGraph);
 
-      // Calculate bounds
-      let minX = Infinity, maxX = -Infinity;
-      let minY = Infinity, maxY = -Infinity;
-
-      inputNodes.forEach(node => {
-        const dagreNode = dagreGraph.node(node.id);
-        minX = Math.min(minX, dagreNode.x);
-        maxX = Math.max(maxX, dagreNode.x);
-        minY = Math.min(minY, dagreNode.y);
-        maxY = Math.max(maxY, dagreNode.y);
-      });
-
-      const graphWidth = maxX - minX + nodeWidth;
-      const graphHeight = maxY - minY + nodeHeight;
-
-      // Calculate scaling to fit viewport
-      const scaleX = availableWidth / graphWidth;
-      const scaleY = availableHeight / graphHeight;
-      const scale = Math.min(scaleX, scaleY, 1); // Limit scale to 1 to prevent too large nodes
+      const graphWidth = dagreGraph.graph().width || 0;
+      const graphHeight = dagreGraph.graph().height || 0;
+      
+      // Calculate scaling to fit viewport while maintaining aspect ratio
+      const scaleX = graphWidth > availableWidth ? availableWidth / graphWidth : 1;
+      const scaleY = graphHeight > availableHeight ? availableHeight / graphHeight : 1;
+      const scale = Math.min(scaleX, scaleY);
 
       // Center the graph
       const xOffset = (viewportWidth - graphWidth * scale) / 2;
       const yOffset = (viewportHeight - graphHeight * scale) / 2;
-
+      
       return {
-        nodes: inputNodes.map(node => {
+        nodes: inputNodes.map((node) => {
           const dagreNode = dagreGraph.node(node.id);
           return {
             ...node,
+            type: 'simple',  // Set node type to simple
             position: {
-              x: (dagreNode.x - minX) * scale + xOffset,
-              y: (dagreNode.y - minY) * scale + yOffset
+              x: dagreNode.x * scale + xOffset,
+              y: dagreNode.y * scale + yOffset,
             },
             targetPosition: Position.Top,
-            sourcePosition: Position.Bottom
+            sourcePosition: Position.Bottom,
           };
         }),
-        edges: inputEdges
+        edges: inputEdges,
       };
     } catch (error) {
-      console.error("Error during DagreTwo layout:", error);
+      console.error("Error during Dagre layout:", error);
       return null;
     }
   } else if (method === "dagre") {
@@ -189,6 +190,8 @@ export default async function generateLayout(
       console.error("Error during Dagre layout:", error);
       return null;
     }
+  
+
   } else if (method === "elk") {
     // ELK Layout
     const elk = new ELK();

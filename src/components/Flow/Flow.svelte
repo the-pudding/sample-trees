@@ -11,6 +11,7 @@
 	import { activeController, activeTree } from "$stores/misc.js";
 	import Node from "./Node/Node.svelte";
 	import Edge from "./Edge/Edge.svelte";
+	import SimpleNode from "./Node/SimpleNode.svelte";
 
 	const { fitView } = useSvelteFlow();
 
@@ -25,7 +26,8 @@
 
 	// Define node and edge types
 	const nodeTypes = {
-		custom: Node
+		custom: Node,
+		simple: SimpleNode
 	};
 
 	const edgeTypes = {
