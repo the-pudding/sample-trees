@@ -5,13 +5,15 @@
 		EdgeLabelRenderer,
 		useEdges
 	} from "@xyflow/svelte";
-
+	import { getContext } from "svelte";
 	import { scaleLinear } from "d3-scale";
-
-	import { activeController, crossfades } from "$stores/misc.js";
 
 	import Waveform from "./Edge.Waveform.svelte";
 	import Crossfade from "./Edge.Crossfade.svelte";
+
+	// Get the stores from context
+	const activeController = getContext('activeController');
+	const crossfades = getContext('crossfades');
 
 	export let id;
 	export let source;
@@ -40,10 +42,8 @@
 		.range([sourceY, targetY])
 		.clamp(true);
 
-	$: progressPercentage = $crossfades[`${id}`]?.progress
-
+	$: progressPercentage = $crossfades[id]?.progress;
 	$: progressY = progressScale(progressPercentage);
-
 </script>
 
 {#if $activeController?.component?.type && $activeController?.component?.id == id}

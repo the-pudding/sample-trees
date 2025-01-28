@@ -15,7 +15,7 @@
 	// Utils
 	import generateFlow from "$utils/flow/generateFlow";
 
-	export let tree;
+	export let key;
 	export let content;
 
 	// Separate inline and sticky items
@@ -59,11 +59,7 @@
 
 	$: if (isReady) {
 		activeTree = render[index];
-		console.log(activeTree)
-
 		activeSlideContent = slides[index];
-
-		// console.log(activeSlideContent);
 	}
 
 	$: activeController = { ...activeSlideContent?.controller, index, progress };
@@ -90,7 +86,14 @@
 				{#if activeSlideContent}
 					{#if activeTree}
 						<SvelteFlowProvider>
-							<Flow {index} {activeTree} {activeController}/>
+							<Flow 
+								{index} 
+								{activeTree} 
+								{activeController} 
+								{key}
+								{slides}
+								{offset}
+							/>
 						</SvelteFlowProvider>
 					{/if}
 				{/if}
@@ -128,8 +131,8 @@
 	}
 
 	.section {
-		border-top: 1px solid red;
-		border-bottom: 1px solid green;
+		// border-top: 1px solid red;
+		// border-bottom: 1px solid green;
 	}
 	.content {
 		margin: 0 auto;
@@ -143,7 +146,7 @@
 		justify-content: center;
 		align-items: center;
 		pointer-events: none;
-		border: 1px solid purple;
+		// border: 1px solid purple;
 
 		&.spacer {
 			height: 25vh;

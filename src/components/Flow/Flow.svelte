@@ -8,15 +8,61 @@
 	} from "@xyflow/svelte";
 	import "@xyflow/svelte/dist/style.css";
 
+	import { setContext } from 'svelte';
+
 	import Node from "./Node/Node.svelte";
 	import Edge from "./Edge/Edge.svelte";
 	import SimpleNode from "./Node/SimpleNode.svelte";
 
 	const { fitView } = useSvelteFlow();
 
-	export let activeTree
-	export let activeController
+	export let activeTree;
+	export let activeController;
 	export let index;
+	export let key;
+	export let slides;
+	export let offset = 0;
+
+	// Create a writable store for the controller
+	const controllerStore = writable(activeController);
+	setContext('activeController', controllerStore);
+
+	// Create crossfades store
+	const crossfades = writable({});
+	setContext('crossfades', crossfades);
+
+	// Update crossfades when slides change
+	$: {
+		const crossfadesObj = slides
+			.filter((d) => d?.controller?.component?.type == "crossfade")
+			.reduce((acc, item) => {
+				const { id } = item.controller?.component;
+				const [source, target] = id.split("_");
+
+				acc[id] = {
+					source,
+					target
+				};
+
+				return acc;
+			}, {});
+		crossfades.set(crossfadesObj);
+	}
+
+	// Update progress when offset changes
+	$: if ($controllerStore?.component?.type == "crossfade") {
+		const id = $controllerStore.component?.id;
+		const crossfadeData = $crossfades[id];
+		if (crossfadeData) {
+			crossfadeData.progress = $controllerStore.focusNode == crossfadeData.source
+				? offset / 2
+				: offset / 2 + 0.5;
+			crossfades.set($crossfades);
+		}
+	}
+
+	// Update the store whenever activeController changes
+	$: controllerStore.set(activeController);
 
 	let flowRef;
 	let previousIndex = activeController.index;
@@ -32,7 +78,7 @@
 	};
 
 	const edgeTypes = {
-		// custom: Edge
+		custom: Edge
 	};
 
 	// Reactive key to force re-render

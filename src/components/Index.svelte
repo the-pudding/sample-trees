@@ -90,8 +90,8 @@
 	// }
 </script>
 
-{#each Object.entries(groupedSlides) as [tree, content], i}
-	<Section {tree} {content} />
+{#each Object.entries(groupedSlides) as [key, content], i}
+	<Section {key} {content} />
 {/each}
 
 <!-- {#await render then renderContent}
