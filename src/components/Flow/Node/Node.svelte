@@ -1,17 +1,19 @@
 <script>
 	import { Handle, Position } from "@xyflow/svelte";
 	import CoverArt from "./Node.CoverArt.svelte";
-	import { activeController } from "$stores/misc.js";
+
 	import viewport from "$stores/viewport";
+	import { getContext } from 'svelte';
 
 	export let data;
 	export let isConnectable = false;
 
 	$$restProps;
 
+	const activeController = getContext('activeController');
+
 	// Helper function to determine if node is part of active
 	$: isSource = $activeController?.component?.id.split("_")[0] === data.id;
-
 	$: isTarget = $activeController?.component?.id.split("_")[1] === data.id;
 
 	function parseSecondaryLabelConfig(str) {
@@ -35,7 +37,7 @@
 	}
 
 	// $: secondaryLabelObj = parseSecondaryLabelConfig(data.secondaryLabelConfig)?.[
-	// 	$activeController.secondaryLabelAccessor
+	// 	activeController.secondaryLabelAccessor
 	// ];
 
 	const textHeight = 30;

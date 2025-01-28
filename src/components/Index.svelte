@@ -19,6 +19,7 @@
 
 	import { activeController, activeTree, crossfades } from "$stores/misc.js";
 	import viewport from "../stores/viewport";
+	import Section from "./Section.svelte";
 
 	function flattenToNested(jsonArray) {
 		return jsonArray.map((flatObject) => {
@@ -49,8 +50,7 @@
 	}
 
 	const nestedSlides = flattenToNested(flatSlides);
-
-	// console.log(nestedSlides)
+	const groupedSlides = groupBy(nestedSlides, "section");
 
 	let isReady = false;
 	let render;
@@ -65,120 +65,65 @@
 
 	let index, offset, progress;
 
-	$: activeSlideContent = nestedSlides[index];
 
-	$: $activeController = { ...activeSlideContent?.controller, index, progress };
 
-	$: if (isReady) {
-		$activeTree = render[index];
-	}
+	// $: $crossfades = nestedSlides
+	// 	.filter((d) => d?.controller?.component?.type == "crossfade")
+	// 	.reduce((acc, item) => {
+	// 		const { id } = item.controller?.component;
+	// 		const [source, target] = id.split("_");
 
-	$: $crossfades = nestedSlides
-		.filter((d) => d?.controller?.component?.type == "crossfade")
-		.reduce((acc, item) => {
-			const { id } = item.controller?.component;
-			const [source, target] = id.split("_");
+	// 		acc[id] = {
+	// 			source,
+	// 			target
+	// 		};
 
-			acc[id] = {
-				source,
-				target
-			};
+	// 		return acc;
+	// 	}, {});
 
-			return acc;
-		}, {});
-
-	$: if ($activeController?.component?.type == "crossfade") {
-		$crossfades[$activeController?.component?.id].progress =
-			$activeController.focusNode ==
-			$crossfades[$activeController.component?.id].source
-				? offset / 2
-				: offset / 2 + 0.5;
-	}
-
-	let startExperience = true;
-
-	let debugging = false;
+	// $: if ($activeController?.component?.type == "crossfade") {
+	// 	$crossfades[$activeController?.component?.id].progress =
+	// 		$activeController.focusNode ==
+	// 		$crossfades[$activeController.component?.id].source
+	// 			? offset / 2
+	// 			: offset / 2 + 0.5;
+	// }
 </script>
 
-<div class="content">
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis
-		exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit
-		optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus
-		voluptates voluptas?
-	</p>
+{#each Object.entries(groupedSlides) as [key, content], i}
+	<Section {key} {content} />
+{/each}
 
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis
-		exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit
-		optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus
-		voluptates voluptas?
-	</p>
-
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis
-		exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit
-		optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus
-		voluptates voluptas?
-	</p>
-
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis
-		exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit
-		optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus
-		voluptates voluptas?
-	</p>
-
-	<button on:click={() => (startExperience = true)}>Click to start</button>
-</div>
-
-<div class="debug-box">Index: {index}</div>
-
-{#await render then renderContent}
-	{#if debugging && render}
-		<!-- <div style="width:100%; height: 100vh">
-	<SvelteFlowProvider>
-		<Flow initController={render[0].controller} tree="intro" />
-	</SvelteFlowProvider>
-</div> -->
-	{:else}
-		<Scroller
-			top={0}
-			bottom={1}
-			threshold={0.5}
-			bind:index
-			bind:offset
-			bind:progress
-		>
-			<div slot="background">
-				{#if activeSlideContent}
-					<!-- <SvelteFlowProvider>
-						<Flow initController={nestedSlides[0].controller} tree="intro" />
-					</SvelteFlowProvider> -->
-
-					<!-- <SvelteFlowProvider>
-						<Flow initController={nestedSlides[0].controller} tree="hit" />
-					</SvelteFlowProvider> -->
-					{#if $activeTree}
-						<SvelteFlowProvider>
-							<Flow {index} />
-						</SvelteFlowProvider>
-					{/if}
+<!-- {#await render then renderContent}
+	<Scroller
+		top={0}
+		bottom={1}
+		threshold={0.5}
+		bind:index
+		bind:offset
+		bind:progress
+	>
+		<div slot="background">
+			{#if activeSlideContent}
+				{#if $activeTree}
+					<SvelteFlowProvider>
+						<Flow {index} />
+					</SvelteFlowProvider>
 				{/if}
-			</div>
+			{/if}
+		</div>
 
-			<div class="foreground" slot="foreground">
-				{#each nestedSlides as slide}
-					<section class="slide" class:spacer={!slide.text}>
-						{#if slide.text}
-							<p>{slide.text}</p>
-						{/if}
-					</section>
-				{/each}
-			</div>
-		</Scroller>
-	{/if}
-{/await}
+		<div class="foreground" slot="foreground">
+			{#each nestedSlides as slide}
+				<section class="slide" class:spacer={!slide.text}>
+					{#if slide.text}
+						<p>{slide.text}</p>
+					{/if}
+				</section>
+			{/each}
+		</div>
+	</Scroller>
+{/await} -->
 
 <style lang="scss">
 	.debug-box {
