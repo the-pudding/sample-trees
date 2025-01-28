@@ -32,6 +32,7 @@ export default async function generateFlow(s) {
 			treeEdges = edges.filter((edge) => edge.tree == treeKey);
 			isPacked = true;
 			method = "elk";
+			// method = "dagreTwo";
 		} else {
 			let trueIds = controllerLinks.map((id) => `${id}-${treeKey}`);
 
