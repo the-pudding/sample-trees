@@ -85,7 +85,6 @@
 			{edgeTypes}
 			fitView
 			connectionLineType={ConnectionLineType.SmoothStep}
-			defaultEdgeOptions={{ type: "smoothstep", animated: false }}
 		>
 			<Background bgColor="#f0f0f0" patternColor="#f0f0f0" />
 		</SvelteFlow>
