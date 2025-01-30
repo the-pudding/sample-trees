@@ -26,6 +26,8 @@
 	export let targetPosition;
 	export let markerEnd = undefined;
 
+	$$restProps;
+
 	let style = "stroke: purple; stroke-width: 5px";
 
 	$: [edgePath, labelX, labelY] = getBezierPath({
@@ -56,6 +58,7 @@
 			play={progressPercentage >= 0.5 && progressPercentage < 0.75}
 			{labelX}
 			{sourceY}
+			{targetY}
 		/>
 
 		<Crossfade {labelX} {sourceY} {targetY} {progressY} />
@@ -66,6 +69,7 @@
 			waveColor="#a3c69b"
 			progressColor="#517D45"
 			play={progressPercentage >= 0.75 && progressPercentage < 1}
+			{sourceY}
 			{labelX}
 			{targetY}
 		/>

@@ -69,7 +69,7 @@
 
 <section class="section">
 	<!-- Render "inline" items before the sticky component -->
-	{#each inlineBefore as item (item.id)}
+	{#each inlineBefore as item}
 		<div class="content">{@html marked(item.text)}</div>
 	{/each}
 
@@ -111,7 +111,7 @@
 		</div>
 	</Scroller>
 
-	{#each inlineAfter as item (item.id)}
+	{#each inlineAfter as item}
 		<div class="content">{@html marked(item.text)}</div>
 	{/each}
 </section>

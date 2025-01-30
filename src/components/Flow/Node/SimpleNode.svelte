@@ -1,6 +1,9 @@
 <script>
     import { Handle, Position } from '@xyflow/svelte';
     import { base } from "$app/paths";
+
+	$$restProps;
+
     export let data;
     export let sourcePosition;
     export let targetPosition;
@@ -17,7 +20,7 @@
         }
     }
 
-    checkImage();
+    // checkImage();
 </script>
 
 <div class="node">
@@ -31,11 +34,11 @@
         title={data.title}
         style="width: {data.circleSize}px; height: {data.circleSize}px;"
     >
-        {#if imageExists}
+        <!-- {#if imageExists}
             <img src="{base}/assets/cover_art/{data.id}.png" alt={data.title} />
         {:else}
             <img src="{base}/assets/cover_art/missing.png" alt={data.title} />
-        {/if}
+        {/if} -->
     </div>
     <Handle 
         type="source" 
@@ -50,6 +53,8 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        width: 100%;
+        height: 100%;
     }
 
     .circle {
@@ -61,6 +66,8 @@
         display: flex;     // Added for image centering
         align-items: center;
         justify-content: center;
+        width: 100%;
+        height: 100%;
 
         img {
             width: 100%;

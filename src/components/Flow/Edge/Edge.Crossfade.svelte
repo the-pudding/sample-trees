@@ -3,6 +3,9 @@
 	export let sourceY;
 	export let targetY;
 	export let progressY;
+
+	$$restProps;
+
 </script>
 
 <div

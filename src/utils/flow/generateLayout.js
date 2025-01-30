@@ -1,6 +1,7 @@
 import dagre from "@dagrejs/dagre";
 import ELK from "elkjs/lib/elk.bundled.js";
 import { get } from "svelte/store";
+import * as d3 from 'd3';
 
 import viewport from "$stores/viewport.js";
 
@@ -162,11 +163,9 @@ export default async function generateLayout(
             ...node,
             type: 'simple',
             position: { x, y },
-            targetPosition: Position.Top,
-            sourcePosition: Position.Bottom,
             data: {
               ...node.data,
-              circleSize: circleSize  // Pass the size through data
+              circleSize: circleSize
             }
           };
         }),
@@ -311,6 +310,7 @@ export default async function generateLayout(
           },
           targetPosition: isHorizontal ? Position.Left : Position.Top,
           sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
+          type: 'simple',
         })),
         edges: layoutedGraph.edges,
       };
@@ -318,7 +318,89 @@ export default async function generateLayout(
       console.error("Error during ELK layout:", error);
       return null;
     }
-  } else {
+  }
+  else if (method === "elkTwo") {
+    // Convert nodes and edges to hierarchical structure for d3
+    const nodeMap = new Map(inputNodes.map(node => [node.id, { 
+      ...node, 
+      children: [] 
+    }]));
+    
+    // Build tree structure
+    inputEdges.forEach(edge => {
+      const parent = nodeMap.get(edge.source);
+      const child = nodeMap.get(edge.target);
+      if (parent && child) {
+        parent.children.push(child);
+      }
+    });
+
+    // Find root nodes (nodes with no incoming edges)
+    const roots = inputNodes.filter(node => 
+      !inputEdges.some(edge => edge.target === node.id)
+    );
+
+    // Create hierarchy
+    const root = {
+      id: 'virtual-root',
+      children: roots.map(r => nodeMap.get(r.id))
+    };
+
+    const padding = 40;
+    const availableWidth = viewportWidth - padding * 2;
+    const availableHeight = viewportHeight - padding * 2;
+    const radius = Math.min(availableWidth, availableHeight) / 2;
+
+    // Create cluster layout
+    const cluster = d3.cluster()
+      .size([360, radius - 100])  // 360 degrees, radius minus padding
+      .separation((a, b) => (a.parent == b.parent ? 1 : 2));
+
+    // Generate the layout
+    const hierarchy = d3.hierarchy(root);
+    const layout = cluster(hierarchy);
+
+    // Convert polar coordinates to Cartesian
+    const nodes = layout.descendants().slice(1); // Skip virtual root
+    const positions = new Map();
+
+    nodes.forEach(node => {
+      const angle = (node.x - 90) / 180 * Math.PI; // Convert to radians, rotate to start from top
+      const x = node.y * Math.cos(angle);
+      const y = node.y * Math.sin(angle);
+      positions.set(node.data.id, {
+        x: x + availableWidth / 2,  // Center in available space
+        y: y + availableHeight / 2
+      });
+    });
+
+    try {
+      return {
+        nodes: inputNodes.map(node => {
+          const position = positions.get(node.id);
+          return {
+            ...node,
+            type: 'simple',
+            position: position,
+            targetPosition: Position.Left,
+            sourcePosition: Position.Left,
+            data: {
+              ...node.data,
+              circleSize: 20
+            }
+          };
+        }),
+        edges: inputEdges.map(edge => ({
+          ...edge,
+          type: 'simple'  // Specify simple edge type for elkTwo
+        }))
+      };
+    } catch (error) {
+      console.error("Error during radial layout:", error);
+      return null;
+    }
+  }
+   else {
     console.error(`Unsupported layout method: ${method}`);
     return null;
   }

@@ -1,9 +1,7 @@
 text,notes,section,type,controller.tree,controller.links,controller.fitViewNodes,controller.fadedNodes,controller.nodeHorizontalGap,controller.secondaryLabelAccessor,controller.component.id,controller.component.type
-"### title xyz
-
-",,intro,inline,,,,,,,,
-"Some samples and interpolations offer instantly recognizable riffs and phrases, such as the bass from “Under Pressure” that appears in “Ice Ice Baby.”",,intro,sticky,intro,88888888057,,,,,88888888057-intro,crossfade
-This is a project about the shared DNA in music. ,,intro,sticky,intro,88888888057,,"243164,252744",,,,
+# Some samples and interpolations offer instantly recognizable riffs and phrases.,,cold,inline,,,,,,,,
+Such as the bass from “Under Pressure” that appears in “Ice Ice Baby”,,cold,sticky,cold,88888888057,,,,,88888888057-cold,crossfade
+# This is a project about the shared DNA in music. ,,intro,inline,,,,,,,,crossfade
 Orchestral music for a play in 1875 can become electronic music for a cartoon in 1983.,,intro,sticky,hit,67872,,,,,67872-hit,crossfade
 Which can be transformed by a minor rap group…,,intro,sticky,hit,"13504,67872","234958,253610",,,,13504-hit,crossfade
 …and then influence the breakout hit of a rap giant….,,intro,sticky,hit,"12882,13504,67872","234780,234958",,,,12882-hit,crossfade
@@ -17,6 +15,10 @@ Brooklyn rap group Stetsasonic bring Tom Jones’ drums into rap rhythms. Their 
 "And all that is just part of the full DNA of this one song, built from an 82 song family tree of samples, remixes, interpolations, and covers…
 ",,intro,sticky,hit,"3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,13504,67872,12882,12823,88888888068",,,,,,
 "I see ""Hit Em' Up"" as the descendent of this history, a culmination of an 82-song family tree.",,intro,sticky,hit,hit,,,,,,
+"# title xyz
+
+",,dna,inline,,,,,,,,
+### TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK,,dna,inline,,,,,,,,
 "The DNA of songs can find their way into very different genres, cultures, and songs.
 
 Let's return to the lineage between ""In the Hall of the Mountain King"" and ""Hit Em' Up.""",,dna,sticky,king,"4047,12823,12882,13504,67872",,,,,,
@@ -52,7 +54,7 @@ We need to figure out a way, in this layout, to highlight some nodes—I'm not s
 nodes to annotate/highlight: 11175, 88888888060,11201",beat,sticky,funky_1,funky_1,,,,,,
 Because the beat doesn’t just pass down to one generation.,,beat,sticky,funky_1,11215,"248775,234409",,,,11215-funky_1,crossfade
 But then also leads “South Bronx” to shape the sound of another Bronx artist’s hit…,,beat,sticky,funky_1,"56862,11212","251523,248775",,,,56862-funky_1,crossfade
-One of a whole second generation of songs that play on Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer”,"note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat,sticky,"funky_1,funky_2","funky_1,funky_2",,,,,,
+One of a whole second generation of songs that play on Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer”,"note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat,sticky,funky_3,funky_3,,,,,,
 "While a beat sets the foundation for a song,  lyrics are some of the most easily transmittable kind of song DNA because they can easily fit into otherwise very different songs.",no viz,lyrics,inline,,,,,,,,
 "The words of particular lyrics can slightly evolve. A Tribe Called Quest released “Can I Kick It?” in 1990, itself a song built on Lou Reed’s “Walk on the Wild Side” from 1972. When Q-Tip asks if he can kick it, the rest of the Tribe responds.
 ",,lyrics,sticky,kick,"54235,19201",,"247659,251388",,,236303-kick,loop

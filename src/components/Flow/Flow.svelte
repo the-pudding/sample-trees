@@ -13,6 +13,7 @@
 	import Node from "./Node/Node.svelte";
 	import Edge from "./Edge/Edge.svelte";
 	import SimpleNode from "./Node/SimpleNode.svelte";
+	import SimpleEdge from "./Edge/SimpleEdge.svelte";
 
 	const { fitView } = useSvelteFlow();
 
@@ -78,7 +79,8 @@
 	};
 
 	const edgeTypes = {
-		custom: Edge
+		custom: Edge,
+		simple: SimpleEdge
 	};
 
 	// Reactive key to force re-render
@@ -117,6 +119,9 @@
 
 		previousIndex = activeController.index;
 	}
+
+	// Change the connection line type to 'straight'
+	const connectionLineType = ConnectionLineType.Straight;
 </script>
 
 {#key flowKey}
@@ -128,7 +133,12 @@
 			{nodeTypes}
 			{edgeTypes}
 			fitView
-			connectionLineType={ConnectionLineType.SmoothStep}
+			{connectionLineType}
+			defaultEdgeOptions={{ 
+				type: "custom", 
+				animated: false,
+				style: { strokeWidth: 1 }
+			}}
 		>
 			<Background bgColor="#f0f0f0" patternColor="#f0f0f0" />
 		</SvelteFlow>

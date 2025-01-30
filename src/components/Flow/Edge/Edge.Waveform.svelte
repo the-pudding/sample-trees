@@ -4,6 +4,11 @@
 	import WaveSurfer from "wavesurfer.js";
 	import { activeController, crossfades, playerTimes } from "$stores/misc.js";
 	import viewport from "$stores/viewport";
+
+
+	$$restProps;
+
+
 	export let position;
 	export let id;
 	export let waveColor;
@@ -12,6 +17,8 @@
 	export let labelX;
 	export let sourceY;
 	export let targetY;
+
+
 
 	const height = 30;
 
