@@ -17,6 +17,7 @@
 	export let labelX;
 	export let sourceY;
 	export let targetY;
+	export let link_id;
 
 
 	const volume = 0.3;
@@ -33,7 +34,7 @@
 			container: waveformRef,
 			waveColor: waveColor,
 			progressColor: progressColor,
-			url: `${base}/assets/audio/${id}.mp3`,
+			url: `${base}/assets/audio/${link_id}-${id}.mp3`,
 			height: height,
 			volume: volume
 		});

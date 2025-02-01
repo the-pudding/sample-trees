@@ -80,32 +80,33 @@ async function main() {
 
     for (let song of jsonData){
         // Check if the audio file exists in audio_inputs directory
-        const audioPath = path.resolve(`./audio_inputs/${song.p_id}.mp3`);
-        if (!fs.existsSync(audioPath)) {
-            console.log(`Audio file not found for ID: ${song.p_id}`);
-            continue;
+        const audioPathOne = path.resolve(`./audio_inputs/${song.p_id}.mp3`);
+        const audioPathTwo = path.resolve(`./audio_inputs/${song.c_id}.mp3`);
+        if (fs.existsSync(audioPathOne) && fs.existsSync(audioPathTwo)) {
+          // console.log(song.p_id)
+          const inputFileP = path.resolve(`./audio_inputs/${song.p_id}.mp3`);  // Path to input file
+          const outputFileP = path.resolve(`../static/assets/audio/${song.link_id}-${song.p_id}.mp3`); // Path to output file
+  
+          const inputFileC = path.resolve(`./audio_inputs/${song.c_id}.mp3`);  // Path to input file
+          const outputFileC = path.resolve(`../static/assets/audio/${song.link_id}-${song.c_id}.mp3`); // Path to output file
+  
+          const startTimestampP = song.p_time_start; // Example: start cropping at 10 seconds
+          const endTimestampP = song.p_time_end;   // Example: stop cropping at 20 seconds
+  
+  
+          const startTimestampC = song.c_time_start; // Example: start cropping at 10 seconds
+          const endTimestampC = song.c_time_end;   // Example: stop cropping at 20 seconds
+  
+          try {
+              cropMp3(inputFileP, outputFileP, startTimestampP, endTimestampP);
+              cropMp3(inputFileC, outputFileC, startTimestampC, endTimestampC);
+  
+          } catch (err) {
+              console.error('Failed to crop MP3:', err);
+          }
+  
         }
         
-        // const inputFileP = path.resolve(`./audio_inputs/${song.p_id}.mp3`);  // Path to input file
-        // const outputFileP = path.resolve(`./${song.link_id}-${song.p_id}.mp3`); // Path to output file
-
-        // const inputFileC = path.resolve(`./audio_inputs/${song.c_id}.mp3`);  // Path to input file
-        // const outputFileC = path.resolve(`./${song.link_id}-${song.c_id}.mp3`); // Path to output file
-
-        // const startTimestampP = song.p_time_start; // Example: start cropping at 10 seconds
-        // const endTimestampP = song.p_time_end;   // Example: stop cropping at 20 seconds
-
-
-        // const startTimestampC = song.c_time_start; // Example: start cropping at 10 seconds
-        // const endTimestampC = song.c_time_end;   // Example: stop cropping at 20 seconds
-
-        // try {
-        //     cropMp3(inputFileP, outputFileP, startTimestampP, endTimestampP);
-        //     cropMp3(inputFileC, outputFileC, startTimestampC, endTimestampC);
-
-        // } catch (err) {
-        //     console.error('Failed to crop MP3:', err);
-        // }
 
     }
 

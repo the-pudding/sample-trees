@@ -30,6 +30,9 @@
 
 	let style = "stroke: purple; stroke-width: 5px";
 
+
+	$: console.log(id)
+	
 	$: [edgePath, labelX, labelY] = getBezierPath({
 		sourceX,
 		sourceY,
@@ -59,6 +62,7 @@
 			{labelX}
 			{sourceY}
 			{targetY}
+			link_id={id.split('-')[0]}
 		/>
 
 		<Crossfade {labelX} {sourceY} {targetY} {progressY} />
@@ -72,6 +76,7 @@
 			{sourceY}
 			{labelX}
 			{targetY}
+			link_id={id.split('-')[0]}
 		/>
 	</EdgeLabelRenderer>
 {:else}
