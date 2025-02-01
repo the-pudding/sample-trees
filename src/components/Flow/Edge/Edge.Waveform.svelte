@@ -19,7 +19,7 @@
 	export let targetY;
 
 
-
+	const volume = 0.3;
 	const height = 30;
 
 	let wavesurfer;
@@ -34,7 +34,8 @@
 			waveColor: waveColor,
 			progressColor: progressColor,
 			url: `${base}/assets/audio/${id}.mp3`,
-			height: height
+			height: height,
+			volume: volume
 		});
 
 		// Mark as ready once the file is loaded
@@ -65,6 +66,7 @@
 			if (play && !wavesurfer.isPlaying()) {
 				// console.log("Playing:", id);
 				wavesurfer.setTime($playerTimes[id] || 0);
+				wavesurfer.setVolume(volume);  // Set volume to 50%
 				console.log("PLAY")
 				wavesurfer.play();
 			} else if (!play && wavesurfer.isPlaying()) {

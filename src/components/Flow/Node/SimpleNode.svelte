@@ -20,7 +20,7 @@
         }
     }
 
-    // checkImage();
+    checkImage();
 </script>
 
 <div class="node">
@@ -34,11 +34,11 @@
         title={data.title}
         style="width: {data.circleSize}px; height: {data.circleSize}px;"
     >
-        <!-- {#if imageExists}
+        {#if imageExists}
             <img src="{base}/assets/cover_art/{data.id}.png" alt={data.title} />
         {:else}
             <img src="{base}/assets/cover_art/missing.png" alt={data.title} />
-        {/if} -->
+        {/if}
     </div>
     <Handle 
         type="source" 

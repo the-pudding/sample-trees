@@ -96,3 +96,8 @@ h6 {
 p {
 	font-size: var(--16px, 16px);
 }
+
+
+.svelte-flow__attribution {
+	display: none;
+}

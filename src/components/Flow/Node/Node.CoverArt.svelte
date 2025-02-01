@@ -15,16 +15,16 @@
 	}
 
 	// Run the check when the component is created
-	// checkImage();
+	checkImage();
 </script>
 
 <div class="cover-art">
-	<!-- {#if imageExists}
+	{#if imageExists}
 		<img src="{base}/assets/cover_art/{data.id}.png" alt={data.title} />
-	{:else} -->
+	{:else}
 	
 		<img src="{base}/assets/cover_art/missing.png" alt={data.title} />
-	<!-- {/if} -->
+	{/if}
 	<!-- <div class="placeholder"></div> -->
 	{#if data.eventText}
 		<div class="secondary {data.eventTextPosition}">{@html data.eventText}</div>
