@@ -34,6 +34,8 @@ async function sprite() {
                     
                     // Process coordinates to use just the filename without path
                     Object.entries(result.coordinates).forEach(([filepath, coords]) => {
+                        // Remove .jpeg extension from filepath
+                        filepath = filepath.replace('.jpeg', '');
                         const filename = path.basename(filepath);
                         coordinates[filename] = coords;
                     });
