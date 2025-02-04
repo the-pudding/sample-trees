@@ -9,9 +9,6 @@
 	// Components
 	import Flow from "./Flow/Flow.svelte";
 
-	// Stores
-	// import { activeController, activeTree, crossfades } from "$stores/misc.js";
-
 	// Utils
 	import generateFlow from "$utils/flow/generateFlow";
 
@@ -167,10 +164,6 @@
 		}
 	}
 
-	.section {
-		// border-top: 1px solid red;
-		// border-bottom: 1px solid green;
-	}
 	.content {
 		margin: 0 auto;
 		max-width: 700px;
@@ -183,7 +176,6 @@
 		justify-content: center;
 		align-items: center;
 		pointer-events: none;
-		// border: 1px solid purple;
 
 		&.spacer {
 			height: 25vh;
