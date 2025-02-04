@@ -71,7 +71,6 @@
 	}
 
 	$: activeController = { ...activeSlideContent?.controller, index, progress };
-
 </script>
 
 <section class="section">
@@ -101,7 +100,7 @@
 									<Flow
 										activeTree={fullTreeResult}
 										activeController={fullTreeController}
-										offset={offset}
+										{offset}
 									/>
 								</SvelteFlowProvider>
 							{/if}
@@ -177,6 +176,10 @@
 
 		&:first-of-type {
 			padding-top: 50vh;
+		}
+
+		&:last-of-type {
+			padding-bottom: 50vh;
 		}
 
 		&.spacer {
