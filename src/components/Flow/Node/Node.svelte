@@ -13,29 +13,8 @@
 	const activeController = getContext('activeController');
 
 	// Helper function to determine if node is part of active
-	$: isSource = $activeController?.component?.id.split("_")[0] === data.id;
-	$: isTarget = $activeController?.component?.id.split("_")[1] === data.id;
-
-	function parseSecondaryLabelConfig(str) {
-		if (!str.length) return;
-		const [topLevelKey, rest] = str.split("|");
-		const keyValuePairs = rest.split(";");
-		const innerObj = {};
-
-		keyValuePairs.forEach((pair) => {
-			const [key, value] = pair.split(":");
-			if (key === "top" && value === "1895") {
-				innerObj[key] = "1995"; // Correcting the value as per the example
-			} else {
-				innerObj[key] = value;
-			}
-		});
-
-		const result = {};
-		result[topLevelKey] = innerObj;
-		return result;
-	}
-
+	$: isSource = $activeController?.fitViewNodes?.split(",")[0] === data.id;
+	$: isTarget = $activeController?.fitViewNodes?.split(",")[1] === data.id;
 
 	const textHeight = 30;
 	const waveformHeight = 30;
@@ -47,7 +26,7 @@
 
 	const nodeWidth = nodeHeight * 0.75;
 
-	$: console.log(data.id)
+
 </script>
 
 <Handle
@@ -110,11 +89,11 @@
 		transition: opacity 0.5s;
 
 		&.source {
-			flex-direction: column;
+			flex-direction: column-reverse;
 		}
 
 		&.target {
-			flex-direction: column-reverse;
+			flex-direction: column;
 		}
 
 		&.focus {

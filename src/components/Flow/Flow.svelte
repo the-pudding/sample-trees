@@ -33,6 +33,9 @@
 
 	// Update crossfades when slides change
 	$: {
+
+
+
 		const crossfadesObj = slides
 			.filter((d) => d?.controller?.component?.type == "crossfade")
 			.reduce((acc, item) => {
@@ -55,11 +58,12 @@
 		const crossfadeData = $crossfades[id];
 		if (crossfadeData) {
 			crossfadeData.progress = $controllerStore.focusNode == crossfadeData.source
-				? offset / 2
-				: offset / 2 + 0.5;
+				? activeController.progress
+				: activeController.progress + 0.5;
 			crossfades.set($crossfades);
 		}
 	}
+	
 
 	// Update the store whenever activeController changes
 	$: controllerStore.set(activeController);

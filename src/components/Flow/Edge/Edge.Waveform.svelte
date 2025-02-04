@@ -2,7 +2,7 @@
 	import { onMount } from "svelte";
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
-	import { activeController, crossfades, playerTimes } from "$stores/misc.js";
+	import { playerTimes } from "$stores/misc.js";
 	import viewport from "$stores/viewport";
 
 
@@ -66,15 +66,13 @@
 		playPauseTimeout = setTimeout(() => {
 			if (play && !wavesurfer.isPlaying()) {
 				wavesurfer.setTime($playerTimes[id] || 0);
-				wavesurfer.setVolume(volume);  // Set volume to 50%
-				console.log("PLAY")
+				wavesurfer.setVolume(volume);
 				wavesurfer.play();
 			} else if (!play && wavesurfer.isPlaying()) {
-				// console.log("Pausing:", id);
 				$playerTimes[id] = wavesurfer.getCurrentTime();
 				wavesurfer.pause();
 			}
-		}, 100); // Adjust delay if needed
+		}, 100);
 	}
 
 	const textHeight = 30;

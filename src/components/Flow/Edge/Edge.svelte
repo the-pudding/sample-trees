@@ -28,7 +28,7 @@
 
 	$$restProps;
 	
-	$: [edgePath, labelX, labelY] = getBezierPath({
+	$: [edgePath, labelX] = getBezierPath({
 		sourceX,
 		sourceY,
 		sourcePosition,
@@ -44,6 +44,8 @@
 
 	$: progressPercentage = $crossfades[id]?.progress;
 	$: progressY = progressScale(progressPercentage);
+
+	$: console.log(progressPercentage)
 </script>
 
 {#if $activeController?.component?.type && $activeController?.component?.id == id}

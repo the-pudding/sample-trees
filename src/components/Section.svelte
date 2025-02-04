@@ -56,8 +56,6 @@
 					fullTree = generateFlow(slide);
 					fullTreeController = { ...slide.controller, index: i, progress: 0 };
 
-				
-
 					return { nodes: [], edges: [] };
 				}
 				return generateFlow(slide);
@@ -73,7 +71,6 @@
 	}
 
 	$: activeController = { ...activeSlideContent?.controller, index, progress };
-
 
 </script>
 
