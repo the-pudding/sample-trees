@@ -29,11 +29,12 @@
 
 	let isReady = false;
 	let render;
-
+	let fullTree;
+	let fullTreeController;
 
 	let activeSlideContent;
 	let activeTree;
-	let activeController
+	let activeController;
 
 	$: {
 		inlineBefore = content.filter(
@@ -52,8 +53,18 @@
 	}
 
 	onMount(async () => {
-		render = await Promise.all(slides.map((slide, i) => generateFlow(slide)));
-
+		render = await Promise.all(
+			slides.map((slide, i) => {
+				if (slide.controller.tree == slide.controller.links) {
+					fullTree = generateFlow(slide);
+					fullTreeController = { ...slide.controller, index: i, progress: 0 };
+				
+					return { nodes: [], edges: [] };
+				}
+				return generateFlow(slide);
+			})
+		);
+		console.log(slides);
 		isReady = true;
 	});
 
@@ -63,6 +74,8 @@
 	}
 
 	$: activeController = { ...activeSlideContent?.controller, index, progress };
+
+	$: console.log(activeController, fullTreeController);
 </script>
 
 <!-- <div class="debug-box">Index: {index}</div> -->
@@ -84,16 +97,21 @@
 		<div slot="background">
 			{#if isReady}
 				{#if activeSlideContent}
+					<div
+						class="full-tree-container"
+						class:visible={activeController.links == activeController.tree}
+					>
+						<!-- <SvelteFlowProvider>
+							<Flow
+								activeTree={fullTree}
+								activeController={fullTreeController}
+							/>
+						</SvelteFlowProvider> -->
+					</div>
+
 					{#if activeTree}
 						<SvelteFlowProvider>
-							<Flow 
-								{index} 
-								{activeTree} 
-								{activeController} 
-								{key}
-								{slides}
-								{offset}
-							/>
+							<Flow {activeTree} {activeController} {slides} />
 						</SvelteFlowProvider>
 					{/if}
 				{/if}
@@ -128,6 +146,20 @@
 		justify-content: center;
 		align-items: center;
 		z-index: 10000;
+	}
+
+	.full-tree-container {
+		background: white;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 10000;
+		opacity: 0;
+		&.visible {
+			opacity: 1;
+		}
 	}
 
 	.section {

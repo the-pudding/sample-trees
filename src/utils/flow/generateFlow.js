@@ -1,5 +1,3 @@
-import getInitialNodesAndEdges from "./getInitialNodesAndEdges";
-
 import generateTree from "./generateTree";
 import generateLayout from "./generateLayout";
 
