@@ -25,7 +25,7 @@
 	let waveformRef;
 
 	onMount(() => {
-		const dpr = window.devicePixelRatio || 1;
+		const dpr =  1;
 
 		wavesurfer = WaveSurfer.create({
 			container: waveformRef,

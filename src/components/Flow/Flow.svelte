@@ -27,7 +27,7 @@
 	const textHeight = 30;
 	const waveformHeight = 20;
 	const playheadHeight = 6;
-	const waveformGap = 4;
+	const waveformGap = 4; // TODO this might need to by dynamic or zoom dependent
 
 	$: nodeHeight = Math.min(
 		$viewport.height / 2 - textHeight - waveformHeight,
