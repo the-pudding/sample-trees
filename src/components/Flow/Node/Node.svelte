@@ -36,9 +36,6 @@
 		return result;
 	}
 
-	// $: secondaryLabelObj = parseSecondaryLabelConfig(data.secondaryLabelConfig)?.[
-	// 	activeController.secondaryLabelAccessor
-	// ];
 
 	const textHeight = 30;
 	const waveformHeight = 30;
@@ -50,6 +47,7 @@
 
 	const nodeWidth = nodeHeight * 0.75;
 
+	$: console.log(data.id)
 </script>
 
 <Handle
@@ -70,14 +68,10 @@
 	data-id={data.id}
 >
 	{#if $activeController.tree != $activeController.links}
-		<!-- {#if !secondaryLabelObj} -->
 			<div class="text">
 				<div class="title">{data.title}</div>
 				<div class="artist">{data.primary_artist}</div>
 			</div>
-		<!-- {:else}
-			something new
-		{/if} -->
 	{/if}
 	<CoverArt {data} />
 </div>
