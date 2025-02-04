@@ -9,6 +9,7 @@
 	import "@xyflow/svelte/dist/style.css";
 
 	import { setContext } from 'svelte';
+	import viewport from "$stores/viewport";
 
 	import Node from "./Node/Node.svelte";
 	import Edge from "./Edge/Edge.svelte";
@@ -20,8 +21,40 @@
 	export let activeTree;
 	export let activeController;
 	export let slides = [];
-	
-	let offset = 0;
+	export let offset = 0;
+
+	// Create dimensions store
+	const textHeight = 30;
+	const waveformHeight = 20;
+	const playheadHeight = 6;
+	const waveformGap = 4;
+
+	$: nodeHeight = Math.min(
+		$viewport.height / 2 - textHeight - waveformHeight,
+		220
+	);
+	$: nodeWidth = nodeHeight * 0.75;
+
+	const dimensions = writable({
+		textHeight,
+		waveformHeight,
+		nodeHeight,
+		nodeWidth,
+		playheadHeight,
+		waveformGap
+	});
+
+	// Update dimensions when viewport changes
+	$: dimensions.set({
+		textHeight,
+		waveformHeight,
+		nodeHeight,
+		nodeWidth,
+		playheadHeight,
+		waveformGap
+	});
+
+	setContext('dimensions', dimensions);
 
 	// Create a writable store for the controller
 	const controllerStore = writable(activeController);
@@ -33,7 +66,6 @@
 
 	// Update crossfades when slides change
 	$: {
-		
 		const crossfadesObj = slides
 			.filter((d) => d?.controller?.component?.type == "crossfade")
 			.reduce((acc, item) => {
@@ -61,7 +93,6 @@
 			crossfades.set($crossfades);
 		}
 	}
-	
 
 	// Update the store whenever activeController changes
 	$: controllerStore.set(activeController);

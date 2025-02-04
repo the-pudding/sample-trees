@@ -8,13 +8,12 @@
 	async function checkImage() {
 		try {
 			const response = await fetch(`${base}/assets/cover_art/${data.id}.png`);
-			imageExists = response.ok; // Sets to true if status is 200-299, false otherwise
+			imageExists = response.ok;
 		} catch (error) {
-			imageExists = false; // If there's a network error, also show the placeholder
+			imageExists = false;
 		}
 	}
 
-	// Run the check when the component is created
 	checkImage();
 </script>
 
@@ -22,7 +21,6 @@
 	{#if imageExists}
 		<img src="{base}/assets/cover_art/{data.id}.png" alt={data.title} />
 	{:else}
-	
 		<img src="{base}/assets/cover_art/missing.png" alt={data.title} />
 	{/if}
 	<!-- <div class="placeholder"></div> -->
@@ -37,6 +35,16 @@
 		height: auto;
 		aspect-ratio: 1/1;
 		position: relative;
+		transform: translateZ(0);
+		backface-visibility: hidden;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+			image-rendering: -webkit-optimize-contrast;
+			transform: translateZ(0);
+		}
 	}
 
 	.placeholder {
@@ -50,6 +58,8 @@
 		font-family: var(--sans);
 		font-weight: bold;
 		position: absolute;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 
 		&.right {
 			right: -10px;

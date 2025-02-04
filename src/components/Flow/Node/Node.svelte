@@ -1,8 +1,6 @@
 <script>
 	import { Handle, Position } from "@xyflow/svelte";
 	import CoverArt from "./Node.CoverArt.svelte";
-
-	import viewport from "$stores/viewport";
 	import { getContext } from 'svelte';
 
 	export let data;
@@ -11,21 +9,11 @@
 	$$restProps;
 
 	const activeController = getContext('activeController');
+	const dimensions = getContext('dimensions');
 
 	// Helper function to determine if node is part of active
 	$: isSource = $activeController?.fitViewNodes?.split(",")[0] === data.id;
 	$: isTarget = $activeController?.fitViewNodes?.split(",")[1] === data.id;
-
-	const textHeight = 30;
-	const waveformHeight = 30;
-
-	const nodeHeight = Math.min(
-		$viewport.height / 2 - textHeight - waveformHeight,
-		260
-	);
-
-	const nodeWidth = nodeHeight * 0.75;
-
 
 </script>
 
@@ -42,15 +30,15 @@
 	class:target={isTarget}
 	class:focus={$activeController.focusNode == data.id}
 	class:faded={$activeController?.fadedNodes?.split(",").includes(data.id)}
-	style:--node-height="{nodeHeight}px"
-	style:--node-width="{nodeWidth}px"
+	style:--node-height="{$dimensions.nodeHeight}px"
+	style:--node-width="{$dimensions.nodeWidth}px"
 	data-id={data.id}
 >
 	{#if $activeController.tree != $activeController.links}
-			<div class="text">
-				<div class="title">{data.title}</div>
-				<div class="artist">{data.primary_artist}</div>
-			</div>
+		<div class="text">
+			<div class="title">{data.title}</div>
+			<div class="artist">{data.primary_artist}</div>
+		</div>
 	{/if}
 	<CoverArt {data} />
 </div>
@@ -82,7 +70,6 @@
 		display: flex;
 		opacity: 1;
 		filter: drop-shadow(0px 0px 10px #ddd);
-		// border: 1px solid red;
 		height: 100%;
 		width: 100%;
 		flex-direction: column;

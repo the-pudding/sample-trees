@@ -14,6 +14,7 @@
 	// Get the stores from context
 	const activeController = getContext('activeController');
 	const crossfades = getContext('crossfades');
+	const dimensions = getContext('dimensions');
 
 	export let id;
 	export let source;
@@ -37,15 +38,21 @@
 		targetPosition
 	});
 
-	const progressScale = scaleLinear()
+	// Calculate crossfader dimensions
+	$: crossfadeStart = sourceY + $dimensions.waveformHeight - $dimensions.waveformGap;
+	$: crossfadeEnd = targetY - $dimensions.waveformHeight + $dimensions.waveformGap;
+	$: crossfadeHeight = crossfadeEnd - crossfadeStart;
+	
+	// Scale range maps to twice the crossfade height, 
+	// starting one crossfade height above the start point
+	$: progressScale = scaleLinear()
 		.domain([0, 1])
-		.range([sourceY, targetY])
+		.range([crossfadeStart - crossfadeHeight, crossfadeEnd])
 		.clamp(true);
 
 	$: progressPercentage = $crossfades[id]?.progress;
 	$: progressY = progressScale(progressPercentage);
 
-	$: console.log(progressPercentage)
 </script>
 
 {#if $activeController?.component?.type && $activeController?.component?.id == id}
@@ -62,8 +69,6 @@
 			link_id={id.split('-')[0]}
 		/>
 
-		<Crossfade {labelX} {sourceY} {targetY} {progressY} />
-
 		<Waveform
 			position="bottom"
 			id={target}
@@ -75,6 +80,8 @@
 			{targetY}
 			link_id={id.split('-')[0]}
 		/>
+
+		<Crossfade {labelX} {sourceY} {targetY} {progressY} />
 	</EdgeLabelRenderer>
 {:else}
 	<BaseEdge path={edgePath} {markerEnd} />

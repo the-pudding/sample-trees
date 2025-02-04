@@ -101,6 +101,7 @@
 									<Flow
 										activeTree={fullTreeResult}
 										activeController={fullTreeController}
+										offset={offset}
 									/>
 								</SvelteFlowProvider>
 							{/if}
@@ -109,7 +110,7 @@
 
 					{#if activeTree}
 						<SvelteFlowProvider>
-							<Flow {activeTree} {activeController} {slides} />
+							<Flow {activeTree} {activeController} {slides} {offset} />
 						</SvelteFlowProvider>
 					{/if}
 				{/if}
@@ -173,6 +174,10 @@
 		justify-content: center;
 		align-items: center;
 		pointer-events: none;
+
+		&:first-of-type {
+			padding-top: 50vh;
+		}
 
 		&.spacer {
 			height: 25vh;

@@ -1,24 +1,34 @@
 <script>
+	import { getContext } from "svelte";
+
+	const dimensions = getContext("dimensions");
+
 	export let labelX;
 	export let sourceY;
 	export let targetY;
 	export let progressY;
-
-	$$restProps;
-
 </script>
 
 <div
 	class="bar"
-	style:transform="translate(-50%, 0%) translate({labelX}px, {sourceY + 30}px)"
-	style:height="{targetY - sourceY - 30 + 4}px"
+	style:transform="translate(-50%, 0%) translate({labelX}px, {sourceY +
+		$dimensions.waveformHeight -
+		$dimensions.waveformGap}px)"
+	style:height="{targetY -
+		sourceY -
+		$dimensions.waveformHeight * 2 +
+		$dimensions.waveformGap * 2}px"
 ></div>
 
 <div
 	class="crossfader"
 	style:transform="translate(-50%, -50%) translate({labelX}px,{progressY}px)"
 >
-	<div class="crossfader__playhead" data-sample=""></div>
+	<div
+		class="crossfader__playhead"
+		style:--playhead-height="{$dimensions.playheadHeight}px"
+		data-sample=""
+	></div>
 </div>
 
 <style lang="scss">
@@ -34,12 +44,12 @@
 		pointer-events: all;
 
 		&__playhead {
-			width: 30px;
-			height: 10px;
+			width: 20px;
+			height: var(--playhead-height);
 			background: linear-gradient(
 				to bottom,
-				#5d5d5d 45%,
-				#ffffff 45%,
+				#5d5d5d 44%,
+				#ffffff 44%,
 				#ffffff 60%,
 				#5d5d5d 60%
 			);
