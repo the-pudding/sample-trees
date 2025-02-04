@@ -19,10 +19,9 @@
 
 	export let activeTree;
 	export let activeController;
-	export let index;
-	export let key;
-	export let slides;
-	export let offset = 0;
+	export let slides = [];
+	
+	let offset = 0;
 
 	// Create a writable store for the controller
 	const controllerStore = writable(activeController);

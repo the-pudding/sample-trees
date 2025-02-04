@@ -65,7 +65,6 @@
 		clearTimeout(playPauseTimeout);
 		playPauseTimeout = setTimeout(() => {
 			if (play && !wavesurfer.isPlaying()) {
-				// console.log("Playing:", id);
 				wavesurfer.setTime($playerTimes[id] || 0);
 				wavesurfer.setVolume(volume);  // Set volume to 50%
 				console.log("PLAY")
