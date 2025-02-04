@@ -20,8 +20,6 @@
 	export let activeTree;
 	export let activeController;
 	export let slides = [];
-
-	console.log(activeTree)
 	
 	let offset = 0;
 
