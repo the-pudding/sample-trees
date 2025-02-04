@@ -29,11 +29,12 @@
 
 	let isReady = false;
 	let render;
-
+	let fullTree;
+	let fullTreeController;
 
 	let activeSlideContent;
 	let activeTree;
-	let activeController
+	let activeController;
 
 	$: {
 		inlineBefore = content.filter(
@@ -52,7 +53,19 @@
 	}
 
 	onMount(async () => {
-		render = await Promise.all(slides.map((slide, i) => generateFlow(slide)));
+		render = await Promise.all(
+			slides.map((slide, i) => {
+				if (slide.controller.tree == slide.controller.links) {
+					fullTree = generateFlow(slide);
+					fullTreeController = { ...slide.controller, index: i, progress: 0 };
+
+				
+
+					return { nodes: [], edges: [] };
+				}
+				return generateFlow(slide);
+			})
+		);
 
 		isReady = true;
 	});
@@ -63,9 +76,9 @@
 	}
 
 	$: activeController = { ...activeSlideContent?.controller, index, progress };
-</script>
 
-<!-- <div class="debug-box">Index: {index}</div> -->
+
+</script>
 
 <section class="section">
 	<!-- Render "inline" items before the sticky component -->
@@ -84,16 +97,25 @@
 		<div slot="background">
 			{#if isReady}
 				{#if activeSlideContent}
+					<div
+						class="full-tree-container"
+						class:visible={activeController.links == activeController.tree}
+					>
+						{#await fullTree then fullTreeResult}
+							{#if fullTreeResult}
+								<SvelteFlowProvider>
+									<Flow
+										activeTree={fullTreeResult}
+										activeController={fullTreeController}
+									/>
+								</SvelteFlowProvider>
+							{/if}
+						{/await}
+					</div>
+
 					{#if activeTree}
 						<SvelteFlowProvider>
-							<Flow 
-								{index} 
-								{activeTree} 
-								{activeController} 
-								{key}
-								{slides}
-								{offset}
-							/>
+							<Flow {activeTree} {activeController} {slides} />
 						</SvelteFlowProvider>
 					{/if}
 				{/if}
@@ -128,6 +150,21 @@
 		justify-content: center;
 		align-items: center;
 		z-index: 10000;
+	}
+
+	.full-tree-container {
+		background: white;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 10000;
+		opacity: 0;
+		transition: 0.5s opacity;
+		&.visible {
+			opacity: 1;
+		}
 	}
 
 	.section {
