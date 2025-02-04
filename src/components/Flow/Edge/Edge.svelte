@@ -27,11 +27,6 @@
 	export let markerEnd = undefined;
 
 	$$restProps;
-
-	let style = "stroke: purple; stroke-width: 5px";
-
-
-	$: console.log(id)
 	
 	$: [edgePath, labelX, labelY] = getBezierPath({
 		sourceX,

@@ -58,13 +58,13 @@
 				if (slide.controller.tree == slide.controller.links) {
 					fullTree = generateFlow(slide);
 					fullTreeController = { ...slide.controller, index: i, progress: 0 };
-				
+
 					return { nodes: [], edges: [] };
 				}
 				return generateFlow(slide);
 			})
 		);
-		console.log(slides);
+
 		isReady = true;
 	});
 
@@ -75,10 +75,8 @@
 
 	$: activeController = { ...activeSlideContent?.controller, index, progress };
 
-	$: console.log(activeController, fullTreeController);
+	// $: console.log(activeController, fullTreeController);
 </script>
-
-<!-- <div class="debug-box">Index: {index}</div> -->
 
 <section class="section">
 	<!-- Render "inline" items before the sticky component -->
@@ -101,12 +99,16 @@
 						class="full-tree-container"
 						class:visible={activeController.links == activeController.tree}
 					>
-						<!-- <SvelteFlowProvider>
-							<Flow
-								activeTree={fullTree}
-								activeController={fullTreeController}
-							/>
-						</SvelteFlowProvider> -->
+						{#await fullTree then fullTreeResult}
+							{#if fullTreeResult}
+								<SvelteFlowProvider>
+									<Flow
+										activeTree={fullTreeResult}
+										activeController={fullTreeController}
+									/>
+								</SvelteFlowProvider>
+							{/if}
+						{/await}
 					</div>
 
 					{#if activeTree}
@@ -157,6 +159,7 @@
 		left: 0;
 		z-index: 10000;
 		opacity: 0;
+		transition: 0.5s opacity;
 		&.visible {
 			opacity: 1;
 		}
