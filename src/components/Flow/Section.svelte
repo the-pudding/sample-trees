@@ -2,8 +2,9 @@
 	// Modules
 	import { marked } from "marked";
 	import Scroller from "@sveltejs/svelte-scroller";
-	import { onMount } from "svelte";
+	import { onMount, getContext, setContext } from "svelte";
 	import { SvelteFlowProvider } from "@xyflow/svelte";
+	import { writable } from "svelte/store";
 	import "@xyflow/svelte/dist/style.css";
 
 	// Components
@@ -15,6 +16,27 @@
 	export let key;
 	export let content;
 
+	const audioRegistry = getContext('audioRegistry');
+
+	// Create loops store
+	const loops = writable({});
+	setContext('loops', loops);
+
+	// Function to advance to next song in loop
+	function advanceLoop(loopId) {
+		loops.update(loops => {
+			const loop = loops[loopId];
+			if (loop && loop.isPlaying) {
+				loop.currentIndex = (loop.currentIndex + 1) % loop.sequence.length;
+				return loops;
+			}
+			return loops;
+		});
+	}
+
+	// Expose advance function to components
+	setContext('advanceLoop', advanceLoop);
+
 	// Separate inline and sticky items
 	let inlineBefore = [];
 	let inlineAfter = [];
@@ -25,8 +47,6 @@
 
 	let isReady = false;
 	let render;
-	let fullTree;
-	let fullTreeController;
 
 	let activeSlideContent;
 	let activeTree;
@@ -49,18 +69,7 @@
 	}
 
 	onMount(async () => {
-		render = await Promise.all(
-			slides.map((slide, i) => {
-				if (slide.controller.tree == slide.controller.links) {
-					fullTree = generateFlow(slide);
-					fullTreeController = { ...slide.controller, index: i, progress: 0 };
-
-					return { nodes: [], edges: [] };
-				}
-				return generateFlow(slide);
-			})
-		);
-
+		render = await Promise.all(slides.map((slide, i) => generateFlow(slide)));
 		isReady = true;
 	});
 
@@ -73,8 +82,30 @@
 		activeController = { ...activeSlideContent?.controller, index, progress };
 		// Pause all audio when index changes
 		if (index !== undefined) {
-			// Signal to Flow that audio should be paused
-			activeController.shouldPauseAudio = true;
+			audioRegistry.pauseAllExcept();
+			
+			// Reset all loops
+			loops.update(loops => {
+				Object.keys(loops).forEach(key => {
+					loops[key].isPlaying = false;
+					loops[key].currentIndex = 0;
+				});
+				return loops;
+			});
+
+			// Initialize new state if this is a loop controller
+			if (activeController?.component?.type === "loop") {
+				const loopId = activeController.component.id;
+				
+				// Set up loop state
+				loops.update(loops => {
+					if (loops[loopId]) {
+						loops[loopId].isPlaying = true;
+						loops[loopId].currentIndex = 0;
+					}
+					return loops;
+				});
+			}
 		}
 	}
 </script>
@@ -96,26 +127,16 @@
 		<div slot="background">
 			{#if isReady}
 				{#if activeSlideContent}
-					<div
-						class="full-tree-container"
-						class:visible={activeController.links == activeController.tree}
-					>
-						{#await fullTree then fullTreeResult}
-							{#if fullTreeResult}
-								<SvelteFlowProvider>
-									<Flow
-										activeTree={fullTreeResult}
-										activeController={fullTreeController}
-										{offset}
-									/>
-								</SvelteFlowProvider>
-							{/if}
-						{/await}
-					</div>
-
 					{#if activeTree}
 						<SvelteFlowProvider>
-							<Flow {activeTree} {activeController} {slides} {offset} />
+							<Flow 
+								{index} 
+								{activeTree} 
+								{activeController} 
+								{key}
+								{slides}
+								{offset}
+							/>
 						</SvelteFlowProvider>
 					{/if}
 				{/if}
@@ -199,4 +220,4 @@
 			padding: 1rem;
 		}
 	}
-</style>
+</style> 

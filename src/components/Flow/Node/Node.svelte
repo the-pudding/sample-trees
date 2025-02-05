@@ -1,20 +1,19 @@
 <script>
 	import { Handle, Position } from "@xyflow/svelte";
 	import CoverArt from "./Node.CoverArt.svelte";
-	import { getContext } from 'svelte';
-
+	import { getContext } from "svelte";
+	import Waveform from "./Node.Waveform.svelte";
 	export let data;
 	export let isConnectable = false;
 
 	$$restProps;
 
-	const activeController = getContext('activeController');
-	const dimensions = getContext('dimensions');
+	const activeController = getContext("activeController");
+	const dimensions = getContext("dimensions");
 
 	// Helper function to determine if node is part of active
 	$: isSource = $activeController?.fitViewNodes?.split(",")[0] === data.id;
 	$: isTarget = $activeController?.fitViewNodes?.split(",")[1] === data.id;
-
 </script>
 
 <Handle
@@ -25,7 +24,7 @@
 />
 
 <div
-	class="node"
+	class="node {$activeController?.component?.type || ''}"
 	class:source={isSource}
 	class:target={isTarget}
 	class:focus={$activeController.focusNode == data.id}
@@ -41,6 +40,15 @@
 		</div>
 	{/if}
 	<CoverArt {data} />
+
+	{#if $activeController?.component?.type == "loop" && $activeController?.component?.id.split(",").includes(data.id)}
+		<Waveform
+			id={data.id}
+			waveColor="#fefbd7"
+			progressColor="#CBB600"
+			play={true}
+		/>
+	{/if}
 </div>
 
 <Handle
@@ -75,11 +83,11 @@
 		flex-direction: column;
 		transition: opacity 0.5s;
 
-		&.source {
+		&.source.crossfade {
 			flex-direction: column-reverse;
 		}
 
-		&.target {
+		&.target.crossfade {
 			flex-direction: column;
 		}
 

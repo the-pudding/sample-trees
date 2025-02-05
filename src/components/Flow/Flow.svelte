@@ -82,6 +82,8 @@
 		crossfades.set(crossfadesObj);
 	}
 
+	$: console.log($crossfades)
+
 	// Update progress when offset changes
 	$: if ($controllerStore?.component?.type == "crossfade") {
 		const id = $controllerStore.component?.id;

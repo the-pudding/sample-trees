@@ -12,9 +12,9 @@
 	import Crossfade from "./Edge.Crossfade.svelte";
 
 	// Get the stores from context
-	const activeController = getContext('activeController');
-	const crossfades = getContext('crossfades');
-	const dimensions = getContext('dimensions');
+	const activeController = getContext("activeController");
+	const crossfades = getContext("crossfades");
+	const dimensions = getContext("dimensions");
 
 	export let id;
 	export let source;
@@ -28,7 +28,7 @@
 	export let markerEnd = undefined;
 
 	$$restProps;
-	
+
 	$: [edgePath, labelX] = getBezierPath({
 		sourceX,
 		sourceY,
@@ -39,11 +39,13 @@
 	});
 
 	// Calculate crossfader dimensions
-	$: crossfadeStart = sourceY + $dimensions.waveformHeight - $dimensions.waveformGap;
-	$: crossfadeEnd = targetY - $dimensions.waveformHeight + $dimensions.waveformGap;
+	$: crossfadeStart =
+		sourceY + $dimensions.waveformHeight - $dimensions.waveformGap;
+	$: crossfadeEnd =
+		targetY - $dimensions.waveformHeight + $dimensions.waveformGap;
 	$: crossfadeHeight = crossfadeEnd - crossfadeStart;
-	
-	// Scale range maps to twice the crossfade height, 
+
+	// Scale range maps to twice the crossfade height,
 	// starting one crossfade height above the start point
 	$: progressScale = scaleLinear()
 		.domain([0, 1])
@@ -53,9 +55,10 @@
 	$: progressPercentage = $crossfades[id]?.progress;
 	$: progressY = progressScale(progressPercentage);
 
+
 </script>
 
-{#if $activeController?.component?.type && $activeController?.component?.id == id}
+{#if $activeController?.component?.type == "crossfade" && $activeController?.component?.id == id}
 	<EdgeLabelRenderer>
 		<Waveform
 			position="top"
@@ -66,7 +69,7 @@
 			{labelX}
 			{sourceY}
 			{targetY}
-			link_id={id.split('-')[0]}
+			link_id={id.split("-")[0]}
 		/>
 
 		<Waveform
@@ -78,7 +81,7 @@
 			{sourceY}
 			{labelX}
 			{targetY}
-			link_id={id.split('-')[0]}
+			link_id={id.split("-")[0]}
 		/>
 
 		<Crossfade {labelX} {sourceY} {targetY} {progressY} />
