@@ -1,10 +1,10 @@
 <script>
-	import { getContext } from "svelte";
+	import { setContext } from "svelte";
 	import { onMount } from "svelte";
 	import { SvelteFlowProvider } from "@xyflow/svelte";
+	import { activeSectionId } from "$stores/misc.js";
 
 	import "@xyflow/svelte/dist/style.css";
-
 
 	import generateFlow from "$utils/flow/generateFlow";
 	import groupBy from "$utils/groupBy";
@@ -12,27 +12,49 @@
 
 	import Section from "./Section.svelte";
 
+	function checkSectionVisibility() {
+		const windowHeight = window.innerHeight;
+		let maxVisibleRatio = 0;
+		let mostVisibleSection = null;
+
+		document.querySelectorAll("section.section").forEach((section) => {
+			const rect = section.getBoundingClientRect();
+			const visibleHeight =
+				Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+			const visibleRatio = visibleHeight / rect.height;
+
+			if (visibleRatio > maxVisibleRatio) {
+				maxVisibleRatio = visibleRatio;
+				mostVisibleSection = section.dataset.id;
+			}
+		});
+
+		if (mostVisibleSection && mostVisibleSection !== $activeSectionId) {
+			$activeSectionId = mostVisibleSection;
+		}
+	}
+
 	function flattenToNested(jsonArray) {
 		return jsonArray.map((flatObject) => {
 			const nestedObject = {};
 
 			Object.keys(flatObject).forEach((key) => {
 				const value = flatObject[key];
-				if (value === "") return; // Skip empty string values
+				if (value === "") return;
 
 				if (key.includes(".")) {
 					const keyParts = key.split(".");
 					let current = nestedObject;
 					keyParts.forEach((part, index) => {
 						if (index === keyParts.length - 1) {
-							current[part] = value; // Set the value at the last key part
+							current[part] = value;
 						} else {
-							current[part] = current[part] || {}; // Ensure intermediate levels exist
+							current[part] = current[part] || {};
 							current = current[part];
 						}
 					});
 				} else {
-					nestedObject[key] = value; // Direct assignment for non-nested keys
+					nestedObject[key] = value;
 				}
 			});
 
@@ -52,11 +74,21 @@
 		);
 
 		isReady = true;
-	});
 
-	
+		// Initial check
+		checkSectionVisibility();
+
+		// Add scroll listener
+		window.addEventListener("scroll", checkSectionVisibility, {
+			passive: true
+		});
+
+		return () => {
+			window.removeEventListener("scroll", checkSectionVisibility);
+		};
+	});
 </script>
 
 {#each Object.entries(groupedSlides) as [key, content], i}
-	<Section {key} {content} />
+	<Section {key} {content} sectionIndex={i} />
 {/each}

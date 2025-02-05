@@ -3,6 +3,8 @@
 	import CoverArt from "./Node.CoverArt.svelte";
 	import { getContext } from "svelte";
 	import Waveform from "./Node.Waveform.svelte";
+	import { activeSectionId } from "$stores/misc.js";
+
 	export let data;
 	export let isConnectable = false;
 
@@ -10,10 +12,34 @@
 
 	const activeController = getContext("activeController");
 	const dimensions = getContext("dimensions");
+	const loops = getContext("loops");
+	const sectionId = getContext("sectionId");
 
 	// Helper function to determine if node is part of active
 	$: isSource = $activeController?.fitViewNodes?.split(",")[0] === data.id;
 	$: isTarget = $activeController?.fitViewNodes?.split(",")[1] === data.id;
+
+	// Determine if this node should be playing in a loop
+	$: isInLoop =
+		$activeController?.component?.type === "loop" &&
+		$activeController?.component?.id.split(",").includes(data.id) &&
+		sectionId === $activeSectionId;
+
+	
+
+
+	$: loopId = $activeController?.component?.id;
+
+	// Determine if this node should be playing
+	$: isCurrentlyPlaying =
+		isInLoop &&
+		$loops[loopId]?.isPlaying &&
+		$loops[loopId]?.sequence[$loops[loopId]?.currentIndex] === data.id;
+
+	// Determine if node should be faded
+	$: shouldBeFaded =
+		$activeController?.fadedNodes?.split(",").includes(data.id) ||
+		($activeController?.component?.type === "loop" && !isCurrentlyPlaying);
 </script>
 
 <Handle
@@ -28,7 +54,7 @@
 	class:source={isSource}
 	class:target={isTarget}
 	class:focus={$activeController.focusNode == data.id}
-	class:faded={$activeController?.fadedNodes?.split(",").includes(data.id)}
+	class:faded={shouldBeFaded}
 	style:--node-height="{$dimensions.nodeHeight}px"
 	style:--node-width="{$dimensions.nodeWidth}px"
 	data-id={data.id}
@@ -41,12 +67,13 @@
 	{/if}
 	<CoverArt {data} />
 
-	{#if $activeController?.component?.type == "loop" && $activeController?.component?.id.split(",").includes(data.id)}
+	{#if isInLoop}
 		<Waveform
 			id={data.id}
 			waveColor="#fefbd7"
 			progressColor="#CBB600"
-			play={true}
+			play={isCurrentlyPlaying}
+			{loopId}
 		/>
 	{/if}
 </div>

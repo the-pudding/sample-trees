@@ -5,4 +5,5 @@ export const activeTree = writable({});
 export const crossfades = writable();
 
 export const playerTimes = writable({});
+export const activeSectionId = writable(null);
 // export const nodeWidth = writable(0)

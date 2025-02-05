@@ -82,8 +82,6 @@
 		crossfades.set(crossfadesObj);
 	}
 
-	$: console.log($crossfades)
-
 	// Update progress when offset changes
 	$: if ($controllerStore?.component?.type == "crossfade") {
 		const id = $controllerStore.component?.id;
@@ -98,6 +96,29 @@
 
 	// Update the store whenever activeController changes
 	$: controllerStore.set(activeController);
+
+	// Create loops store
+	const loops = writable({});
+	setContext('loops', loops);
+
+	// Update loops when slides change
+	$: {
+		const loopsObj = slides
+			.filter((d) => d?.controller?.component?.type == "loop")
+			.reduce((acc, item) => {
+				const { id } = item.controller?.component;
+				const nodeIds = id.split(",");
+
+				acc[id] = {
+					sequence: nodeIds,
+					currentIndex: 0,
+					isPlaying: true
+				};
+
+				return acc;
+			}, {});
+		loops.set(loopsObj);
+	}
 
 	let flowRef;
 	let previousIndex = activeController.index;
@@ -126,7 +147,21 @@
 		edges.set(activeTree.edges);
 	}
 
-	// Handle fitView when activeController index changes
+	// Function to advance to next song in loop
+	function advanceLoop(loopId) {
+		loops.update(loops => {
+			const loop = loops[loopId];
+			if (loop && loop.isPlaying) {
+				loop.currentIndex = (loop.currentIndex + 1) % loop.sequence.length;
+			}
+			return loops;
+		});
+	}
+
+	// Expose advance function to components
+	setContext('advanceLoop', advanceLoop);
+
+	// Handle state changes when controller changes
 	$: if (previousIndex !== activeController.index) {
 		let fitToNodes;
 		if (activeController?.fitViewNodes) {
@@ -138,6 +173,29 @@
 			fitToNodes = activeTree.nodes;
 		}
 
+		// Reset all loops
+		loops.update(loops => {
+			Object.keys(loops).forEach(key => {
+				loops[key].isPlaying = false;
+				loops[key].currentIndex = 0;
+			});
+			return loops;
+		});
+
+		// Initialize new state if this is a loop controller
+		if (activeController?.component?.type === "loop") {
+			const loopId = activeController.component.id;
+			
+			// Set up loop state
+			loops.update(loops => {
+				if (loops[loopId]) {
+					loops[loopId].isPlaying = true;
+					loops[loopId].currentIndex = 0;
+				}
+				return loops;
+			});
+		}
+
 		window.setTimeout(() => {
 			fitView({
 				nodes: fitToNodes,
@@ -146,9 +204,8 @@
 			});
 		}, 0);
 
-		// Watch for changes in the specific condition and update flowKey
 		if (activeController.links === activeController.tree) {
-			flowKey += 1; // Increment key to force re-render
+			flowKey += 1;
 		}
 
 		previousIndex = activeController.index;
