@@ -2,7 +2,7 @@
 	// Modules
 	import { marked } from "marked";
 	import Scroller from "@sveltejs/svelte-scroller";
-	import { onMount } from "svelte";
+	import { onMount, getContext, setContext } from "svelte";
 	import { SvelteFlowProvider } from "@xyflow/svelte";
 	import "@xyflow/svelte/dist/style.css";
 
@@ -14,11 +14,16 @@
 
 	export let key;
 	export let content;
+	export let sectionIndex;
+
+	let sectionRef;
 
 	// Separate inline and sticky items
 	let inlineBefore = [];
 	let inlineAfter = [];
 	let slides = null;
+
+	setContext("sectionId", key);
 
 	// Divide content into sections reactively
 	let index, offset, progress;
@@ -71,15 +76,10 @@
 
 	$: {
 		activeController = { ...activeSlideContent?.controller, index, progress };
-		// Pause all audio when index changes
-		if (index !== undefined) {
-			// Signal to Flow that audio should be paused
-			activeController.shouldPauseAudio = true;
-		}
 	}
 </script>
 
-<section class="section">
+<section class="section" bind:this={sectionRef} data-id={key}>
 	<!-- Render "inline" items before the sticky component -->
 	{#each inlineBefore as item}
 		<div class="content">{@html marked(item.text)}</div>

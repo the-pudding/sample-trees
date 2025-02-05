@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from "svelte";
+	import { onMount, onDestroy } from "svelte";
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
 	import { playerTimes } from "$stores/misc.js";
@@ -11,8 +11,10 @@
 	export let waveColor;
 	export let progressColor;
 	export let play;
+	export let loopId;
 
 	const dimensions = getContext("dimensions");
+	const advanceLoop = getContext("advanceLoop");
 	const volume = 0.3;
 
 	let wavesurfer;
@@ -39,37 +41,49 @@
 		// Mark as ready once the file is loaded
 		wavesurfer.on("ready", () => {
 			isReady = true;
+			// Start playing if we should be playing
+			if (play) {
+				wavesurfer.setVolume(volume);
+				wavesurfer.play();
+			}
 		});
 
-		// Replay on finish
+		// When song finishes, advance to next in loop
 		wavesurfer.on("finish", () => {
-			wavesurfer.play();
+			if (loopId) {
+				advanceLoop(loopId);
+			}
 		});
 
 		wavesurfer.on("timeupdate", (currentTime) => {
-			// $playerTimes[id] = currentTime;
-			// console.log($playerTimes[id])
+			$playerTimes[id] = currentTime;
 		});
-
-		return () => {
-			wavesurfer.destroy();
-		};
 	});
 
-	// Debounce play/pause changes to avoid conflicts
-	let playPauseTimeout;
-	$: if (wavesurfer && isReady) {
-		clearTimeout(playPauseTimeout);
-		playPauseTimeout = setTimeout(() => {
-			if (play && !wavesurfer.isPlaying()) {
-				wavesurfer.setTime($playerTimes[id] || 0);
-				wavesurfer.setVolume(volume);
-				wavesurfer.play();
-			} else if (!play && wavesurfer.isPlaying()) {
+	onDestroy(() => {
+		if (wavesurfer) {
+			if (wavesurfer.isPlaying()) {
 				$playerTimes[id] = wavesurfer.getCurrentTime();
 				wavesurfer.pause();
 			}
-		}, 100);
+			wavesurfer.destroy();
+		}
+	});
+
+	// Handle play/pause changes
+	$: if (wavesurfer && isReady) {
+		if (play && !wavesurfer.isPlaying()) {
+			// Only play if we have a valid time or are starting from the beginning
+			const startTime = $playerTimes[id] || 0;
+			if (startTime >= 0) {
+				wavesurfer.setTime(startTime);
+				wavesurfer.setVolume(volume);
+				wavesurfer.play();
+			}
+		} else if (!play && wavesurfer.isPlaying()) {
+			$playerTimes[id] = wavesurfer.getCurrentTime();
+			wavesurfer.pause();
+		}
 	}
 </script>
 
