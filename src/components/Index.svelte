@@ -16,12 +16,14 @@
 	let isReady = false;
 	let render;
 
+	// Create array of image URLs for preloading
+	const imageUrls = nodes.map(
+		(node) => `${base}/assets/cover_art/${node.id}.png`
+	);
+
 	// Preload images in batches
 	async function preloadImages() {
 		const BATCH_SIZE = 100;
-		const imageUrls = nodes.map(
-			(node) => `${base}/assets/cover_art/${node.id}.png`
-		);
 		const totalImages = imageUrls.length;
 
 		for (let i = 0; i < totalImages; i += BATCH_SIZE) {
@@ -118,6 +120,13 @@
 		};
 	});
 </script>
+
+<svelte:head>
+	<link rel="preload" href="{base}/assets/sprites/spritesheet.jpeg" as="image" />
+	{#each imageUrls as url}
+		<link rel="preload" href={url} as="image" />
+	{/each}
+</svelte:head>
 
 {#if isReady}
 	<div transition:fade>
