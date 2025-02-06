@@ -125,8 +125,10 @@
 			<Section {key} {content} sectionIndex={i} />
 		{/each}
 	</div>
-{:else}
-	<div class="loading-screen" transition:fade >
+{/if}
+
+{#if !isReady}
+	<div class="loading-screen" out:fade={{ delay: 1000 }}>
 		<div class="loader"></div>
 	</div>
 {/if}
@@ -138,7 +140,7 @@
 		left: 0;
 		width: 100%;
 		height: 100vh;
-		background: #F0F0F0;
+		background: #f0f0f0;
 		display: flex;
 		justify-content: center;
 		align-items: center;
