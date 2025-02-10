@@ -270,6 +270,11 @@ export default async function generateLayout(
         height: nodeHeight,
       })),
       edges: inputEdges,
+      // edges: inputEdges.map(edge => ({
+      //   ...edge,
+      //   type: 'simple'  // Specify simple edge type for elkTwo
+      // }))
+
     };
 
     try {
@@ -312,7 +317,13 @@ export default async function generateLayout(
           sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
           type: 'simple',
         })),
-        edges: layoutedGraph.edges,
+        edges: layoutedGraph.edges.map(edge => ({
+          ...edge,
+          data: {
+            ...edge.data,
+            method: method  // Add method to edge data
+          }
+        }))
       };
     } catch (error) {
       console.error("Error during ELK layout:", error);

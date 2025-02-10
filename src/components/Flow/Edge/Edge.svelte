@@ -26,6 +26,7 @@
 	export let targetY;
 	export let targetPosition;
 	export let markerEnd = undefined;
+	export let data;
 
 	$$restProps;
 
@@ -86,6 +87,32 @@
 
 		<Crossfade {labelX} {sourceY} {targetY} {progressY} />
 	</EdgeLabelRenderer>
+{:else if data?.method === "elk"}
+	<BaseEdge 
+		path={edgePath} 
+		{markerEnd}
+		style="stroke-width: 2px;"
+		class="base-edge elk-edge"
+	/>
 {:else}
-	<BaseEdge path={edgePath} {markerEnd} />
+	<BaseEdge 
+		path={edgePath} 
+		{markerEnd}
+		style=""
+		class="base-edge"
+	/>
 {/if}
+
+<style>
+	:global(.base-edge) {
+		transition: stroke 0.2s, stroke-width 0.2s;
+		stroke: #ccc;
+		stroke-width: 3px;
+		vector-effect: non-scaling-stroke;
+	}
+
+	:global(.base-edge:hover) {
+		stroke: #ADADAD;
+		stroke-width: 3px;
+	}
+</style>

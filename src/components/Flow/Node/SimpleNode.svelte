@@ -73,10 +73,7 @@
 	}
 
 	.circle {
-		border-radius: 50%;
 		background: #fff;
-		outline: 1px solid #ccc;
-		cursor: pointer;
 		overflow: hidden; // Added to keep image within circle
 		display: flex; // Added for image centering
 		align-items: center;
