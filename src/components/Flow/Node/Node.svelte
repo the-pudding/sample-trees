@@ -62,7 +62,7 @@
 	{#if $activeController.tree != $activeController.links}
 		<div class="text">
 			<div class="title">{data.title}</div>
-			<div class="artist">{data.primary_artist}</div>
+			<div class="artist">{data.primary_artist} ({data.release_date.slice(0,4)})</div>
 		</div>
 	{/if}
 	<CoverArt {data} />

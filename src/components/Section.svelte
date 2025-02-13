@@ -195,7 +195,6 @@
 			background: white;
 			width: 100%;
 			max-width: 400px;
-			box-shadow: 5px 5px 15px #ddd;
 			padding: 1rem;
 		}
 	}

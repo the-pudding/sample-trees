@@ -18,7 +18,7 @@
 
 	/* presets (used in reset.css) */
 	--border-radius: 2px;
-	--font-body: var(--serif);
+	--font-body: var(--sans);
 	--font-form: var(--sans);
 	--color-bg: #f0f0f0;
 	--color-fg: var(--color-gray-900);
@@ -70,7 +70,8 @@
 
 h1 {
 	font-size: var(--48px, 48px);
-	
+	font-weight: 400;
+	text-align: center;
 }
 
 h2 {
