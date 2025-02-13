@@ -37,6 +37,12 @@
 		position: relative;
 		transform: translateZ(0);
 		backface-visibility: hidden;
+		box-shadow: 
+			0 48px 26px rgba(0, 0, 0, 0.01),
+			0 30px 24px rgba(0, 0, 0, 0.01), 
+			0 17px 20px rgba(0, 0, 0, 0.05),
+			0 8px 15px rgba(0, 0, 0, 0.05),
+			0 -2px 8px rgba(0, 0, 0, 0.05);
 
 		img {
 			width: 100%;

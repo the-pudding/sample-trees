@@ -36,8 +36,8 @@
 			volume: volume,
 			pixelRatio: dpr,
 			normalize: true,
-			barWidth: 1,
-			barGap: 1,
+			barWidth: .1,
+			barGap: 0,
 			barRadius: 0
 		});
 

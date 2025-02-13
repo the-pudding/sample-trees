@@ -104,7 +104,6 @@
 		text-align: center;
 		display: flex;
 		opacity: 1;
-		filter: drop-shadow(0px 0px 10px #ddd);
 		height: 100%;
 		width: 100%;
 		flex-direction: column;
@@ -112,6 +111,10 @@
 
 		&.source.crossfade {
 			flex-direction: column-reverse;
+			:global(.text) {
+				transform: translate(0px, 5px);
+			}
+
 		}
 
 		&.target.crossfade {
@@ -130,6 +133,10 @@
 			font-weight: bold;
 		}
 
+		.artist {
+			font-size: 10px;
+		}
+
 		.cover-art {
 			flex: 1 1 100%;
 			img {
@@ -142,6 +149,9 @@
 		.text {
 			font-family: var(--sans);
 			text-align: center;
+			line-height: 1.2;
+			z-index: 1000;
+			transform: translateY(-5px);
 
 			* {
 				white-space: nowrap;
