@@ -8,7 +8,7 @@
 	} from "@xyflow/svelte";
 	import "@xyflow/svelte/dist/style.css";
 
-	import { setContext } from 'svelte';
+	import { setContext, onMount } from "svelte";
 	import viewport from "$stores/viewport";
 
 	import Node from "./Node/Node.svelte";
@@ -54,15 +54,15 @@
 		waveformGap
 	});
 
-	setContext('dimensions', dimensions);
+	setContext("dimensions", dimensions);
 
 	// Create a writable store for the controller
 	const controllerStore = writable(activeController);
-	setContext('activeController', controllerStore);
+	setContext("activeController", controllerStore);
 
 	// Create crossfades store
 	const crossfades = writable({});
-	setContext('crossfades', crossfades);
+	setContext("crossfades", crossfades);
 
 	// Update crossfades when slides change
 	$: {
@@ -87,9 +87,10 @@
 		const id = $controllerStore.component?.id;
 		const crossfadeData = $crossfades[id];
 		if (crossfadeData) {
-			crossfadeData.progress = $controllerStore.focusNode == crossfadeData.source
-				? offset / 2
-				: offset / 2 + 0.5;
+			crossfadeData.progress =
+				$controllerStore.focusNode == crossfadeData.source
+					? offset / 2
+					: offset / 2 + 0.5;
 			crossfades.set($crossfades);
 		}
 	}
@@ -99,7 +100,7 @@
 
 	// Create loops store
 	const loops = writable({});
-	setContext('loops', loops);
+	setContext("loops", loops);
 
 	// Update loops when slides change
 	$: {
@@ -149,7 +150,7 @@
 
 	// Function to advance to next song in loop
 	function advanceLoop(loopId) {
-		loops.update(loops => {
+		loops.update((loops) => {
 			const loop = loops[loopId];
 			if (loop && loop.isPlaying) {
 				loop.currentIndex = (loop.currentIndex + 1) % loop.sequence.length;
@@ -159,10 +160,9 @@
 	}
 
 	// Expose advance function to components
-	setContext('advanceLoop', advanceLoop);
+	setContext("advanceLoop", advanceLoop);
 
-	// Handle state changes when controller changes
-	$: if (previousIndex !== activeController.index) {
+	function fitViewToNodes() {
 		let fitToNodes;
 		if (activeController?.fitViewNodes) {
 			fitToNodes = activeController.fitViewNodes
@@ -172,10 +172,23 @@
 		} else {
 			fitToNodes = activeTree.nodes;
 		}
+		window.setTimeout(() => {
+			fitView({
+				nodes: fitToNodes,
+				padding: 0.05,
+				duration: 500
+			});
+		}, 0);
+	}
+
+	// Handle state changes when controller changes
+	$: if (previousIndex !== activeController.index) {
+		// fit the view
+		fitViewToNodes();
 
 		// Reset all loops
-		loops.update(loops => {
-			Object.keys(loops).forEach(key => {
+		loops.update((loops) => {
+			Object.keys(loops).forEach((key) => {
 				loops[key].isPlaying = false;
 				loops[key].currentIndex = 0;
 			});
@@ -185,9 +198,9 @@
 		// Initialize new state if this is a loop controller
 		if (activeController?.component?.type === "loop") {
 			const loopId = activeController.component.id;
-			
+
 			// Set up loop state
-			loops.update(loops => {
+			loops.update((loops) => {
 				if (loops[loopId]) {
 					loops[loopId].isPlaying = true;
 					loops[loopId].currentIndex = 0;
@@ -195,14 +208,6 @@
 				return loops;
 			});
 		}
-
-		window.setTimeout(() => {
-			fitView({
-				nodes: fitToNodes,
-				padding: 0.05,
-				duration: 500
-			});
-		}, 0);
 
 		if (activeController.links === activeController.tree) {
 			flowKey += 1;
@@ -213,6 +218,11 @@
 
 	// Change the connection line type to 'straight'
 	const connectionLineType = ConnectionLineType.Straight;
+
+
+	onMount(() => {
+		fitViewToNodes();
+	});
 </script>
 
 {#key flowKey}
@@ -225,8 +235,8 @@
 			{edgeTypes}
 			fitView
 			{connectionLineType}
-			defaultEdgeOptions={{ 
-				type: "custom", 
+			defaultEdgeOptions={{
+				type: "custom",
 				animated: false,
 				style: { strokeWidth: 1 }
 			}}
