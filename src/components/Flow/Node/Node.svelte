@@ -15,6 +15,13 @@
 	const loops = getContext("loops");
 	const sectionId = getContext("sectionId");
 
+	// Add font size store for forcing rerender
+	let fontSize = 12;
+	$: if ($activeController?.index !== undefined) {
+		// Toggle between same size to force text rerender
+		fontSize = fontSize === 12 ? 12.0001 : 12;
+	}
+
 	// Helper function to determine if node is part of active
 	$: isSource = $activeController?.fitViewNodes?.split(",")[0] === data.id;
 	$: isTarget = $activeController?.fitViewNodes?.split(",")[1] === data.id;
@@ -24,9 +31,6 @@
 		$activeController?.component?.type === "loop" &&
 		$activeController?.component?.id.split(",").includes(data.id) &&
 		sectionId === $activeSectionId;
-
-	
-
 
 	$: loopId = $activeController?.component?.id;
 
@@ -57,13 +61,18 @@
 	class:faded={shouldBeFaded}
 	style:--node-height="{$dimensions.nodeHeight}px"
 	style:--node-width="{$dimensions.nodeWidth}px"
+	style:--font-size="{fontSize}px"
 	data-id={data.id}
 >
 	{#if $activeController.tree != $activeController.links}
-		<div class="text">
-			<div class="title">{data.title}</div>
-			<div class="artist">{data.primary_artist} ({data.release_date.slice(0,4)})</div>
-		</div>
+		{#key fontSize}
+			<div class="text">
+				<div class="title">{data.title}</div>
+				<div class="artist">
+					{data.primary_artist} ({data.release_date.slice(0, 4)})
+				</div>
+			</div>
+		{/key}
 	{/if}
 	<CoverArt {data} />
 
@@ -99,7 +108,7 @@
 		max-width: var(--node-width);
 		max-height: var(--node-height);
 		position: relative;
-		font-size: 12px;
+		font-size: var(--font-size, 12px);
 		z-index: 1000;
 		text-align: center;
 		display: flex;
@@ -114,7 +123,6 @@
 			:global(.text) {
 				transform: translate(0px, 5px);
 			}
-
 		}
 
 		&.target.crossfade {
@@ -151,7 +159,11 @@
 			text-align: center;
 			line-height: 1.2;
 			z-index: 1000;
-			transform: translateY(-5px);
+			transform: translateZ(0);
+			backface-visibility: hidden;
+			transform-style: preserve-3d;
+			will-change: transform;
+			transform: translate3d(0, -5px, 0);
 
 			* {
 				white-space: nowrap;
