@@ -32,7 +32,7 @@ input, button, textarea, select {
 
 p, h1, h2, h3, h4, h5, h6 {
   overflow-wrap: break-word;
-	margin: 16px 0;
+  margin: 16px 0;
 }
 
 input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), textarea {
