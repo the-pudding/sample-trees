@@ -2,7 +2,7 @@
 	import { onMount, onDestroy } from "svelte";
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
-	import { playerTimes } from "$stores/misc.js";
+	import { playerTimes, isMuted } from "$stores/misc.js";
 	import { getContext } from "svelte";
 
 	$$restProps;
@@ -30,7 +30,7 @@
 			progressColor: progressColor,
 			url: `${base}/assets/audio/${id}.mp3`,
 			height: $dimensions.waveformHeight * dpr,
-			volume: volume,
+			volume: $isMuted ? 0 : volume,
 			pixelRatio: dpr,
 			normalize: true,
 			barWidth: 1,
@@ -43,7 +43,7 @@
 			isReady = true;
 			// Start playing if we should be playing
 			if (play) {
-				wavesurfer.setVolume(volume);
+				wavesurfer.setVolume($isMuted ? 0 : volume);
 				wavesurfer.play();
 			}
 		});
@@ -77,13 +77,18 @@
 			const startTime = $playerTimes[id] || 0;
 			if (startTime >= 0) {
 				wavesurfer.setTime(startTime);
-				wavesurfer.setVolume(volume);
+				wavesurfer.setVolume($isMuted ? 0 : volume);
 				wavesurfer.play();
 			}
 		} else if (!play && wavesurfer.isPlaying()) {
 			$playerTimes[id] = wavesurfer.getCurrentTime();
 			wavesurfer.pause();
 		}
+	}
+
+	// Update volume when mute state changes
+	$: if (wavesurfer && isReady) {
+		wavesurfer.setVolume($isMuted ? 0 : volume);
 	}
 </script>
 

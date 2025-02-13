@@ -10,10 +10,13 @@
 	import generateFlow from "$utils/flow/generateFlow";
 	import groupBy from "$utils/groupBy";
 	import flatSlides from "$data/slides.csv";
+	import Title from "./Title.svelte";
+	import AudioToggle from "./AudioToggle.svelte";
 
 	import Section from "./Section.svelte";
 
 	let isReady = false;
+	let hasStarted = false;
 	let render;
 
 	// Create array of image URLs for preloading
@@ -39,6 +42,10 @@
 				)
 			);
 		}
+	}
+
+	function handleStart() {
+		hasStarted = true;
 	}
 
 	function checkSectionVisibility() {
@@ -122,140 +129,26 @@
 </script>
 
 <svelte:head>
-	<link rel="preload" href="{base}/assets/sprites/spritesheet.jpeg" as="image" />
+	<link
+		rel="preload"
+		href="{base}/assets/sprites/spritesheet.jpeg"
+		as="image"
+	/>
 	{#each imageUrls as url}
 		<link rel="preload" href={url} as="image" />
 	{/each}
 </svelte:head>
 
-{#if isReady}
-	<div transition:fade>
-		{#each Object.entries(groupedSlides) as [key, content], i}
-			<Section {key} {content} sectionIndex={i} />
-		{/each}
-	</div>
+{#if !hasStarted}
+	<Title {isReady} onStart={handleStart} />
 {/if}
 
-{#if !isReady}
-	<div class="loading-screen" out:fade={{ delay: 1000 }}>
-		<div class="loader"></div>
-	</div>
-{/if}
+<div transition:fade>
+	<AudioToggle />
+	{#each Object.entries(groupedSlides) as [key, content], i}
+		<Section {key} {content} sectionIndex={i} />
+	{/each}
+</div>
 
 <style lang="scss">
-	.loading-screen {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100vh;
-		background: #f0f0f0;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		z-index: 9999;
-	}
-
-	.loader {
-		position: relative;
-		width: 55px;
-		height: 55px;
-		background-repeat: no-repeat;
-		background-image: linear-gradient(#000 50px, transparent 0),
-			linear-gradient(#000 50px, transparent 0),
-			linear-gradient(#000 50px, transparent 0),
-			linear-gradient(#000 50px, transparent 0),
-			linear-gradient(#000 50px, transparent 0),
-			linear-gradient(#000 50px, transparent 0);
-		background-size: 5px 40px;
-		background-position:
-			0px center,
-			10px center,
-			20px center,
-			30px center,
-			40px center,
-			50px center;
-		animation: spikeUp 1s linear infinite alternate;
-	}
-	@keyframes spikeUp {
-		0% {
-			background-size: 5px 40px;
-		}
-		16% {
-			background-size:
-				5px 55px,
-				5px 40px,
-				5px 40px,
-				5px 40px,
-				5px 40px,
-				5px 40px;
-		}
-		33% {
-			background-size:
-				5px 40px,
-				5px 55px,
-				5px 40px,
-				5px 40px,
-				5px 40px,
-				5px 40px;
-		}
-		50% {
-			background-size:
-				5px 40px,
-				5px 40px,
-				5px 55px,
-				5px 40px,
-				5px 40px,
-				5px 40px;
-		}
-		66% {
-			background-size:
-				5px 40px,
-				5px 40px,
-				5px 40px,
-				5px 55px,
-				5px 40px,
-				5px 40px;
-		}
-		83% {
-			background-size:
-				5px 40px,
-				5px 40px,
-				5px 40px,
-				5px 40px,
-				5px 55px,
-				5px 40px;
-		}
-		100% {
-			background-size:
-				5px 40px,
-				5px 40px,
-				5px 40px,
-				5px 40px,
-				5px 40px,
-				5px 55px;
-		}
-	}
-
-	.progress-bar {
-		width: 200px;
-		height: 4px;
-		background: #eee;
-		border-radius: 2px;
-		overflow: hidden;
-		margin: 0 auto;
-	}
-
-	.progress {
-		height: 100%;
-		background: #333;
-		transition: width 0.3s ease;
-	}
-
-	.progress-text {
-		margin-top: 0.5rem;
-		font-size: 0.875rem;
-		color: #666;
-		font-family: var(--sans);
-	}
 </style>
