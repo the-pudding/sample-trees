@@ -1,5 +1,5 @@
 text,notes,section,type,controller.tree,controller.links,controller.fitViewNodes,controller.fadedNodes,controller.nodeHorizontalGap,controller.secondaryLabelAccessor,controller.component.id,controller.component.type
-# Some samples and interpolations offer instantly recognizable riffs and phrases.,,cold,inline,,,,,,,,
+# Some samples and interpolations offer instantly recognizable riffs and phrases.,,cold,inline,,,"243164,252744",,,,,
 Such as the bass from “Under Pressure” that appears in “Ice Ice Baby”,,cold,sticky,cold,88888888057,"243164,252744",,,,88888888057-cold,crossfade
 # This is a project about the shared DNA in music. ,,intro,inline,,,,,,,,crossfade
 Orchestral music for a play in 1875 can become electronic music for a cartoon in 1983.,,intro,sticky,hit,67872,"253610,64739",,,,67872-hit,crossfade
@@ -9,11 +9,11 @@ Which can be transformed by a minor rap group…,,intro,sticky,hit,"13504,67872"
 "We can see the full impact of sampling if we look at how sound is passed down between generations, forming a musical lineage that spans over 100 years.",,intro,sticky,hit,"4047,12823,12882,13504,67872",,,,,,
 But “Hit Em’ Up” doesn’t just come from that one line. There’s also the R&B of Dionne Warwick’s “Walk on By”,,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872","232485,271914",,,,1218-hit,crossfade
 TK Text reflecting on this leg,,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068",,"253610,64739,234958,234780,234899",,,,
-And the soul of Tom Jones’ “Looking Out My Window”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,13504,67872,12882,12823,88888888068","241514,999999999001",,,,88888888001-hit,crossfade
-Brooklyn rap group Stetsasonic bring Tom Jones’ drums into rap rhythms. Their iconic line “Go Brooklyn” sets out a chain of beats and lyrics set to those beats that leads opens the last verse of “Hit Em Up.” ,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,13504,67872,12882,12823,88888888068",,"232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",,,,
-"And, crucially, the funk of “Blind Man Can See It” by James Brown",,intro,sticky,hit,"3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,13504,67872,12882,12823,88888888068","233659,240512",,,,3946-hit,crossfade
+And the soul of Tom Jones’ “Looking Out My Window”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","241514,999999999001",,,,88888888001-hit,crossfade
+Brooklyn rap group Stetsasonic bring Tom Jones’ drums into rap rhythms. Their iconic line “Go Brooklyn” sets out a chain of beats and lyrics set to those beats that leads opens the last verse of “Hit Em Up.” ,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,"232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",,,,
+"And, crucially, the funk of “Blind Man Can See It” by James Brown",,intro,sticky,hit,"3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","233659,240512",,,,3946-hit,crossfade
 "And all that is just part of the full DNA of this one song, built from an 82 song family tree of samples, remixes, interpolations, and covers…
-",,intro,sticky,hit,"3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,13504,67872,12882,12823,88888888068",,,,,,
+",,intro,sticky,hit,"3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,,,,,
 "I see “Hit ’Em Up” as the descendent of this history, a culmination of an 82-song family tree. Some of its predecessors are directly audible in the final product and are not – but all were influences, big and small, in this generational development of sound.
 
 “Hit ’Em Up” is a sample rich example – not just because Tupac and Biggie specifically used samples to reference one another, but generally because hip-hop is the scene responsible for bringing music sampling into popular music.",,intro,sticky,hit,hit,,,,,,
@@ -23,7 +23,7 @@ Brooklyn rap group Stetsasonic bring Tom Jones’ drums into rap rhythms. Their 
 ### TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK TKTK,,dna,inline,,,,,,,,
 "The DNA of songs can find their way into very different genres, cultures, and songs.
 
-Let's return to the lineage between ""In the Hall of the Mountain King"" and ""Hit Em' Up.""",,dna,sticky,king,"4047,12823,12882,13504,67872",,,,,,
+Let's return to the lineage between ""In the Hall of the Mountain King"" and ""Big Poppa""",,dna,sticky,king,"4047,12823,12882,13504,67872",,,,,,
 "The descendants of ""In the Hall of the Mountain King"" include songs like Jhene Aiko’s “The Worst.” a great-great-great grandchild of “In the Hall of the Mountain King” due to a shared lineage with Big Poppa.",,dna,sticky,king,"88888888058,45521,4047,12823,12882,13504,67872",,,,,,
 "We can even see ""In the Hall of the Mountain King"" make its way to K-pop.
 
@@ -43,20 +43,17 @@ This is how “In The Hall of the Mountain King” has affected music via sample
 The connections in these musical family trees may be a recognizable riff, a borrowed beat, or loaned lyrics. They directly carry on a musical lineage or, at the least, influence the development of a song’s other features.","ideally this is a top down network graph (see script)
 
 MD: need to add missing links from ""the worst"" and ""what if""",dna,sticky,king_2,king_2,,,,,,
-"Some songs have introduced beats that have directly been sampled by hundreds, or even thousands, of other songs. 
+"Some songs have introduced beats that have directly been sampled by hundreds, or even thousands, of other songs.",,,inline,,,,,,,,
+"These are X samples of James Brown’s 1970 track “Funky Drummer,” which is used in everything from George Michael’s “Freedom! '90”, to Alanis Morissette’s “Head Over Feet,” to Ed Sheeran’s “Shirtsleeves.” 
 
-Their total influence on the rhythm of modern music is way larger.
-
-This beat is from James Brown’s 1970 track “Funky Drummer,” which is used in everything from George Michael’s “Freedom! ‘90”, to Alanis Morisette’s “Head Over Feet” to Ed Sheeran’s “Shirtsleeves.” 
-
-And once you hear it, You’ll hear it everywhere. From our perspective, the song has among the most ""descendants"" in music history. ","ideally a radial chart with Funky Drummer in the center.
+And once you hear it, you’ll hear it everywhere; the song has among the most “descendants” in music history.","ideally a radial chart with Funky Drummer in the center.
 
 We need to figure out a way, in this layout, to highlight some nodes—I'm not sure we need cover art for this one and might just want to use shapes.
 
 nodes to annotate/highlight: 11175, 88888888060,11201",beat,sticky,funky_1,funky_1,,,,,,
-Because the beat doesn’t just pass down to one generation.,,beat,sticky,funky_1,11215,"248775,234409",,,,11215-funky_1,crossfade
-But then also leads “South Bronx” to shape the sound of another Bronx artist’s hit…,,beat,sticky,funky_1,"56862,11212","251523,248775",,,,56862-funky_2,crossfade
-One of a whole second generation of songs that play on Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer”,"note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat,sticky,funky_3,funky_3,,,,,,
+Because the beat doesn’t just pass down to one generation.,,beat2,sticky,funky_3,11215,"248775,234409",,,,11215-funky_3,crossfade
+But then also leads “South Bronx” to shape the sound of another Bronx artist’s hit…,,beat2,sticky,funky_3,"56862,11215","251523,248775",,,,56862-funky_3,crossfade
+One of a whole second generation of songs that play on Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer”,"note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat2,sticky,funky_3,funky_3,,,,,,
 "While a beat sets the foundation for a song,  lyrics are some of the most easily transmittable kind of song DNA because they can easily fit into otherwise very different songs.",no viz,lyrics,inline,,,,,,,,
 "The words of particular lyrics can slightly evolve. A Tribe Called Quest released “Can I Kick It?” in 1990, itself a song built on Lou Reed’s “Walk on the Wild Side” from 1972. When Q-Tip asks if he can kick it, the rest of the Tribe responds.
 ",,lyrics,sticky,kick,"54235,19201",,"247659,251388",,,236303,loop
@@ -64,9 +61,9 @@ One of a whole second generation of songs that play on Clyde Stubblefield’s im
 "In 2021, Lorde picks up the line from Robbie Williams – not A Tribe Called Quest – but she takes on both parts.",,lyrics,sticky,kick,"54235,19201","251388,247659",,,,54235-kick,crossfade
 "The structure of a catchy phrase can also produce variations with different content altogether.
 
-Tupac also coined the phrase “I keep my mind on my money, money on my mind” in a verse on MC Breed’s 1993 “Gotta Get Mine” (1:22-1:25, link) – but it blew up when Snoop Dogg quoted it in the chorus of “Gin and Juice” later that year.",no viz,lyrics,sticky,mind,"9378,9410",,,,,,
-Demi Lovato’s “Cool for the Summer” (2015) plays with that format: “Got my mind on your body and your body on my mind”,,lyrics,sticky,mind,"9378,9410","234503,234047",,,,9410-kick,crossfade
-In addition to heavily sampling Avril Lavigne’s “I’m With You”….. Rihanna’s “Cheers (Drink to That)” from 2010 plays a little looser with the formula:  “I got a drink on my mind and my mind on my money.”,,lyrics,sticky,mind,"9378,9410","234473,234047",,,,9378-kick,crossfade
+Tupac also coined the phrase “I keep my mind on my money, money on my mind” in a verse on MC Breed’s 1993 “Gotta Get Mine” (1:22-1:25, link) – but it blew up when Snoop Dogg quoted it in the chorus of “Gin and Juice” later that year.",no viz,lyrics,sticky,mind,"88888888069,88888888070",,,,,,
+Demi Lovato’s “Cool for the Summer” (2015) plays with that format: “Got my mind on your body and your body on my mind”,,lyrics,sticky,mind,"88888888069,88888888070","234503,243893",,,,88888888069-mind,crossfade
+In addition to heavily sampling Avril Lavigne’s “I’m With You”….. Rihanna’s “Cheers (Drink to That)” from 2010 plays a little looser with the formula:  “I got a drink on my mind and my mind on my money.”,,lyrics,sticky,mind,"88888888069,88888888070","234473,243893",,,,88888888070-mind,crossfade
 "Or the words can stay exactly the same, but completely change meaning.
 
 Chubby Checker popularized the phrase “How low can you go” when he added vocals to The Champs’ song “Limbo Rock.” He’s asking about how far to lower the limbo stick…
@@ -97,4 +94,4 @@ That riddim draws from “Stalag 17” a 1962 Hit, and
 ",,melody,sticky,murder,"73469,73497,73479,88888888067,88888888066,88888888062,88888888063,88888888064,88888888065","302743,256139,279390,257494,279400","306957,105701,292345,292347,999999999024",,,,
 "Let’s look at the song “Shake It” by Kay Flock featuring Cardi B, Dougie B, and Bory 300. This sample heavy song took off on TikTok before it was even released, and then was one of the New York Times top songs of 2022. In just this segment, there’s a tune from Buffalo Springfield and Fun Boy Three, lyrics from Akon, a clap beat from Sean Paul and an earlier riddim, and a bass line from a previous Kay Flock song, all combined together.
 ",,wrap,inline,shake,"79003,78998,78999",,,,,258574,loop
-"Then again– there’s something to sticking to the classics, too.",,wrap,sticky,conclusion,88888888061,"999999999023,252744",,,,88888888061-conclusion,crossfade
+"Then again– there’s something to sticking to the classics, too.",,wrap,sticky,conclusion,88888888061,"999999999023,243164",,,,88888888061-conclusion,crossfade
