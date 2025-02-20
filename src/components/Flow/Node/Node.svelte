@@ -14,7 +14,7 @@
 	const dimensions = getContext("dimensions");
 	const loops = getContext("loops");
 	const sectionId = getContext("sectionId");
-
+	const secondaryLabels = getContext("secondaryLabels");
 	// Add font size store for forcing rerender
 	let fontSize = 12;
 	$: if ($activeController?.index !== undefined) {
@@ -65,15 +65,33 @@
 	data-id={data.id}
 >
 	{#if $activeController.tree != $activeController.links}
-		{#key fontSize}
-			<div class="text">
-				<div class="title">{data.title}</div>
-				<div class="artist">
-					{data.primary_artist} ({data.release_date.slice(0, 4)})
+		{#if $secondaryLabels[data.id]}
+			<div class="secondary-labels">
+				<div class="secondary-label top">
+					{$secondaryLabels[data.id].top || ""}
+				</div>
+				<div class="secondary-label right">
+					{$secondaryLabels[data.id].right || ""}
+				</div>
+				<div class="secondary-label bottom">
+					{$secondaryLabels[data.id].bottom || ""}
+				</div>
+				<div class="secondary-label left">
+					{$secondaryLabels[data.id].left || ""}
 				</div>
 			</div>
-		{/key}
+		{:else}
+			{#key fontSize}
+				<div class="text">
+					<div class="title">{data.title}</div>
+					<div class="artist">
+						{data.primary_artist} ({data.release_date.slice(0, 4)})
+					</div>
+				</div>
+			{/key}
+		{/if}
 	{/if}
+
 	<CoverArt {data} />
 
 	{#if isInLoop}
@@ -171,6 +189,35 @@
 				margin-left: -100%;
 				margin-right: -100%;
 			}
+		}
+	}
+
+	.secondary-label {
+		position: absolute;
+		width: 150px;
+		font-weight: bold;
+		font-size: 1rem;
+
+		&.top {
+			top: -25px;
+			text-align: center;
+			left: 50%;
+			-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
+		}
+		&.right {
+			right: calc(var(--node-width) * -1);
+			text-align: left;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&.bottom {
+			bottom: -25px;
+			text-align: center;
+			left: 50%;
+			-webkit-transform: translateX(-50%);
+			transform: translateX(-50%);
 		}
 	}
 </style>

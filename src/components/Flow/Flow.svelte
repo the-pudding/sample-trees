@@ -82,6 +82,9 @@
 		crossfades.set(crossfadesObj);
 	}
 
+	const secondaryLabels = writable({});
+	setContext("secondaryLabels", secondaryLabels);
+
 	// Update progress when offset changes
 	$: if ($controllerStore?.component?.type == "crossfade") {
 		const id = $controllerStore.component?.id;
@@ -213,12 +216,36 @@
 			flowKey += 1;
 		}
 
+		// Update secondary labels
+		if (activeController?.secondaryLabel) {
+			let labels = activeController?.secondaryLabel
+				.replaceAll(/\n+/g, "")
+				.split(";");
+
+			labels.forEach((l) => {
+				if (l.trim() === "") return;
+				let parts = l.split(".");
+				let id = parts[0].trim();
+				let key = parts[1].trim();
+				let value = parts[2].trim();
+
+				// If the id doesn't exist yet, initialize it as an object
+				if (!$secondaryLabels[id]) {
+					$secondaryLabels[id] = {};
+				}
+
+				// Add or update the property
+				$secondaryLabels[id][key] = value;
+			});
+		} else {
+			$secondaryLabels = {};
+		}
+
 		previousIndex = activeController.index;
 	}
 
 	// Change the connection line type to 'straight'
 	const connectionLineType = ConnectionLineType.Straight;
-
 
 	onMount(() => {
 		fitViewToNodes();
