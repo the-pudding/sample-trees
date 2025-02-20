@@ -19,25 +19,24 @@
 
 	const dimensions = getContext("dimensions");
 	const volume = 0.3;
+	const barHeightPadding = 3;
 
 	let wavesurfer;
 	let isReady = false;
 	let waveformRef;
 
 	onMount(() => {
-		const dpr =  1;
-
 		wavesurfer = WaveSurfer.create({
 			container: waveformRef,
 			waveColor: waveColor,
 			progressColor: progressColor,
-			url: `${base}/assets/audio/${link_id}-${id}.mp3`,
-			height: $dimensions.waveformHeight * dpr,
 			volume: $isMuted ? 0 : volume,
-			pixelRatio: dpr,
+			url: `${base}/assets/audio/${link_id}-${id}.mp3`,
+			height: $dimensions.waveformHeight - barHeightPadding*2,
+			barWidth: 1,
+			barAlign: "center",
 			normalize: true,
-			barWidth: .1,
-			barGap: 0,
+			barGap: 1,
 			barRadius: 0
 		});
 
@@ -53,11 +52,6 @@
 		// Replay on finish
 		wavesurfer.on("finish", () => {
 			wavesurfer.play();
-		});
-
-		wavesurfer.on("timeupdate", (currentTime) => {
-			// $playerTimes[id] = currentTime;
-			// console.log($playerTimes[id])
 		});
 
 		return () => {
@@ -94,7 +88,8 @@
 		: `translate(${labelX}px, ${targetY - $dimensions.waveformHeight + $dimensions.waveformGap}px)`}"
 	style:--node-height="{$dimensions.nodeHeight}px"
 	style:--node-width="{$dimensions.nodeWidth}px"
-	style:--waveform-height="{$dimensions.waveformHeight}px"
+	style:--waveform-height="{$dimensions.waveformHeight - barHeightPadding*2}px"
+	style:--bar-height-padding="{barHeightPadding}px"
 >
 	<div
 		bind:this={waveformRef}
@@ -111,17 +106,18 @@
 		width: var(--node-width);
 		height: var(--waveform-height);
 		position: absolute;
-		z-index: 10000 ;
+		z-index: 10000;
 	}
 
 	.waveform {
-		height: var(--waveform-height);
+		// height: var(--waveform-height);
 		width: 100%;
 		background: var(--bg);
-
+		padding-top: var(--bar-height-padding);
+		padding-bottom: var(--bar-height-padding);
 		:global(canvas) {
-			transform: scale(1, 0.5);
-			transform-origin: 0 0;
+			// transform: scale(1, 0.5);
+			// transform-origin: 0 0;
 		}
 	}
 
