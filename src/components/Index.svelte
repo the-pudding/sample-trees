@@ -4,7 +4,8 @@
 	import { SvelteFlowProvider } from "@xyflow/svelte";
 	import { activeSectionId } from "$stores/misc.js";
 	import { base } from "$app/paths";
-	import nodes from "$data/nodes.csv";
+
+	import links from "$data/links.csv";
 	import "@xyflow/svelte/dist/style.css";
 	import { fade } from "svelte/transition";
 	import generateFlow from "$utils/flow/generateFlow";
@@ -19,13 +20,24 @@
 	let hasStarted = false;
 	let render;
 
-	// Create array of image URLs for preloading
-	const imageUrls = nodes.map(
-		(node) => `${base}/assets/cover_art/${node.id}.png`
-	);
+	let imageUrls;
 
 	// Preload images in batches
 	async function preloadImages() {
+		const prerenderLinks = flatSlides
+			.map((slide) => slide["controller.links"].split(","))
+			.flat();
+
+		const prerenderNodes = links
+			.filter((link) => prerenderLinks.includes(link.id))
+			.map((edge) => [edge.start_node_id, edge.end_node_id])
+			.flat();
+
+		// Create array of image URLs for preloading
+		imageUrls = prerenderNodes.map(
+			(node) => `${base}/assets/cover_art/${node}.png`
+		);
+
 		const BATCH_SIZE = 100;
 		const totalImages = imageUrls.length;
 
@@ -134,9 +146,11 @@
 		href="{base}/assets/sprites/spritesheet.jpeg"
 		as="image"
 	/>
-	{#each imageUrls as url}
-		<link rel="preload" href={url} as="image" />
-	{/each}
+	{#if imageUrls?.length}
+		{#each imageUrls as url}
+			<link rel="preload" href={url} as="image" />
+		{/each}
+	{/if}
 </svelte:head>
 
 {#if !hasStarted}
