@@ -10,33 +10,14 @@
 	export let targetPosition;
 
 	const spritesheetWidth = 4384;
-	const spritesheetHeight = 4282;
 	const spriteSize = 100;
-	const spriteGap = 1;
 
-	let imageExists = false;
+	const scale = (data.circleSize || 20) / spriteSize;
 
-	$: spriteCoords =
-		coordinates[data.id + ".jpeg"] || coordinates["missing.jpeg"];
+	$: sprite = coordinates[data.id + ".jpeg"] || coordinates["missing.jpeg"];
 
-	// Check if the image exists before rendering it
-	async function checkImage() {
-		try {
-			const response = await fetch(`${base}/assets/cover_art/${data.id}.png`);
-			imageExists = response.ok;
-		} catch (error) {
-			imageExists = false;
-		}
-	}
-
-	// background-position: {-spriteCoords.x - spriteCoords.x / (spriteSize + spriteGap)}px
-	// {-spriteCoords.y - spriteCoords.y / (spriteSize + spriteGap)}px;
-
-	checkImage();
-
-	let xOffset = (coordinates["10515.jpeg"].x / spritesheetWidth) * 100;
-	let yOffset = (coordinates["10516.jpeg"].y / spritesheetHeight) * 100;
-
+	$: bgX = -(sprite.x * scale);
+	$: bgY = -(sprite.y * scale);
 </script>
 
 <div class="node simple-node">
@@ -50,12 +31,8 @@
 			class="sprite"
 			style="
 				background-image: url({base}/assets/sprites/spritesheet.jpeg);
-				background-position: calc({(spriteCoords.x / spritesheetWidth) *
-				100}% + 1px + {xOffset}%) calc({(spriteCoords.y / spritesheetHeight) *
-				100}% + 1px + {yOffset}%);
-				background-size: {spritesheetWidth}% {spritesheetHeight}%;
-				width: 100%;
-				height: 100%;
+				background-size: calc({spritesheetWidth}px * {scale}) auto;
+				background-position: {bgX}px {bgY}px;
 			"
 		/>
 	</div>
