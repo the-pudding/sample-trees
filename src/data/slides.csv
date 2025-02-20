@@ -1,4 +1,4 @@
-text,notes,section,type,controller.tree,controller.links,controller.fitViewNodes,controller.fadedNodes,controller.nodeHorizontalGap,controller.secondaryLabelAccessor,controller.component.id,controller.component.type
+text,notes,section,type,controller.tree,controller.links,controller.fitViewNodes,controller.fadedNodes,controller.nodeHorizontalGap,controller.secondaryLabel,controller.component.id,controller.component.type
 # Some samples and interpolations offer instantly recognizable riffs and phrases.,,cold,inline,,,"243164,252744",,,,,
 Such as the bass from “Under Pressure” that appears in “Ice Ice Baby”,,cold,sticky,cold,88888888057,"243164,252744",,,,88888888057-cold,crossfade
 # This is a project about the shared DNA in music. ,,intro,inline,,,,,,,,crossfade
@@ -6,7 +6,13 @@ Orchestral music for a play in 1875 can become electronic music for a cartoon in
 Which can be transformed by a minor rap group…,,intro,sticky,hit,"13504,67872","234958,253610",,,,13504-hit,crossfade
 …and then influence the breakout hit of a rap giant….,,intro,sticky,hit,"12882,13504,67872","234780,234958",,,,12882-hit,crossfade
 ...and eventually end up in the back-and-forth of diss tracks that defined the rap rivalry between the east coast and Biggie Smalls and the west coast of Tupac Shakur.,,intro,sticky,hit,"4047,12823,12882,13504,67872","233667,234899,234780",,,,,
-"We can see the full impact of sampling if we look at how sound is passed down between generations, forming a musical lineage that spans over 100 years.",,intro,sticky,hit,"4047,12823,12882,13504,67872",,,,,,
+"We can see the full impact of sampling if we look at how sound is passed down between generations, forming a musical lineage that spans over 100 years.",,intro,sticky,hit,"4047,12823,12882,13504,67872",,,,"64739.top.1895;
+64739.right.Great Great Great Grandparent;
+253610.right.Great Great Grandparent;
+234958.right.Great Grandparent;
+234780.right.Grandparent;
+234899.right.Parent;
+233667.bottom.1996",,
 But “Hit Em’ Up” doesn’t just come from that one line. There’s also the R&B of Dionne Warwick’s “Walk on By”,,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872","232485,271914",,,,1218-hit,crossfade
 TK Text reflecting on this leg,,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068",,"253610,64739,234958,234780,234899",,,,
 And the soul of Tom Jones’ “Looking Out My Window”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","241514,999999999001",,,,88888888001-hit,crossfade
