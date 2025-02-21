@@ -1,14 +1,6 @@
 PHONY: github pudding
 
 github:
-	@if ! git diff-index --quiet HEAD --; then \
-		echo "Warning: You have uncommitted changes. Do you want to continue? (y/n)"; \
-		read ans; \
-		if [ "$$ans" != "y" ]; then \
-			echo "Aborting deployment."; \
-			exit 1; \
-		fi; \
-	fi
 	rm -rf docs
 	cp -r build docs
 	touch docs/.nojekyll
