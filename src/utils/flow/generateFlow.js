@@ -29,7 +29,7 @@ export default async function generateFlow(s) {
 		if (controllerLinks[0] == treeKey) {
 			treeEdges = edges.filter((edge) => edge.tree == treeKey);
 			isPacked = true;
-			method = "elk";
+			method = "dagreTwo";
 			if(treeKey == "king_2") {
 				method = "elkTwo";
 			}

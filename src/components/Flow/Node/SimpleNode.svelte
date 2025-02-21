@@ -1,6 +1,7 @@
 <script>
 	import { Handle, Position } from "@xyflow/svelte";
 	import { base } from "$app/paths";
+	import { getContext } from "svelte";
 	import coordinates from "$data/coordinates.json";
 
 	$$restProps;
@@ -11,6 +12,9 @@
 
 	const spritesheetWidth = 4384;
 	const spriteSize = 100;
+	const secondaryLabels = getContext("secondaryLabels");
+
+	console.log(secondaryLabels)
 
 	const scale = (data.circleSize || 20) / spriteSize;
 
@@ -27,6 +31,14 @@
 		title={data.title}
 		style="width: {data.circleSize}px; height: {data.circleSize}px;"
 	>
+
+		<div class="secondary-labels">
+			<div class="secondary-label right" style="font-size: 12px;">
+				hello
+			</div>
+		</div>
+
+
 		<div
 			class="sprite"
 			style="
@@ -73,6 +85,42 @@
 			background-repeat: no-repeat;
 			width: 100%;
 			height: 100%;
+		}
+
+		.secondary-label {
+			position: absolute;
+			width: 150px;
+			font-weight: bold;
+			font-size: 1rem;
+
+			&.top {
+				
+				text-align: center;
+				top: 0px;
+				transform: translate(0, -100%);
+				left: 0;
+				right: 0;
+				margin: 0 auto;
+				
+			}
+			&.right {
+				right: calc(var(--node-width) * -1);
+				text-align: left;
+				top: 50%;
+				transform: translate(100%, -50%);
+				right: -5px;
+				left: auto;
+				width: auto;
+				line-height: 1;
+			}
+			&.bottom {
+				text-align: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				margin: 0 auto;
+				transform: translate(0, 100%);
+			}
 		}
 	}
 

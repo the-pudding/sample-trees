@@ -1,5 +1,5 @@
 <script>
-	import { Handle, Position } from "@xyflow/svelte";
+	import { Handle, Position, useSvelteFlow } from "@xyflow/svelte";
 	import CoverArt from "./Node.CoverArt.svelte";
 	import { getContext } from "svelte";
 	import Waveform from "./Node.Waveform.svelte";
@@ -15,7 +15,8 @@
 	const loops = getContext("loops");
 	const sectionId = getContext("sectionId");
 	const secondaryLabels = getContext("secondaryLabels");
-	// Add font size store for forcing rerender
+	const { viewport } = useSvelteFlow();
+
 	let fontSize = 12;
 	$: if ($activeController?.index !== undefined) {
 		// Toggle between same size to force text rerender
@@ -61,22 +62,23 @@
 	class:faded={shouldBeFaded}
 	style:--node-height="{$dimensions.nodeHeight}px"
 	style:--node-width="{$dimensions.nodeWidth}px"
-	style:--font-size="{fontSize}px"
+	style:--base-font-size="{fontSize}"
 	data-id={data.id}
 >
 	{#if $activeController.tree != $activeController.links}
 		{#if $secondaryLabels[data.id]}
 			<div class="secondary-labels">
-				<div class="secondary-label top">
+				<div class="secondary-label top" style="font-size: {12/$viewport.zoom}px;">
 					{$secondaryLabels[data.id].top || ""}
 				</div>
-				<div class="secondary-label right">
+
+				<div class="secondary-label right" style="font-size: {12/$viewport.zoom}px;">
 					{$secondaryLabels[data.id].right || ""}
 				</div>
-				<div class="secondary-label bottom">
+				<div class="secondary-label bottom" style="font-size: {12/$viewport.zoom}px;">
 					{$secondaryLabels[data.id].bottom || ""}
 				</div>
-				<div class="secondary-label left">
+				<div class="secondary-label left" style="font-size: {12/$viewport.zoom}px;">
 					{$secondaryLabels[data.id].left || ""}
 				</div>
 			</div>
@@ -183,6 +185,15 @@
 			will-change: transform;
 			transform: translate3d(0, -5px, 0);
 
+			.title {
+				font-size: var(--base-font-size);
+				font-weight: bold;
+			}
+
+			.artist {
+				font-size: calc(var(--base-font-size) * 0.8);
+			}
+
 			* {
 				white-space: nowrap;
 				text-align: center;
@@ -199,25 +210,33 @@
 		font-size: 1rem;
 
 		&.top {
-			top: -25px;
+			
 			text-align: center;
-			left: 50%;
-			-webkit-transform: translateX(-50%);
-			transform: translateX(-50%);
+			top: 0px;
+			transform: translate(0, -100%);
+			left: 0;
+			right: 0;
+			margin: 0 auto;
+			
 		}
 		&.right {
 			right: calc(var(--node-width) * -1);
 			text-align: left;
 			top: 50%;
-			transform: translateY(-50%);
+			transform: translate(100%, -50%);
+			right: -18px;
+			left: auto;
+			width: auto;
+			line-height: 1;
 		}
 
 		&.bottom {
-			bottom: -25px;
 			text-align: center;
-			left: 50%;
-			-webkit-transform: translateX(-50%);
-			transform: translateX(-50%);
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: 0 auto;
+			transform: translate(0, 100%);
 		}
 	}
 </style>

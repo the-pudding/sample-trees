@@ -167,21 +167,31 @@
 
 	function fitViewToNodes() {
 		let fitToNodes;
+
 		if (activeController?.fitViewNodes) {
 			fitToNodes = activeController.fitViewNodes
 				.split(",")
 				.map((id) => id.trim())
 				.map((id) => ({ id }));
 		} else {
-			fitToNodes = activeTree.nodes;
+			// Remove duplicate nodes by id
+			fitToNodes = [...new Map(activeTree.nodes.map(node => [node.id, node])).values()];
+			// fitToNodes = activeTree.nodes;
 		}
+		
 		window.setTimeout(() => {
+
 			fitView({
 				nodes: fitToNodes,
-				padding: 0.05,
-				duration: 500
+				padding: fitToNodes.length === 2 ? 0.2 : 0.05,
+				duration: 500,
+				minZoom: 0.1,
+				maxZoom: 2,
+				includeHiddenNodes: false,
+				width: $viewport.width,
+				height: window.innerHeight
 			});
-		}, 0);
+		}, 250);
 	}
 
 	// Handle state changes when controller changes
@@ -262,6 +272,9 @@
 			{edgeTypes}
 			fitView
 			{connectionLineType}
+			minZoom={0.1}
+			maxZoom={2}
+			defaultViewport={{ x: 0, y: 0, zoom: 1 }}
 			defaultEdgeOptions={{
 				type: "custom",
 				animated: false,
@@ -276,8 +289,9 @@
 <style lang="scss">
 	.flow {
 		top: 0px;
-		height: 100svh;
+		height: 100dvh;
 		width: 100%;
+		position: relative;
 	}
 
 	:global(.svelte-flow__edges) {

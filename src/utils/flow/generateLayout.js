@@ -163,6 +163,8 @@ export default async function generateLayout(
             ...node,
             type: 'simple',
             position: { x, y },
+            sourcePosition: Position.Bottom,
+            targetPosition: Position.Top,
             data: {
               ...node.data,
               circleSize: circleSize
@@ -181,15 +183,25 @@ export default async function generateLayout(
     dagreGraph.setDefaultEdgeLabel(() => ({}));
 
     // Set graph direction
-    dagreGraph.setGraph({ rankdir: direction });
+    dagreGraph.setGraph({ 
+      rankdir: direction,
+      // ranksep: 1,
+    });
 
     // Add nodes to the Dagre graph
     inputNodes.forEach((node) => {
       dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
     });
 
+
     // Add edges to the Dagre graph
+    // inputEdges.forEach((edge) => {
+    //   dagreGraph.setEdge(edge.source, edge.target);
+    // });
+
+    // Set edge type to 'step' for each edge
     inputEdges.forEach((edge) => {
+      // edge.type = 'step';
       dagreGraph.setEdge(edge.source, edge.target);
     });
 
@@ -220,40 +232,82 @@ export default async function generateLayout(
   
 
   } else if (method === "elk") {
-    // ELK Layout
     const elk = new ELK();
     
+    // Increase padding to give more room around edges
     const padding = 5;
     const availableWidth = viewportWidth - padding * 2;
     const availableHeight = viewportHeight - padding * 2;
 
-    // Calculate aspect ratio to determine if we're in desktop mode
     const isDesktop = availableWidth / availableHeight > 1.2;
 
-    // Adjust spacing based on aspect ratio
-    const baseNodeSpacing = isDesktop ? 60 : 40;
+    // Count nodes per level
+    const levels = new Map();
+    const nodeMap = new Map();
+    inputNodes.forEach(node => nodeMap.set(node.id, { level: 0 }));
+    
+    // Calculate levels
+    inputEdges.forEach(edge => {
+      const targetNode = nodeMap.get(edge.target);
+      const sourceNode = nodeMap.get(edge.source);
+      if (targetNode && sourceNode) {
+        targetNode.level = sourceNode.level + 1;
+      }
+    });
+
+    nodeMap.forEach(node => {
+      if (!levels.has(node.level)) {
+        levels.set(node.level, 0);
+      }
+      levels.set(node.level, levels.get(node.level) + 1);
+    });
+
+    const maxNodesInLevel = Math.max(...levels.values());
+    const numLevels = levels.size;
+
+    // Calculate larger node dimensions
+    const maxNodeWidth = Math.floor(availableWidth / (maxNodesInLevel));  // Removed +1 to allow larger nodes
+    const maxNodeHeight = Math.floor(availableHeight / (numLevels));      // Removed +1 to allow larger nodes
+    
+    console.log(maxNodesInLevel)
+
+
+    // Increase maximum node size by using a larger fraction of screen
+    let nodeSize = Math.min(
+      maxNodeWidth,
+      maxNodeHeight,
+      Math.min(availableWidth, availableHeight) / 2  // Changed from /3 to /2 for larger nodes
+    );
+
+    nodeSize = 30;
+
+    const nodeWidth = nodeSize;
+    const nodeHeight = nodeSize;
+
+    const baseNodeSpacing = isDesktop ? nodeSize*4 : nodeSize*2;//60 : 60;
     const baseLayerSpacing = isDesktop ? 250 : 200;
     const horizontalModifier = isDesktop ? 1.5 : 1.0;
+
+
+    // Very small spacing to keep nodes close together
+    // const baseNodeSpacing = nodeSize * 0.05;    // 5% of node size
+    // const baseLayerSpacing = nodeSize * 0.05;   // 5% of node size
 
     const elkOptions = {
       "elk.direction": direction === "TB" ? "DOWN" : "RIGHT",
       "elk.algorithm": "layered",
-      // Adjust spacing based on screen shape
-      "elk.spacing.nodeNode": baseNodeSpacing * horizontalModifier,  // More horizontal space on desktop
+      "elk.spacing.nodeNode": baseNodeSpacing * horizontalModifier,
       "elk.spacing.componentComponent": baseNodeSpacing,
       "elk.layered.spacing.nodeNodeBetweenLayers": baseLayerSpacing,
-      "elk.layered.spacing.edgeNodeBetweenLayers": baseLayerSpacing * 0.5,
-      // Layout options
+      "elk.layered.spacing.edgeNodeBetweenLayers": baseLayerSpacing * 0.1,  // Reduced to 10% for shorter edges
       "elk.layered.nodePlacement.bk.fixedAlignment": "BALANCED",
       "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
       "elk.layered.nodePlacement.strategy": "BRANDES_KOEPF",
       "elk.layered.layering.strategy": "NETWORK_SIMPLEX",
-      // Adjust aspect ratio based on screen shape
       "elk.aspectRatio": isDesktop 
         ? (availableWidth * 0.85) / availableHeight  // Use more width on desktop
         : (availableWidth * 0.7) / availableHeight,
       "elk.padding": `[top=${padding}, left=${padding}, bottom=${padding}, right=${padding}]`,
-      // Additional spacing options
       "elk.layered.spacing.baseValue": isDesktop ? 120 : 100,
       "elk.layered.considerModelOrder": true,
       "elk.layered.spacing.modifier": isDesktop ? 1.2 : 1.0
@@ -269,12 +323,7 @@ export default async function generateLayout(
         width: nodeWidth,
         height: nodeHeight,
       })),
-      edges: inputEdges,
-      // edges: inputEdges.map(edge => ({
-      //   ...edge,
-      //   type: 'simple'  // Specify simple edge type for elkTwo
-      // }))
-
+      edges: inputEdges
     };
 
     try {
@@ -316,6 +365,10 @@ export default async function generateLayout(
           targetPosition: isHorizontal ? Position.Left : Position.Top,
           sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
           type: 'simple',
+          data: {
+            ...node.data,
+            circleSize: nodeSize
+          }
         })),
         edges: layoutedGraph.edges.map(edge => ({
           ...edge,

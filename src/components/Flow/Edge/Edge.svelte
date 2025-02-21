@@ -1,6 +1,6 @@
 <script>
 	import {
-		getBezierPath,
+		getSmoothStepPath,
 		BaseEdge,
 		EdgeLabelRenderer,
 		useEdges
@@ -30,7 +30,7 @@
 
 	$$restProps;
 
-	$: [edgePath, labelX] = getBezierPath({
+	$: [edgePath, labelX] = getSmoothStepPath({
 		sourceX,
 		sourceY,
 		sourcePosition,
