@@ -44,7 +44,9 @@
 	// Determine if node should be faded
 	$: shouldBeFaded =
 		$activeController?.fadedNodes?.split(",").includes(data.id) ||
-		($activeController?.component?.type === "loop" && !isCurrentlyPlaying);
+		(!$activeController?.component?.id == "258574" &&
+			$activeController?.component?.type === "loop" &&
+			!isCurrentlyPlaying);
 </script>
 
 <Handle
@@ -62,27 +64,39 @@
 	class:faded={shouldBeFaded}
 	style:--node-height="{$dimensions.nodeHeight}px"
 	style:--node-width="{$dimensions.nodeWidth}px"
-	style:--base-font-size="{fontSize}"
+	style:--base-font-size={fontSize}
 	data-id={data.id}
 >
 	{#if $activeController.tree != $activeController.links}
 		{#if $secondaryLabels[data.id]}
 			<div class="secondary-labels">
-				<div class="secondary-label top" style="font-size: {12/$viewport.zoom}px;">
+				<div
+					class="secondary-label top"
+					style="font-size: {12 / $viewport.zoom}px;"
+				>
 					{$secondaryLabels[data.id].top || ""}
 				</div>
 
-				<div class="secondary-label right" style="font-size: {12/$viewport.zoom}px;">
+				<div
+					class="secondary-label right"
+					style="font-size: {12 / $viewport.zoom}px;"
+				>
 					{$secondaryLabels[data.id].right || ""}
 				</div>
-				<div class="secondary-label bottom" style="font-size: {12/$viewport.zoom}px;">
+				<div
+					class="secondary-label bottom"
+					style="font-size: {12 / $viewport.zoom}px;"
+				>
 					{$secondaryLabels[data.id].bottom || ""}
 				</div>
-				<div class="secondary-label left" style="font-size: {12/$viewport.zoom}px;">
+				<div
+					class="secondary-label left"
+					style="font-size: {12 / $viewport.zoom}px;"
+				>
 					{$secondaryLabels[data.id].left || ""}
 				</div>
 			</div>
-		{:else}
+		{:else if $activeController.showPrimaryText}
 			{#key fontSize}
 				<div class="text">
 					<div class="title">{data.title}</div>
@@ -210,14 +224,12 @@
 		font-size: 1rem;
 
 		&.top {
-			
 			text-align: center;
 			top: 0px;
 			transform: translate(0, -100%);
 			left: 0;
 			right: 0;
 			margin: 0 auto;
-			
 		}
 		&.right {
 			right: calc(var(--node-width) * -1);

@@ -175,12 +175,13 @@
 				.map((id) => ({ id }));
 		} else {
 			// Remove duplicate nodes by id
-			fitToNodes = [...new Map(activeTree.nodes.map(node => [node.id, node])).values()];
+			fitToNodes = [
+				...new Map(activeTree.nodes.map((node) => [node.id, node])).values()
+			];
 			// fitToNodes = activeTree.nodes;
 		}
-		
-		window.setTimeout(() => {
 
+		window.setTimeout(() => {
 			fitView({
 				nodes: fitToNodes,
 				padding: fitToNodes.length === 2 ? 0.2 : 0.05,
@@ -226,6 +227,12 @@
 			flowKey += 1;
 		}
 
+		updateSecondaryLabels();
+
+		previousIndex = activeController.index;
+	}
+
+	function updateSecondaryLabels() {
 		// Update secondary labels
 		if (activeController?.secondaryLabel) {
 			let labels = activeController?.secondaryLabel
@@ -250,8 +257,11 @@
 		} else {
 			$secondaryLabels = {};
 		}
+	}
 
-		previousIndex = activeController.index;
+	// Handle the special case for the wrap1 controller
+	$: if (activeController?.component?.id == "258574") {
+		updateSecondaryLabels();
 	}
 
 	// Change the connection line type to 'straight'

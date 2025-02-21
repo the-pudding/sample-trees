@@ -14,8 +14,6 @@
 	const spriteSize = 100;
 	const secondaryLabels = getContext("secondaryLabels");
 
-	console.log(secondaryLabels)
-
 	const scale = (data.circleSize || 20) / spriteSize;
 
 	$: sprite = coordinates[data.id + ".jpeg"] || coordinates["missing.jpeg"];

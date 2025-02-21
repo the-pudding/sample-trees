@@ -22,7 +22,7 @@ export default async function generateLayout(
   const waveformHeight = 30;
 
   const nodeHeight = isPacked
-    ? 20
+    ? 50
     : Math.min(get(viewport).height / 2 - textHeight - waveformHeight, 260);
   const nodeWidth = isPacked ? 20 : nodeHeight * 0.75;
 
