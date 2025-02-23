@@ -47,6 +47,7 @@
 		(!$activeController?.component?.id == "258574" &&
 			$activeController?.component?.type === "loop" &&
 			!isCurrentlyPlaying);
+
 </script>
 
 <Handle

@@ -44,7 +44,7 @@ async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp) {
     return new Promise((resolve, reject) => {
       ffmpeg(inputPath)
         .setStartTime(startInSeconds)     // Start time in seconds
-        .setDuration(duration)            // Duration in seconds
+        .setDuration(duration+1)            // Duration in seconds
         .output(outputPath)
         .on('end', () => {
           console.log(`Successfully cropped ${inputPath} to ${outputPath}`);
@@ -87,9 +87,15 @@ async function main() {
           const inputFileP = path.resolve(`./audio_inputs/${song.p_id}.mp3`);  // Path to input file
           const outputFileP = path.resolve(`../static/assets/audio/${song.link_id}-${song.p_id}.mp3`); // Path to output file
   
+          const outputFilePalt = path.resolve(`../static/assets/audio/${song.p_id}.mp3`);
+
           const inputFileC = path.resolve(`./audio_inputs/${song.c_id}.mp3`);  // Path to input file
           const outputFileC = path.resolve(`../static/assets/audio/${song.link_id}-${song.c_id}.mp3`); // Path to output file
   
+          const outputFileCalt = path.resolve(`../static/assets/audio/${song.c_id}.mp3`);
+
+
+
           const startTimestampP = song.p_time_start; // Example: start cropping at 10 seconds
           const endTimestampP = song.p_time_end;   // Example: stop cropping at 20 seconds
   
@@ -100,7 +106,12 @@ async function main() {
           try {
               cropMp3(inputFileP, outputFileP, startTimestampP, endTimestampP);
               cropMp3(inputFileC, outputFileC, startTimestampC, endTimestampC);
-  
+
+              cropMp3(inputFileP, outputFilePalt, startTimestampP, endTimestampP);
+              cropMp3(inputFileC, outputFileCalt, startTimestampC, endTimestampC);
+
+              
+
           } catch (err) {
               console.error('Failed to crop MP3:', err);
           }

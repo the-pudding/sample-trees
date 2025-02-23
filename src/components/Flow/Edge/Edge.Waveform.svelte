@@ -18,7 +18,7 @@
 	export let link_id;
 
 	const dimensions = getContext("dimensions");
-	const volume = 0.2;
+	const volume = .1;
 	const barHeightPadding = 3;
 
 	let wavesurfer;

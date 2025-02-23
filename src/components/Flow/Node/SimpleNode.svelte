@@ -32,7 +32,7 @@
 
 		<div class="secondary-labels">
 			<div class="secondary-label right" style="font-size: 12px;">
-				hello
+				
 			</div>
 		</div>
 

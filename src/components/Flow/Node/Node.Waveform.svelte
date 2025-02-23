@@ -15,7 +15,7 @@
 
 	const dimensions = getContext("dimensions");
 	const advanceLoop = getContext("advanceLoop");
-	const volume = 0.3;
+	const volume = .05;
 
 	let wavesurfer;
 	let isReady = false;
