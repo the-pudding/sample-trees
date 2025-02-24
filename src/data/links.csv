@@ -2701,11 +2701,13 @@ id,start_node_id,end_node_id,relationship_type,tree,remove,S_NAME,E_NAME,type,fl
 88888888063,292345,306957,,murder,,Freaks,Murder She Wrote,,,88888888063-murder,292345-306957murder
 88888888064,292347,306957,,murder,,Post to Be,Murder She Wrote,,,88888888064-murder,292347-306957murder
 88888888065,999999999024,306957,,murder,,Labios Mordidos,Murder She Wrote,,,88888888065-murder,999999999024-306957murder
-88888888066,306957,302743,,murder,,Murder She Wrote,Stalag 17,,,88888888066-murder,
-88888888067,256139,302743,,murder,,Bam Bam,Stalag 17,,,88888888067-murder,
-73469,279390,256139,,murder,,Do to Me,Bam Bam,,,73469-murder,
-73497,257494,256139,,murder,,Lost Ones,Bam Bam,,,73497-murder,
-73479,279400,256139,,murder,,Bam,Bam Bam,,,73479-murder,
-79003,258574,80750,,shake,,Shake It,Is Ya Ready,,,79003-shake,
-78998,258574,81845,,shake,,Shake It,Temperature,,,78998-shake,
-78999,258574,276583,,shake,,Shake It,Bananza (Belly Dancer),,,78999-shake,
+88888888066,306957,302743,,murder,,Murder She Wrote,Stalag 17,,,88888888066-murder,306957-302743murder
+88888888067,256139,302743,,murder,,Bam Bam,Stalag 17,,,88888888067-murder,256139-302743murder
+73469,279390,256139,,murder,,Do to Me,Bam Bam,,,73469-murder,279390-256139murder
+73497,257494,256139,,murder,,Lost Ones,Bam Bam,,,73497-murder,257494-256139murder
+73479,279400,256139,,murder,,Bam,Bam Bam,,,73479-murder,279400-256139murder
+79003,258574,80750,,shake,,Shake It,Is Ya Ready,,,79003-shake,258574-80750shake
+78998,258574,81845,,shake,,Shake It,Temperature,,,78998-shake,258574-81845shake
+78999,258574,276583,,shake,,Shake It,Bananza (Belly Dancer),,,78999-shake,258574-276583shake
+88888888071,999999999026,999999999025,,open,,I Believe to My Soul,I Believe to My Soul,,,88888888071-open,999999999026-999999999025open
+88888888072,999999999027,999999999026,,open,,Not Like Us,I Believe to My Soul,,,88888888072-open,999999999027-999999999026open
