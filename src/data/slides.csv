@@ -1,4 +1,6 @@
 text,notes,section,type,controller.tree,controller.links,controller.fitViewNodes,controller.fadedNodes,controller.secondaryLabel,controller.showPrimaryText,controller.component.id,controller.component.type
+How does this…,,open,sticky,open,88888888071,"999999999026,999999999025",,,true,88888888071-open,crossfade
+Become this?,,open,sticky,open,"88888888072,88888888071","999999999027,999999999026",,,true,88888888072-open,crossfade
 # Do you know where your music comes from?,,cold,inline,,,"243164,252744",,,,,
 "Some songs may be pretty obvious, because they grow out of iconic sounds, such as the bass from “Under Pressure,” which is passed down to “Ice Ice Baby.”",,cold,sticky,cold,88888888057,"243164,252744",,,true,88888888057-cold,crossfade
 "# But many songs have a far more complex and concealed musical history, spanning genres, cultures, and even centuries.
@@ -19,28 +21,29 @@ In 1996, over 120 years after “In the Hall of the Mountain King,” 2pac relea
 233667.bottom.1996",,,
 "This isn’t “Hit ’Em Up’s” only lineage, but one of many, connected through samples, interpolations, covers and remixes.
 
-Another lineage begins with the smooth R&B passed down from Dionne Warwick’s “Walk on By.” Next, Isaac Hayes reinterprets the song and slows down the tempo.",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872","232485,271914",,,,1218-hit,crossfade
+Another lineage begins with the smooth R&B passed down from Dionne Warwick’s “Walk on By.” Next, Isaac Hayes reinterprets the song and slows down the tempo.",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872","232485,271914",,,true,1218-hit,crossfade
 "This catches the ear of Biggie Smalls and forms the basis of his track “Warning,” which starts a chain of Biggie and Junior M.A.F.I.A. samples, eventually sampled by, once again, “Hit ’Em Up.”",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068",,"253610,64739,234958,234780,234899","271914.top.1964;
 233667.bottom.1996",,,
-And there’s the soul of Tom Jones’ “Looking Out My Window.”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","241514,999999999001",,,,88888888001-hit,crossfade
+And there’s the soul of Tom Jones’ “Looking Out My Window.”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","241514,999999999001","232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",,true,88888888001-hit,crossfade
 "Brooklyn rap group Stetsasonic brings Tom Jones’ drums into rap rhythms. Their iconic line “Go Brooklyn” sets out a chain of beats, and lyrics set to those beats, that inspires the opening of the last verse of “Hit ’Em Up.”",,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,"232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",233667.bottom.1996,,,
-"And, crucially, there’s the funk of “Blind Man Can See It” by James Brown. This iconic bass riff is a clear influence on the bassline of Dennis Edwards and Siedah Garrett’s “Don’t Look Any Further.”
-
-“Hit ’Em Up” samples this baseline.",,intro,sticky,hit,"3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","233659,240512",,,,3946-hit,crossfade
+"And, crucially, there’s the funk of “Blind Man Can See It” by James Brown. This iconic bass riff is a clear influence on the bassline of Dennis Edwards and Siedah Garrett’s “Don’t Look Any Further.”",,intro,sticky,hit,"3946,3944","233659,240512",,,true,3946-hit,crossfade
+“Hit ’Em Up” then samples “Don’t Look Any Further’s” baseline.,,intro,sticky,hit,"3946,3944","233659,233667",,,true,3944-hit,crossfade
 All of this is just a fraction of the full DNA of this one song.,,intro,sticky,hit,"3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,,"64739.top.1895;
 271914.top.1964;
+240512.top.1973;
 999999999001.top.1968;
 233667.bottom.1996",,,
 "“Hit ’Em Up” is the descendent of a larger history, a culmination of an 82-song family tree.
 
 Some of “Hit ’Em Up’s” ancestors are directly audible in the final product; others are not. But all of these tracks were influences, big and small, in the generational development of “Hit ’Em Up.”
-",,intro,sticky,hit,hit,,,233667.right.test,,,
+",,intro,sticky,hit,hit,,,233667.right.test;,,,
 "# Shared DNA: Who’s your music related to?
 
 ",,dna,inline,,,,,,,,
 "### When we consider samples, remixes, interpolations, and covers as  musical family ties, we can trace how the DNA of one song can lead to a very different genre and culture. We can see how very different songs might actually be related. ",,dna,inline,,,,,,,,
 "First, let’s return to the lineage between “In the Hall of the Mountain King” and “Big Poppa.”",,dna,sticky,king,"4047,12823,12882,13504,67872",,,,,,
-"The descendants of “In the Hall of the Mountain King” include Jhene Aiko’s “The Worst,” a great-great-great grandchild of “In the Hall of the Mountain King” due to a shared lineage with Big Poppa.",,dna,sticky,king,"88888888058,45521,4047,12823,12882,13504,67872",,,,,,
+"The descendants of “In the Hall of the Mountain King” include Jhene Aiko’s “The Worst,” a great-great-great grandchild of “In the Hall of the Mountain King” due to a shared lineage with Big Poppa.",,dna,sticky,king,"88888888058,45521,4047,12823,12882,13504,67872",,"233667,234899","12024.bottom.The Worst;
+64739.top.Mountain King",,,
 "But if we take a different route through the family tree, we can even see “In the Hall of the Mountain King” make its way to Korean rap in J-Hope’s song “What if…”",,dna,sticky,king,"15265,3026,3030,88888888059,88888888058,45521,4047,12823,12882,13504,67872",,"233667,234899,234780,244142,234958,244133,244143",,,,
 Doug E. Fresh samples the familiar riff from Inspector Gadget.,,dna,sticky,king,"15265,3026,3030,88888888059","235321,253610",,,true,15265-king,crossfade
 Slick Rick’s lyrics are then sampled by Big Daddy Kane on “Show & Prove.”,,dna,sticky,king,"15265,3026,3030,88888888059","233262,235321",,,true,3026-king,crossfade
@@ -78,9 +81,9 @@ While a beat sets the foundation for a song, lyrics are some of the most easily 
 "In 2021, Lorde picked up the line [from](https://www.youtube.com/watch?v=If-VG2s0lX8) Robbie Williams— not A Tribe Called Quest— – but she takes on both parts.",,lyrics,sticky,kick,"54235,19201","251388,247659",,,true,54235-kick,crossfade
 "The structure of a catchy phrase can also produce variations with different content altogether.
 
-Tupac also used the phrase “I keep my mind on my money, money on my mind” in a verse on MC Breed’s 1993 “Gotta Get Mine,” but it blew up when Snoop Dogg quoted it in the chorus of “Gin and Juice” later that year.",no viz,lyrics,sticky,mind,"88888888069,88888888070",,,,,,
-"Demi Lovato’s “Cool for the Summer” (2015) plays with that line, but shifts the focus in a different direction…",,lyrics,sticky,mind,88888888069,"234503,243893",,,true,88888888069-mind,crossfade
-"While Rihanna’s “Cheers (Drink to That)” from 2010, in addition to heavily sampling Avril Lavigne’s “I’m With You,” abandons the parallel format entirely…",,lyrics,sticky,mind,88888888070,"234473,243893",,,true,88888888070-mind,crossfade
+Tupac also used the phrase “I keep my mind on my money, money on my mind” in a verse on MC Breed’s 1993 “Gotta Get Mine,” but it blew up when Snoop Dogg quoted it in the chorus of “Gin and Juice” later that year.",no viz,lyrics,sticky,mind,"9410,9378",,,,,,
+"Demi Lovato’s “Cool for the Summer” (2015) plays with that line, but shifts the focus in a different direction…",,lyrics,sticky,mind,9410,"234503,234047",,,true,9410-mind,crossfade
+"While Rihanna’s “Cheers (Drink to That)” from 2010, in addition to heavily sampling Avril Lavigne’s “I’m With You,” abandons the parallel format entirely…",,lyrics,sticky,mind,9378,"234473,234047",,,true,9378-mind,crossfade
 "Or the words can stay exactly the same, but completely change meaning.
 
 Chubby Checker popularized the phrase “How low can you go” when he added vocals to The Champs’ song “Limbo Rock.” He’s asking about how far to lower the limbo stick…",,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031",,,,,,
