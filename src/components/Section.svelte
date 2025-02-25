@@ -5,6 +5,8 @@
 	import { onMount, getContext, setContext } from "svelte";
 	import { SvelteFlowProvider } from "@xyflow/svelte";
 	import "@xyflow/svelte/dist/style.css";
+	import viewport from "$stores/viewport";
+
 
 	// Components
 	import Flow from "./Flow/Flow.svelte";
@@ -125,8 +127,16 @@
 		</div>
 
 		<div class="foreground" slot="foreground">
-			{#each slides as slide}
-				<section class="slide" class:spacer={!slide.text}>
+			{#each slides as slide, i}
+				<section
+					class="slide"
+					style="
+						height:{!slide.text ? $viewport.height*.25 : $viewport.height}px;
+						padding-top:{i == 0 ? $viewport.height/2 : ''}px;
+						padding-bottom:{i == slides.length - 1 ? $viewport.height/2 : ''}px;
+					"
+					class:spacer={!slide.text}
+				>
 					{#if slide.text}
 						<p>{slide.text}</p>
 					{/if}
@@ -176,23 +186,11 @@
 	}
 
 	.slide {
-		height: 100vh;
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		align-items: flex-start;
 		pointer-events: none;
 
-		&:first-of-type {
-			padding-top: 50vh;
-		}
-
-		&:last-of-type {
-			padding-bottom: 50vh;
-		}
-
-		&.spacer {
-			height: 25vh;
-		}
 		p {
 			background: white;
 			width: 100%;

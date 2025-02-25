@@ -240,7 +240,6 @@
 			$edgeHighlights = [];
 		}
 
-		console.log($edgeHighlights);
 		$edgeHighlights = $edgeHighlights;
 	}
 
