@@ -15,6 +15,7 @@
 	const activeController = getContext("activeController");
 	const crossfades = getContext("crossfades");
 	const dimensions = getContext("dimensions");
+	const edgeHighlights = getContext("edgeHighlights");
 
 	export let id;
 	export let source;
@@ -27,6 +28,10 @@
 	export let targetPosition;
 	export let markerEnd = undefined;
 	export let data;
+
+	$: highlight = $edgeHighlights
+		.map((edgeId) => `${edgeId}-${$activeController.tree}`)
+		.includes(id);
 
 	$$restProps;
 
@@ -55,8 +60,6 @@
 
 	$: progressPercentage = $crossfades[id]?.progress;
 	$: progressY = progressScale(progressPercentage);
-
-
 </script>
 
 {#if $activeController?.component?.type == "crossfade" && $activeController?.component?.id == id}
@@ -88,31 +91,45 @@
 		<Crossfade {labelX} {sourceY} {targetY} {progressY} />
 	</EdgeLabelRenderer>
 {:else if data?.method === "elk"}
-	<BaseEdge 
-		path={edgePath} 
+	<BaseEdge
+		path={edgePath}
 		{markerEnd}
 		style="stroke-width: 2px;"
-		class="base-edge elk-edge"
+		class="base-edge elk-edge {highlight ? 'highlighted' : ''}"
 	/>
 {:else}
-	<BaseEdge 
-		path={edgePath} 
+	<BaseEdge
+		path={edgePath}
 		{markerEnd}
 		style=""
-		class="base-edge"
+		class="base-edge {highlight ? 'highlighted' : ''}"
 	/>
 {/if}
 
-<style>
+<style lang="scss">
 	:global(.base-edge) {
-		transition: stroke 0.2s, stroke-width 0.2s;
+		transition:
+			stroke 0.2s,
+			stroke-width 0.2s;
 		stroke: #ccc;
 		stroke-width: 3px;
 		vector-effect: non-scaling-stroke;
 	}
 
 	:global(.base-edge:hover) {
-		stroke: #ADADAD;
+		stroke: #adadad;
 		stroke-width: 3px;
+	}
+
+	:global(.show-highlighted-edges .base-edge.highlighted) {
+		stroke: #ff0000;
+		stroke-width: 3px;
+		z-index: 10000;
+	}
+
+	:global {
+		svg:has(.base-edge.highlighted) {
+			z-index: 1 !important;
+		}
 	}
 </style>

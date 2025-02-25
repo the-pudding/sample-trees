@@ -171,4 +171,11 @@
 
 
 <style lang="scss">
+	.disable-scroll {
+		overflow: hidden;
+		height: 100dvh;
+		width: 100dvw;
+		position: fixed;
+		pointer-events: none;
+	}
 </style>
