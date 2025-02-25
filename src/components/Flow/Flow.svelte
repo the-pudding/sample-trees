@@ -89,7 +89,7 @@
 	// Create edge highlights store
 	const edgeHighlights = writable([]);
 	setContext("edgeHighlights", edgeHighlights);
-	// updateEdgeHighlights();
+	updateEdgeHighlights();
 
 	// Update progress when offset changes
 	$: if ($controllerStore?.component?.type == "crossfade") {
@@ -236,12 +236,11 @@
 				.map((id) => id.trim());
 
 			$edgeHighlights = highlightedEdges;
-		} 
-		// else {
-		// 	$edgeHighlights = [];
-		// }
+		} else {
+			$edgeHighlights = [];
+		}
 
-		console.log($edgeHighlights)
+		console.log($edgeHighlights);
 		$edgeHighlights = $edgeHighlights;
 	}
 
@@ -286,10 +285,10 @@
 	$: if (activeController?.component?.id == "258574") {
 		updateSecondaryLabels();
 	}
-	
+
 	if (isFullTree) {
 		updateSecondaryLabels();
-		updateEdgeHighlights()
+		updateEdgeHighlights();
 	}
 
 	// Change the connection line type to 'straight'
