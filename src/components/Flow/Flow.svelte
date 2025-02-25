@@ -22,6 +22,7 @@
 	export let activeController;
 	export let slides = [];
 	export let offset = 0;
+	export let isFullTree = false;
 
 	// Create dimensions store
 	const textHeight = 30;
@@ -281,6 +282,10 @@
 
 	// Handle the special case for the wrap1 controller
 	$: if (activeController?.component?.id == "258574") {
+		updateSecondaryLabels();
+	}
+	
+	if (isFullTree) {
 		updateSecondaryLabels();
 	}
 

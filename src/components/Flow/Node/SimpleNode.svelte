@@ -1,5 +1,5 @@
 <script>
-	import { Handle, Position } from "@xyflow/svelte";
+	import { Handle, useSvelteFlow } from "@xyflow/svelte";
 	import { base } from "$app/paths";
 	import { getContext } from "svelte";
 	import coordinates from "$data/coordinates.json";
@@ -13,6 +13,7 @@
 	const spritesheetWidth = 4384;
 	const spriteSize = 100;
 	const secondaryLabels = getContext("secondaryLabels");
+	const { viewport } = useSvelteFlow();
 
 	const scale = (data.circleSize || 20) / spriteSize;
 
@@ -20,22 +21,37 @@
 
 	$: bgX = -(sprite.x * scale);
 	$: bgY = -(sprite.y * scale);
+
+	let fontSize = 14;
+	$: adjustedFontSize = fontSize / $viewport.zoom;
 </script>
 
-<div class="node simple-node">
+<div class="node simple-node" style:--adjusted-font-size="{adjustedFontSize}px">
 	<Handle type="target" position={targetPosition} class="handle" />
 	<div
 		class="circle"
 		title={data.title}
 		style="width: {data.circleSize}px; height: {data.circleSize}px;"
 	>
-
 		<div class="secondary-labels">
-			<div class="secondary-label right" style="font-size: 12px;">
-				
-			</div>
-		</div>
+			{#if $secondaryLabels[data.id]}
+				<div class="secondary-labels">
+					<div class="secondary-label top">
+						{$secondaryLabels[data.id].top || ""}
+					</div>
 
+					<div class="secondary-label right">
+						{$secondaryLabels[data.id].right || ""}
+					</div>
+					<div class="secondary-label bottom">
+						{$secondaryLabels[data.id].bottom || ""}
+					</div>
+					<div class="secondary-label left">
+						{$secondaryLabels[data.id].left || ""}
+					</div>
+				</div>
+			{/if}
+		</div>
 
 		<div
 			class="sprite"
@@ -57,6 +73,7 @@
 		position: relative;
 		width: 100%;
 		height: 100%;
+		font-size: var(--adjusted-font-size, 12px);
 	}
 
 	.circle {
@@ -89,17 +106,14 @@
 			position: absolute;
 			width: 150px;
 			font-weight: bold;
-			font-size: 1rem;
 
 			&.top {
-				
 				text-align: center;
 				top: 0px;
 				transform: translate(0, -100%);
 				left: 0;
 				right: 0;
 				margin: 0 auto;
-				
 			}
 			&.right {
 				right: calc(var(--node-width) * -1);
@@ -108,7 +122,6 @@
 				transform: translate(100%, -50%);
 				right: -5px;
 				left: auto;
-				width: auto;
 				line-height: 1;
 			}
 			&.bottom {
