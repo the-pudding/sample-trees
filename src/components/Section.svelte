@@ -99,6 +99,7 @@
 					<div
 						class="full-tree-container"
 						class:visible={activeController.links == activeController.tree}
+						class:show-highlighted-edges={activeController.edgeHighlight}
 					>
 						{#await fullTree then fullTreeResult}
 							{#if fullTreeResult}
