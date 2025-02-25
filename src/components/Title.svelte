@@ -1,6 +1,7 @@
 <script>
 	import { fade } from "svelte/transition";
 	import { isMuted } from "$stores/misc.js";
+	import Header from "./Header.svelte";
 
 	export let isReady = false;
 	export let onStart;
@@ -12,6 +13,7 @@
 </script>
 
 <div class="title-screen" transition:fade>
+	<Header />
 	<h1>The Genealogy of Samples</h1>
 	{#if isReady}
 		<div class="buttons">
