@@ -4,8 +4,9 @@
 	import Scroller from "@sveltejs/svelte-scroller";
 	import { onMount, getContext, setContext } from "svelte";
 	import { SvelteFlowProvider } from "@xyflow/svelte";
+	import { activeSectionId } from "$stores/misc.js";
 	import "@xyflow/svelte/dist/style.css";
-
+	import { fade } from "svelte/transition";
 	// Components
 	import Flow from "./Flow/Flow.svelte";
 
@@ -114,9 +115,13 @@
 					</div>
 
 					{#if activeTree}
-						<SvelteFlowProvider>
-							<Flow {activeTree} {activeController} {slides} {offset} />
-						</SvelteFlowProvider>
+						{#if $activeSectionId == key}
+							<div transition:fade={{ duration: 500 }}>
+								<SvelteFlowProvider>
+									<Flow {activeTree} {activeController} {slides} {offset} />
+								</SvelteFlowProvider>
+							</div>
+						{/if}
 					{/if}
 				{/if}
 			{/if}
@@ -177,7 +182,7 @@
 		height: 100vh;
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		align-items: start;
 		pointer-events: none;
 
 		&:first-of-type {
@@ -194,8 +199,10 @@
 		p {
 			background: white;
 			width: 100%;
+			height: fit-content;
 			max-width: 400px;
 			padding: 1rem;
+			transform: translateY(25vh);
 		}
 	}
 </style>

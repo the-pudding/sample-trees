@@ -47,7 +47,6 @@
 		(!$activeController?.component?.id == "258574" &&
 			$activeController?.component?.type === "loop" &&
 			!isCurrentlyPlaying);
-
 </script>
 
 <Handle
@@ -136,7 +135,9 @@
 	}
 
 	:global(.svelte-flow__node) {
-		transition: transform 0.5s ease;
+		@media only screen and (min-width: 40rem) {
+			transition: transform 0.5s ease;
+		}
 	}
 
 	.node {

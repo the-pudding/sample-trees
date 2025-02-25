@@ -94,6 +94,9 @@
 				$controllerStore.focusNode == crossfadeData.source
 					? offset / 2
 					: offset / 2 + 0.5;
+
+				console.log(crossfadeData.progress);
+
 			crossfades.set($crossfades);
 		}
 	}
@@ -197,6 +200,7 @@
 
 	// Handle state changes when controller changes
 	$: if (previousIndex !== activeController.index) {
+		
 		// fit the view
 		fitViewToNodes();
 
@@ -284,12 +288,6 @@
 			{connectionLineType}
 			minZoom={0.1}
 			maxZoom={2}
-			defaultViewport={{ x: 0, y: 0, zoom: 1 }}
-			defaultEdgeOptions={{
-				type: "custom",
-				animated: false,
-				style: { strokeWidth: 1 }
-			}}
 		>
 			<Background bgColor="#f0f0f0" patternColor="#f0f0f0" />
 		</SvelteFlow>
