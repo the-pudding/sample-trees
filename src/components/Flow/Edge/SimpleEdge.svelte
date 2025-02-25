@@ -11,9 +11,16 @@
 	export let targetPosition;
 	export let data;
 
+	$$restProps;
+
+	const activeController = getContext("activeController");
 	const edgeHighlights = getContext("edgeHighlights");
 
-	$$restProps;
+	$: highlight = $edgeHighlights
+		.map((edgeId) => `${edgeId}-${$activeController.tree}`)
+		.includes(id);
+
+	$: $edgeHighlights.length && console.log($edgeHighlights);
 
 	// Create a straight path between source and target, with null checks
 	$: path =
@@ -24,7 +31,7 @@
 
 {#if path}
 	<path
-		class="simple-edge {$edgeHighlights.includes(id) ? 'highlighted' : ''}"
+		class="simple-edge {highlight ? 'highlighted' : ''}"
 		{id}
 		d={path}
 		fill="none"

@@ -230,7 +230,6 @@
 
 	function updateEdgeHighlights() {
 		// Update edge highlights
-
 		if (activeController?.edgeHighlight) {
 			const highlightedEdges = activeController.edgeHighlight
 				.split(",")
@@ -240,6 +239,8 @@
 		} else {
 			$edgeHighlights = [];
 		}
+
+		console.log($edgeHighlights);
 		$edgeHighlights = $edgeHighlights;
 	}
 
@@ -284,9 +285,10 @@
 	$: if (activeController?.component?.id == "258574") {
 		updateSecondaryLabels();
 	}
-	
+
 	if (isFullTree) {
 		updateSecondaryLabels();
+		updateEdgeHighlights();
 	}
 
 	// Change the connection line type to 'straight'
