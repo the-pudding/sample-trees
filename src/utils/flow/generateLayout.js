@@ -177,7 +177,7 @@ export default async function generateLayout(
             ...edge.data,
             method: method  // Add method to edge data
           },
-          type: "smoothstep"
+          type: "custom"
         }))
 
         // edges: inputEdges
