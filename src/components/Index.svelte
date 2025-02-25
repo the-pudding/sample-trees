@@ -154,11 +154,11 @@
 	{/if}
 </svelte:head>
 
-<div style="display:{hasStarted ? 'none' : 'block'};">
+{#if !hasStarted}
 	<Title {isReady} onStart={handleStart} />
-</div>
+{/if}
 
-<div style="display:{hasStarted ? 'block' : 'none'};" transition:fade>
+<div transition:fade class:disable-scroll={!hasStarted}>
 	<AudioToggle />
 	{#each Object.entries(groupedSlides) as [key, content], i}
 		<Section {key} {content} sectionIndex={i} />
