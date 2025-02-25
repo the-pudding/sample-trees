@@ -73,7 +73,7 @@ export default async function generateLayout(
     [...rootNodes].forEach(rootId => traverseTree(rootId));
 
     // Adjust circle size to be slightly smaller
-    const maxCircleSize = 20;
+    const maxCircleSize = 30;
     const minCircleSize = 12;
 
     // const circleSize = 1;
@@ -111,8 +111,8 @@ export default async function generateLayout(
     // Add nodes with calculated dimensions
     inputNodes.forEach((node) => {
       dagreGraph.setNode(node.id, {
-        width: circleSize,
-        height: circleSize,
+        width:+node.id == 233667 ? circleSize*2 : circleSize,
+        height: +node.id == 233667 ? circleSize*2 : circleSize,
         level: nodeMap.get(node.id).level
       });
     });
@@ -159,6 +159,8 @@ export default async function generateLayout(
           const x = (dagreNode.x - minX) * scale + xOffset;
           const y = (dagreNode.y - minY) * (scaleY * 0.9) + yOffset;
 
+          console.log(dagreNode)
+
           return {
             ...node,
             type: 'simple',
@@ -167,11 +169,20 @@ export default async function generateLayout(
             targetPosition: Position.Top,
             data: {
               ...node.data,
-              circleSize: circleSize
+              circleSize: dagreNode.width
             }
           };
         }),
-        edges: inputEdges
+        edges: inputEdges.map(edge => ({
+          ...edge,
+          data: {
+            ...edge.data,
+            method: method  // Add method to edge data
+          },
+          type: "smoothstep"
+        }))
+
+        // edges: inputEdges
       };
     } catch (error) {
       console.error("Error during DagreTwo layout:", error);
@@ -313,6 +324,8 @@ export default async function generateLayout(
       "elk.layered.spacing.modifier": isDesktop ? 1.2 : 1.0
     };
 
+
+    
     const graph = {
       id: "root",
       layoutOptions: elkOptions,
@@ -320,8 +333,8 @@ export default async function generateLayout(
         ...node,
         targetPosition: isHorizontal ? Position.Left : Position.Top,
         sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
-        width: nodeWidth,
-        height: nodeHeight,
+        width:+node.id == 233667 ? nodeWidth*2 : nodeWidth,
+        height: +node.id == 233667 ? nodeHeight*2 : nodeHeight,
       })),
       edges: inputEdges
     };
@@ -355,6 +368,8 @@ export default async function generateLayout(
       const xOffset = (viewportWidth - graphWidth * scale) / 2;
       const yOffset = padding * 2;
 
+      // console.log(layoutedGraph.children)
+
       return {
         nodes: layoutedGraph.children.map((node) => ({
           ...node,
@@ -367,7 +382,7 @@ export default async function generateLayout(
           type: 'simple',
           data: {
             ...node.data,
-            circleSize: nodeSize
+            circleSize: node.width
           }
         })),
         edges: layoutedGraph.edges.map(edge => ({
@@ -375,7 +390,8 @@ export default async function generateLayout(
           data: {
             ...edge.data,
             method: method  // Add method to edge data
-          }
+          },
+          type: "bezier"
         }))
       };
     } catch (error) {
