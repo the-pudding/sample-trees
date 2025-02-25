@@ -159,8 +159,6 @@ export default async function generateLayout(
           const x = (dagreNode.x - minX) * scale + xOffset;
           const y = (dagreNode.y - minY) * (scaleY * 0.9) + yOffset;
 
-          console.log(dagreNode)
-
           return {
             ...node,
             type: 'simple',
