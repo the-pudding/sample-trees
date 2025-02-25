@@ -157,7 +157,7 @@
 	<Title {isReady} onStart={handleStart} />
 {/if}
 
-<div transition:fade>
+<div transition:fade class:disable-scroll={!hasStarted}>
 	<AudioToggle />
 	{#each Object.entries(groupedSlides) as [key, content], i}
 		<Section {key} {content} sectionIndex={i} />
@@ -165,4 +165,11 @@
 </div>
 
 <style lang="scss">
+	.disable-scroll {
+		overflow: hidden;
+		height: 100dvh;
+		width: 100dvw;
+		position: fixed;
+		pointer-events: none;
+	}
 </style>
