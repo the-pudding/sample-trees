@@ -108,6 +108,7 @@
 										activeTree={fullTreeResult}
 										activeController={fullTreeController}
 										{offset}
+										isFullTree={true}
 									/>
 								</SvelteFlowProvider>
 							{/if}
