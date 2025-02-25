@@ -16,6 +16,8 @@
 
 	const scale = (data.circleSize || 20) / spriteSize;
 
+	$: console.log(scale, data)
+
 	$: sprite = coordinates[data.id + ".jpeg"] || coordinates["missing.jpeg"];
 
 	$: bgX = -(sprite.x * scale);

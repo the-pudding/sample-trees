@@ -4,6 +4,7 @@
 	import { SvelteFlowProvider } from "@xyflow/svelte";
 	import { activeSectionId } from "$stores/misc.js";
 	import { base } from "$app/paths";
+	import Footer from "./Footer.svelte";
 
 	import links from "$data/links.csv";
 	import "@xyflow/svelte/dist/style.css";
@@ -35,7 +36,7 @@
 
 		// Create array of image URLs for preloading
 		imageUrls = prerenderNodes.map(
-			(node) => `${base}/assets/cover_art/${node}.png`
+			(node) => `${base}/assets/cover_art_jpegs/${node}.jpeg`
 		);
 
 		const BATCH_SIZE = 100;
@@ -153,16 +154,21 @@
 	{/if}
 </svelte:head>
 
-{#if !hasStarted}
+<div style="display:{hasStarted ? 'none' : 'block'};">
 	<Title {isReady} onStart={handleStart} />
-{/if}
+</div>
 
-<div transition:fade>
+<div style="display:{hasStarted ? 'block' : 'none'};" transition:fade>
 	<AudioToggle />
 	{#each Object.entries(groupedSlides) as [key, content], i}
 		<Section {key} {content} sectionIndex={i} />
 	{/each}
 </div>
+
+{#if hasStarted}
+	<Footer />
+{/if}
+
 
 <style lang="scss">
 </style>

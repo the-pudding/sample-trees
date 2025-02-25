@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Define source and destination directories
-const sourceDir = path.join(__dirname, 'cover_art_2');
+const sourceDir = path.join(__dirname, 'cover_art');
 const destDir = path.join(__dirname, 'cover_art_jpegs');
 
 // Create destination directory if it doesn't exist
@@ -27,7 +27,7 @@ async function processFiles() {
         
         try {
             await sharp(sourcePath)
-                .resize(100, 100, {
+                .resize(500, 500, {
                     fit: 'cover',
                     position: 'center'
                 })

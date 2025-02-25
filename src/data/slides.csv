@@ -1,112 +1,112 @@
-text,notes,section,type,controller.tree,controller.links,controller.fitViewNodes,controller.fadedNodes,controller.secondaryLabel,controller.showPrimaryText,controller.component.id,controller.component.type
-How does this…,,open,sticky,open,88888888071,"999999999026,999999999025",,,true,88888888071-open,crossfade
-Become this?,,open,sticky,open,"88888888072,88888888071","999999999027,999999999026",,,true,88888888072-open,crossfade
-# Do you know where your music comes from?,,cold,inline,,,"243164,252744",,,,,
-"Some songs may be pretty obvious, because they grow out of iconic sounds, such as the bass from “Under Pressure,” which is passed down to “Ice Ice Baby.”",,cold,sticky,cold,88888888057,"243164,252744",,,true,88888888057-cold,crossfade
+text,notes,section,type,controller.tree,controller.links,controller.fitViewNodes,controller.fadedNodes,controller.secondaryLabel,controller.edgeHighlight,controller.showPrimaryText,controller.component.id,controller.component.type
+How does this…,,open,sticky,open,88888888071,"999999999026,999999999025",,,,true,88888888071-open,crossfade
+Become this?,,open,sticky,open,"88888888072,88888888071","999999999027,999999999026",,,,true,88888888072-open,crossfade
+# Do you know where your music comes from?,,cold,inline,,,"243164,252744",,,,,,
+"Some songs may be pretty obvious, because they grow out of iconic sounds, such as the bass from “Under Pressure,” which is passed down to “Ice Ice Baby.”",,cold,sticky,cold,88888888057,"243164,252744",,,,true,88888888057-cold,crossfade
 "# But many songs have a far more complex and concealed musical history, spanning genres, cultures, and even centuries.
 
-# This is a project about shared DNA in music.",,intro,inline,,,,,,,,crossfade
-Orchestral music for a play in 1875 can become electronic music for a cartoon in 1983.,,intro,sticky,hit,67872,"253610,64739",,,true,67872-hit,crossfade
-Which can be transformed by a minor rap group...,,intro,sticky,hit,"13504,67872","234958,253610",,,true,13504-hit,crossfade
-...which then presents a rap giant with the lyrics to start his breakout hit…,,intro,sticky,hit,"12882,13504,67872","234780,234958",,,true,12882-hit,crossfade
+# This is a project about shared DNA in music.",,intro,inline,,,,,,,,,crossfade
+Orchestral music for a play in 1875 can become electronic music for a cartoon in 1983.,,intro,sticky,hit,67872,"253610,64739",,,,true,67872-hit,crossfade
+Which can be transformed by a minor rap group...,,intro,sticky,hit,"13504,67872","234958,253610",,,,true,13504-hit,crossfade
+...which then presents a rap giant with the lyrics to start his breakout hit…,,intro,sticky,hit,"12882,13504,67872","234780,234958",,,,true,12882-hit,crossfade
 "...and eventually end up in the back-and-forth of diss tracks in the rap rivalry between Biggie Smalls and Tupac Shakur.
 
-In 1996, over 120 years after “In the Hall of the Mountain King,” 2pac released the song “Hit ’Em Up”—an escalation in the beef that, three months later, led to his murder.",,intro,sticky,hit,"4047,12823,12882,13504,67872","233667,234899,234780",,,,,
+In 1996, over 120 years after “In the Hall of the Mountain King,” 2pac released the song “Hit ’Em Up”—an escalation in the beef that, three months later, led to his murder.",,intro,sticky,hit,"4047,12823,12882,13504,67872","233667,234899,234780",,,,,,
 "“Hit ’Em Up’s” lineage depicts the many kinds of musical DNA that's passed down, over time. In this example, each generation is connected by a sample—where a song reuses part of an original recording—or an interpolation—where a song uses a re-recording of sound.",,intro,sticky,hit,"4047,12823,12882,13504,67872",,,"64739.top.1895;
 64739.right.Great Great Great Grandparent;
 253610.right.Great Great Grandparent;
 234958.right.Great Grandparent;
 234780.right.Grandparent;
 234899.right.Parent;
-233667.bottom.1996",,,
+233667.bottom.1996",,,,
 "This isn’t “Hit ’Em Up’s” only lineage, but one of many, connected through samples, interpolations, covers and remixes.
 
-Another lineage begins with the smooth R&B passed down from Dionne Warwick’s “Walk on By.” Next, Isaac Hayes reinterprets the song and slows down the tempo.",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872","232485,271914",,,true,1218-hit,crossfade
+Another lineage begins with the smooth R&B passed down from Dionne Warwick’s “Walk on By.” Next, Isaac Hayes reinterprets the song and slows down the tempo.",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872","232485,271914",,,,true,1218-hit,crossfade
 "This catches the ear of Biggie Smalls and forms the basis of his track “Warning,” which starts a chain of Biggie and Junior M.A.F.I.A. samples, eventually sampled by, once again, “Hit ’Em Up.”",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068",,"253610,64739,234958,234780,234899","271914.top.1964;
-233667.bottom.1996",,,
-And there’s the soul of Tom Jones’ “Looking Out My Window.”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","241514,999999999001","232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",,true,88888888001-hit,crossfade
-"Brooklyn rap group Stetsasonic brings Tom Jones’ drums into rap rhythms. Their iconic line “Go Brooklyn” sets out a chain of beats, and lyrics set to those beats, that inspires the opening of the last verse of “Hit ’Em Up.”",,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,"232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",233667.bottom.1996,,,
-"And, crucially, there’s the funk of “Blind Man Can See It” by James Brown. This iconic bass riff is a clear influence on the bassline of Dennis Edwards and Siedah Garrett’s “Don’t Look Any Further.”",,intro,sticky,hit,"3946,3944","233659,240512",,,true,3946-hit,crossfade
-“Hit ’Em Up” then samples “Don’t Look Any Further’s” baseline.,,intro,sticky,hit,"3946,3944","233659,233667",,,true,3944-hit,crossfade
+233667.bottom.1996",,,,
+And there’s the soul of Tom Jones’ “Looking Out My Window.”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","241514,999999999001","232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",,,true,88888888001-hit,crossfade
+"Brooklyn rap group Stetsasonic brings Tom Jones’ drums into rap rhythms. Their iconic line “Go Brooklyn” sets out a chain of beats, and lyrics set to those beats, that inspires the opening of the last verse of “Hit ’Em Up.”",,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,"232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",233667.bottom.1996,,,,
+"And, crucially, there’s the funk of “Blind Man Can See It” by James Brown. This iconic bass riff is a clear influence on the bassline of Dennis Edwards and Siedah Garrett’s “Don’t Look Any Further.”",,intro,sticky,hit,"3946,3944","233659,240512",,,,true,3946-hit,crossfade
+“Hit ’Em Up” then samples “Don’t Look Any Further’s” baseline.,,intro,sticky,hit,"3946,3944","233659,233667",,,,true,3944-hit,crossfade
 All of this is just a fraction of the full DNA of this one song.,,intro,sticky,hit,"3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,,"64739.top.1895;
 271914.top.1964;
 240512.top.1973;
 999999999001.top.1968;
-233667.bottom.1996",,,
+233667.bottom.1996",,,,
 "“Hit ’Em Up” is the descendent of a larger history, a culmination of an 82-song family tree.
 
 Some of “Hit ’Em Up’s” ancestors are directly audible in the final product; others are not. But all of these tracks were influences, big and small, in the generational development of “Hit ’Em Up.”
-",,intro,sticky,hit,hit,,,233667.right.test;,,,
+",,intro,sticky,hit,hit,,,233667.right.test;,"3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,,
 "# Shared DNA: Who’s your music related to?
 
-",,dna,inline,,,,,,,,
-"### When we consider samples, remixes, interpolations, and covers as  musical family ties, we can trace how the DNA of one song can lead to a very different genre and culture. We can see how very different songs might actually be related. ",,dna,inline,,,,,,,,
-"First, let’s return to the lineage between “In the Hall of the Mountain King” and “Big Poppa.”",,dna,sticky,king,"4047,12823,12882,13504,67872",,,,,,
+",,dna,inline,,,,,,,,,
+"### When we consider samples, remixes, interpolations, and covers as  musical family ties, we can trace how the DNA of one song can lead to a very different genre and culture. We can see how very different songs might actually be related. ",,dna,inline,,,,,,,,,
+"First, let’s return to the lineage between “In the Hall of the Mountain King” and “Big Poppa.”",,dna,sticky,king,"4047,12823,12882,13504,67872",,,,,,,
 "The descendants of “In the Hall of the Mountain King” include Jhene Aiko’s “The Worst,” a great-great-great grandchild of “In the Hall of the Mountain King” due to a shared lineage with Big Poppa.",,dna,sticky,king,"88888888058,45521,4047,12823,12882,13504,67872",,"233667,234899","12024.bottom.The Worst;
-64739.top.Mountain King",,,
-"But if we take a different route through the family tree, we can even see “In the Hall of the Mountain King” make its way to Korean rap in J-Hope’s song “What if…”",,dna,sticky,king,"15265,3026,3030,88888888059,88888888058,45521,4047,12823,12882,13504,67872",,"233667,234899,234780,244142,234958,244133,244143",,,,
-Doug E. Fresh samples the familiar riff from Inspector Gadget.,,dna,sticky,king,"15265,3026,3030,88888888059","235321,253610",,,true,15265-king,crossfade
-Slick Rick’s lyrics are then sampled by Big Daddy Kane on “Show & Prove.”,,dna,sticky,king,"15265,3026,3030,88888888059","233262,235321",,,true,3026-king,crossfade
-Ol' Dirty Bastard then samples his own lyrics on “Shimmy Shimmy Ya.”,,dna,sticky,king,"15265,3026,3030,88888888059","241459,233262",,,true,3030-king,crossfade
-J-Hope reinterprets the riff from “Shimmy Shimmy Ya” on the track “What if…”,,dna,sticky,king,"15265,3026,3030,88888888059","233265,241459",,,true,88888888059-king,crossfade
+64739.top.Mountain King",,,,
+"But if we take a different route through the family tree, we can even see “In the Hall of the Mountain King” make its way to Korean rap in J-Hope’s song “What if…”",,dna,sticky,king,"15265,3026,3030,88888888059,88888888058,45521,4047,12823,12882,13504,67872",,"233667,234899,234780,244142,234958,244133,244143",,,,,
+Doug E. Fresh samples the familiar riff from Inspector Gadget.,,dna,sticky,king,"15265,3026,3030,88888888059","235321,253610",,,,true,15265-king,crossfade
+Slick Rick’s lyrics are then sampled by Big Daddy Kane on “Show & Prove.”,,dna,sticky,king,"15265,3026,3030,88888888059","233262,235321",,,,true,3026-king,crossfade
+Ol' Dirty Bastard then samples his own lyrics on “Shimmy Shimmy Ya.”,,dna,sticky,king,"15265,3026,3030,88888888059","241459,233262",,,,true,3030-king,crossfade
+J-Hope reinterprets the riff from “Shimmy Shimmy Ya” on the track “What if…”,,dna,sticky,king,"15265,3026,3030,88888888059","233265,241459",,,,true,88888888059-king,crossfade
 "This is what we mean by musical DNA and its ability to spread through culture.
 
 It is how “In The Hall of the Mountain King” affects music across 5 generations and 833 songs.","ideally this is a top down network graph (see script)
 
-MD: need to add missing links from ""the worst"" and ""what if""",dna,sticky,king_2,king_2,,,,,,
+MD: need to add missing links from ""the worst"" and ""what if""",dna,sticky,king_2,king_2,,,,,,,
 "Each connection continues a musical lineage or, at the least, influences the development of the features of a song.
 
-The connections in these musical family trees may be a borrowed beat, loaned lyrics, or a multipurpose melody. Let’s look at examples of each one.",,,inline,,,,,,,,
+The connections in these musical family trees may be a borrowed beat, loaned lyrics, or a multipurpose melody. Let’s look at examples of each one.",,,inline,,,,,,,,,
 "# BORROWED BEATS
 
-Some songs have introduced beats that have directly been sampled by hundreds, or even thousands, of other songs.",,,inline,,,,,,,,
+Some songs have introduced beats that have directly been sampled by hundreds, or even thousands, of other songs.",,,inline,,,,,,,,,
 "These are X samples of James Brown’s 1970 track “Funky Drummer,” which is used in everything from George Michael’s “Freedom! '90”, to Alanis Morissette’s “Head Over Feet,” to Ed Sheeran’s “Shirtsleeves.” 
 
 And once you hear it, you’ll hear it everywhere; the song has among the most “descendants” in music history.","ideally a radial chart with Funky Drummer in the center.
 
 We need to figure out a way, in this layout, to highlight some nodes—I'm not sure we need cover art for this one and might just want to use shapes.
 
-nodes to annotate/highlight: 11175, 88888888060,11201",beat,sticky,funky_1,funky_1,,,,,,
-Because the beat doesn’t just pass down to one generation.,,beat2,sticky,funky_3,11215,"248775,234409",,,true,11215-funky_3,crossfade
-It leads “South Bronx” to shape the sound of another Bronx artist’s hit.,,beat2,sticky,funky_3,"56862,11215","251523,248775",,,true,56862-funky_3,crossfade
-"“Jenny From the Block” is only one of a whole second generation of songs that originate from Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer.” There’s also Will Smith’s “Wild Wild West”, “(I Can’t Help) Falling In Love With You” by UB40, and “Bring ‘Em Out” by T.I. ","note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat2,sticky,funky_3,funky_3,,,,,,
-"As they say, the beat goes on…",,beat2,sticky,funky_3,funky_3,,,,,,
+nodes to annotate/highlight: 11175, 88888888060,11201",beat,sticky,funky_1,funky_1,,,,,,,
+Because the beat doesn’t just pass down to one generation.,,beat2,sticky,funky_3,11215,"248775,234409",,,,true,11215-funky_3,crossfade
+It leads “South Bronx” to shape the sound of another Bronx artist’s hit.,,beat2,sticky,funky_3,"56862,11215","251523,248775",,,"56862,11215",true,56862-funky_3,crossfade
+"“Jenny From the Block” is only one of a whole second generation of songs that originate from Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer.” There’s also Will Smith’s “Wild Wild West”, “(I Can’t Help) Falling In Love With You” by UB40, and “Bring ‘Em Out” by T.I. ","note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat2,sticky,funky_3,funky_3,,,,,,,
+"As they say, the beat goes on…",,beat2,sticky,funky_3,funky_3,,,,,,,
 "# LOANED LYRICS
 
-While a beat sets the foundation for a song, lyrics are some of the most easily transmittable DNA: a few words can easily fit into otherwise very different songs.",no viz,lyrics,inline,,,,,,,,
-"Here's an example of lyrics slightly evolving through generations: A Tribe Called Quest released “Can I Kick It?” in 1990, itself a song built on Lou Reed’s “Walk on the Wild Side” from 1972. When Q-Tip asks if he can kick it, the rest of the Tribe responds.",,lyrics,sticky,kick,"54235,19201",,"247659,251388",,,236303,loop
+While a beat sets the foundation for a song, lyrics are some of the most easily transmittable DNA: a few words can easily fit into otherwise very different songs.",no viz,lyrics,inline,,,,,,,,,
+"Here's an example of lyrics slightly evolving through generations: A Tribe Called Quest released “Can I Kick It?” in 1990, itself a song built on Lou Reed’s “Walk on the Wild Side” from 1972. When Q-Tip asks if he can kick it, the rest of the Tribe responds.",,lyrics,sticky,kick,"54235,19201",,"247659,251388",,,,236303,loop
 "Robbie Williams then used the line in 2000s “Rock DJ.” Williams [said](https://www.youtube.com/watch?v=BnaPtu2sshs) he, “Really struggled to write the lyrics. So what I’ve just done is I’ve robbed loads of really old rap lyrics.”
 
-|But instead of his own band responding, it now sounds like the DJ’s crowd.",,lyrics,sticky,kick,"54235,19201","247659,236303",,,true,19201-kick,crossfade
-"In 2021, Lorde picked up the line [from](https://www.youtube.com/watch?v=If-VG2s0lX8) Robbie Williams— not A Tribe Called Quest— – but she takes on both parts.",,lyrics,sticky,kick,"54235,19201","251388,247659",,,true,54235-kick,crossfade
+|But instead of his own band responding, it now sounds like the DJ’s crowd.",,lyrics,sticky,kick,"54235,19201","247659,236303",,,,true,19201-kick,crossfade
+"In 2021, Lorde picked up the line [from](https://www.youtube.com/watch?v=If-VG2s0lX8) Robbie Williams— not A Tribe Called Quest— – but she takes on both parts.",,lyrics,sticky,kick,"54235,19201","251388,247659",,,,true,54235-kick,crossfade
 "The structure of a catchy phrase can also produce variations with different content altogether.
 
-Tupac also used the phrase “I keep my mind on my money, money on my mind” in a verse on MC Breed’s 1993 “Gotta Get Mine,” but it blew up when Snoop Dogg quoted it in the chorus of “Gin and Juice” later that year.",no viz,lyrics,sticky,mind,"9410,9378",,,,,,
-"Demi Lovato’s “Cool for the Summer” (2015) plays with that line, but shifts the focus in a different direction…",,lyrics,sticky,mind,9410,"234503,234047",,,true,9410-mind,crossfade
-"While Rihanna’s “Cheers (Drink to That)” from 2010, in addition to heavily sampling Avril Lavigne’s “I’m With You,” abandons the parallel format entirely…",,lyrics,sticky,mind,9378,"234473,234047",,,true,9378-mind,crossfade
+Tupac also used the phrase “I keep my mind on my money, money on my mind” in a verse on MC Breed’s 1993 “Gotta Get Mine,” but it blew up when Snoop Dogg quoted it in the chorus of “Gin and Juice” later that year.",no viz,lyrics,sticky,mind,"9410,9378",,,,,,,
+"Demi Lovato’s “Cool for the Summer” (2015) plays with that line, but shifts the focus in a different direction…",,lyrics,sticky,mind,9410,"234503,234047",,,,true,9410-mind,crossfade
+"While Rihanna’s “Cheers (Drink to That)” from 2010, in addition to heavily sampling Avril Lavigne’s “I’m With You,” abandons the parallel format entirely…",,lyrics,sticky,mind,9378,"234473,234047",,,,true,9378-mind,crossfade
 "Or the words can stay exactly the same, but completely change meaning.
 
-Chubby Checker popularized the phrase “How low can you go” when he added vocals to The Champs’ song “Limbo Rock.” He’s asking about how far to lower the limbo stick…",,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031",,,,,,
-But then Chuck D uses the line to talk about the bass singing register.,,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031","235859,118357",,,true,88888888030-low,crossfade
-"Ludacris then samples Chuck D’s voice from “Bring the Noise” and alters the tempo and quality to kick off his 2010 song “How Low,” where he’s talking about “booty.”",,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031","237235,235859",,,true,88888888029-low,crossfade
-"While we don’t know which lyric inspired Charley Crockett for his 2019 record “How Low Can You Go,” Crockett  used  the phrase  to describe what a romantic interest is doing to his heart.",,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031","999999999022,237235",,,true,88888888028-low,crossfade
+Chubby Checker popularized the phrase “How low can you go” when he added vocals to The Champs’ song “Limbo Rock.” He’s asking about how far to lower the limbo stick…",,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031",,,,,,,
+But then Chuck D uses the line to talk about the bass singing register.,,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031","235859,118357",,,,true,88888888030-low,crossfade
+"Ludacris then samples Chuck D’s voice from “Bring the Noise” and alters the tempo and quality to kick off his 2010 song “How Low,” where he’s talking about “booty.”",,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031","237235,235859",,,,true,88888888029-low,crossfade
+"While we don’t know which lyric inspired Charley Crockett for his 2019 record “How Low Can You Go,” Crockett  used  the phrase  to describe what a romantic interest is doing to his heart.",,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031","999999999022,237235",,,,true,88888888028-low,crossfade
 "# MULTIPURPOSE MELODIES
 
-For most people, however, melody is the most identifiable kind of musical DN. Sampled and interpolated melodies may be instantly recognizable, hit on a subconscious familiarity even if you’re not aware there’s a sample at all, or sit right at the edge of recognition, making you think “where have I heard that before?”",no viz,melody,inline,,,,,,,,
+For most people, however, melody is the most identifiable kind of musical DN. Sampled and interpolated melodies may be instantly recognizable, hit on a subconscious familiarity even if you’re not aware there’s a sample at all, or sit right at the edge of recognition, making you think “where have I heard that before?”",no viz,melody,inline,,,,,,,,,
 "While sampling is commonly associated with hip hop, the art of sharing and borrowing melodies is a global practice, transcending every  genre.
 
-For example, where does this international selection of hits get their sound?","nodes are horizontally in a line, no links, looping audio between each node",melody,sticky,murder,,"105701,292345,292347,999999999024",,,true,"105701,292345,292347,999999999024",loop
-The immediate answer is the 1982 classic “Murder She Wrote” by Chaka Demus and Pliers.,,melody,sticky,murder,"88888888062,88888888063,88888888064,88888888065",,,,true,306957,loop
-But “Murder She Wrote” is actually only one of  many songs based on a sound from 1962. The bouncing melody behind the song comes from a “riddim”—the instrumental pattern in reggae and dancehall music – that emerged from the song “Stalag 17.” ,,melody,sticky,murder,"88888888066,88888888062,88888888063,88888888064,88888888065",,"306957,105701,292345,292347,999999999024",,true,302743,loop
-"The “Stalag Riddim” and its descendants form the basis for countless Jamaican hits, including “Murder She Wrote” and Sister Nancy’s “Bam Bam.”",,melody,sticky,murder,"88888888067,88888888066,88888888062,88888888063,88888888064,88888888065",,"306957,105701,292345,292347,999999999024",,true,256139,loop
+For example, where does this international selection of hits get their sound?","nodes are horizontally in a line, no links, looping audio between each node",melody,sticky,murder,,"105701,292345,292347,999999999024",,,,true,"105701,292345,292347,999999999024",loop
+The immediate answer is the 1982 classic “Murder She Wrote” by Chaka Demus and Pliers.,,melody,sticky,murder,"88888888062,88888888063,88888888064,88888888065",,,,,true,306957,loop
+But “Murder She Wrote” is actually only one of  many songs based on a sound from 1962. The bouncing melody behind the song comes from a “riddim”—the instrumental pattern in reggae and dancehall music – that emerged from the song “Stalag 17.” ,,melody,sticky,murder,"88888888066,88888888062,88888888063,88888888064,88888888065",,"306957,105701,292345,292347,999999999024",,,true,302743,loop
+"The “Stalag Riddim” and its descendants form the basis for countless Jamaican hits, including “Murder She Wrote” and Sister Nancy’s “Bam Bam.”",,melody,sticky,murder,"88888888067,88888888066,88888888062,88888888063,88888888064,88888888065",,"306957,105701,292345,292347,999999999024",,,true,256139,loop
 "Remarkably, you can still hear the influence of Stalag 17. Descendants of “Bam Bam” include songs like ""Do to Me"" by H.E.R., ""Lost Ones"" by Lauryn Hill, and ""Bam"" by Jay-Z and Damian Marley.
 
-Once a melody enters our musical family in this way, the original source can fade into obscurity, even as the sound continues to pass on and evolve. The descendents of this generation of songs will be informed by what a few Jamaican studio musicians recorded in 1962, even if they’ve never given them a second of thought.",,melody,sticky,murder,"73469,73497,73479,88888888067,88888888066,88888888062,88888888063,88888888064,88888888065","302743,256139,279390,257494,279400","306957,105701,292345,292347,999999999024",,true,,
+Once a melody enters our musical family in this way, the original source can fade into obscurity, even as the sound continues to pass on and evolve. The descendents of this generation of songs will be informed by what a few Jamaican studio musicians recorded in 1962, even if they’ve never given them a second of thought.",,melody,sticky,murder,"73469,73497,73479,88888888067,88888888066,88888888062,88888888063,88888888064,88888888065","302743,256139,279390,257494,279400","306957,105701,292345,292347,999999999024",,,true,,
 "And while some sounds spread far and wide, the evolution of sampling has also made sampling layer on layer (deep).
 
-Sampling has become so widespread and so sophisticated, that you can have hits that not only have a wide range of ancestors – they also actually sound like those ancestors. Artists and producers can create incredibly complex and catchy sounds, drawing from a wide range of sources.",,wrap1,inline,,,,,,,,
+Sampling has become so widespread and so sophisticated, that you can have hits that not only have a wide range of ancestors – they also actually sound like those ancestors. Artists and producers can create incredibly complex and catchy sounds, drawing from a wide range of sources.",,wrap1,inline,,,,,,,,,
 "Let’s look at the song “Shake It” by Kay Flock featuring Cardi B, Dougie B, and Bory 300. This sample heavy song took off on TikTok before it was even released, and then was one of the New York Times top songs of 2022. In just this segment, there’s a tune from Buffalo Springfield and Fun Boy Three, lyrics from Akon, a clap beat from Sean Paul and an earlier riddim, and a bass line from a previous Kay Flock song, all combined together.",,wrap1,sticky,shake,"79003,78998,78999",,,"81845.top.Melody;
 276583.top.Lyrics;
-80750.top.Bass",true,258574,loop
-"The song, produced by Elias Beats, also represents how generational and cross-genre sampling has been turbocharged. Beatmakers like Elias Beats now produce sample-based beats and post them online for free for anyone to build a song around. His YouTube channel has drill beats built around everything from “Hips Don’t Lie” to “Just Dance” to “I Want it That Way” or “Gangnam Style.” Diverse musical DNA from all kinds of traditions and genres are being mixed up and spread out in new and surprising ways.",,wrap2,,,,,,,true,,
-"Then again– there’s something to sticking to the classics, too.",,wrap2,sticky,conclusion,88888888061,"999999999023,243164",,,true,88888888061-conclusion,crossfade
+80750.top.Bass",,true,258574,loop
+"The song, produced by Elias Beats, also represents how generational and cross-genre sampling has been turbocharged. Beatmakers like Elias Beats now produce sample-based beats and post them online for free for anyone to build a song around. His YouTube channel has drill beats built around everything from “Hips Don’t Lie” to “Just Dance” to “I Want it That Way” or “Gangnam Style.” Diverse musical DNA from all kinds of traditions and genres are being mixed up and spread out in new and surprising ways.",,wrap2,inline,,,,,,,true,,
+"Then again– there’s something to sticking to the classics, too.",,wrap2,sticky,conclusion,88888888061,"999999999023,243164",,,,true,88888888061-conclusion,crossfade
