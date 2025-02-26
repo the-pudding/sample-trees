@@ -6,7 +6,6 @@ import * as d3 from 'd3';
 import viewport from "$stores/viewport.js";
 
 import { Position } from "@xyflow/svelte";
-import DarkModeToggle from "../../components/helpers/DarkModeToggle.svelte";
 
 // Function to generate the layout using Dagre or ELK
 export default async function generateLayout(
