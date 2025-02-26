@@ -311,7 +311,7 @@
 	onMount(() => {
 		setTimeout(() => {
 			fitViewToNodes();
-		}, 100);
+		}, 1000);
 	});
 </script>
 
