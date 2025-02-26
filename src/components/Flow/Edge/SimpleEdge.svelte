@@ -57,13 +57,20 @@
 	/>
 {/if}
 
-<style>
+<style lang="scss">
 	.simple-edge {
 		pointer-events: none;
 	}
 
-	.simple-edge.highlighted {
+	:global(.show-highlighted-edges .simple-edge.highlighted) {
 		stroke: #ff0000;
-		stroke-width: 2px;
+		stroke-width: 3px;
+		z-index: 10000;
+	}
+
+	:global {
+		svg:has(.simple-edge.highlighted) {
+			z-index: 1 !important;
+		}
 	}
 </style>
