@@ -309,7 +309,9 @@
 	const connectionLineType = ConnectionLineType.Straight;
 
 	onMount(() => {
-		fitViewToNodes();
+		setTimeout(() => {
+			fitViewToNodes();
+		}, 1000);
 	});
 </script>
 
