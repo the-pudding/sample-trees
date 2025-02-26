@@ -41,6 +41,19 @@
 	let activeTree;
 	let activeController;
 
+	// Debounce function to prevent too many rapid calls
+	function debounce(func, wait) {
+		let timeout;
+		return function executedFunction(...args) {
+			const later = () => {
+				clearTimeout(timeout);
+				func(...args);
+			};
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+		};
+	}
+
 	$: {
 		inlineBefore = content.filter(
 			(item, index) =>
@@ -58,6 +71,30 @@
 	}
 
 	onMount(async () => {
+		await init();
+		
+		// Add resize event listener with debouncing
+		const debouncedInit = debounce(() => init(), 250);
+		window.addEventListener('resize', debouncedInit);
+
+		// Cleanup
+		return () => {
+			window.removeEventListener('resize', debouncedInit);
+		};
+	});
+
+	$: if (isReady) {
+		activeTree = render[index];
+		activeSlideContent = slides[index];
+	}
+
+	$: {
+		activeController = { ...activeSlideContent?.controller, index, progress };
+	}
+
+
+	async function init() {
+		isReady = false;
 		render = await Promise.all(
 			slides.map((slide, i) => {
 				if (slide.controller.tree == slide.controller.links) {
@@ -71,15 +108,6 @@
 		);
 
 		isReady = true;
-	});
-
-	$: if (isReady) {
-		activeTree = render[index];
-		activeSlideContent = slides[index];
-	}
-
-	$: {
-		activeController = { ...activeSlideContent?.controller, index, progress };
 	}
 </script>
 
