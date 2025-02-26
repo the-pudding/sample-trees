@@ -8,7 +8,7 @@
 	} from "@xyflow/svelte";
 	import "@xyflow/svelte/dist/style.css";
 
-	import { setContext, onMount } from "svelte";
+	import { setContext, onMount, tick } from "svelte";
 	import viewport from "$stores/viewport";
 
 	import Node from "./Node/Node.svelte";
@@ -36,8 +36,6 @@
 		$viewport.height / 2 - (hasComponent ? textHeight - waveformHeight : 0),
 		hasComponent ? 240 : 300
 	);
-
-	$: console.log(nodeHeight);
 
 	$: nodeWidth = nodeHeight * 0.75;
 
@@ -143,6 +141,9 @@
 	const nodes = writable(activeTree.nodes);
 	const edges = writable(activeTree.edges);
 
+	// Add a store for tracking node readiness
+	const nodesReady = writable(false);
+
 	// Define node and edge types
 	const nodeTypes = {
 		custom: Node,
@@ -161,6 +162,13 @@
 	$: if (activeTree) {
 		nodes.set(activeTree.nodes);
 		edges.set(activeTree.edges);
+		nodesReady.set(false);  // Reset readiness when tree changes
+		
+		// Use tick to wait for DOM updates after nodes change
+		tick().then(() => {
+			// Small delay to ensure nodes are fully rendered
+			setTimeout(() => nodesReady.set(true), 50);
+		});
 	}
 
 	// Function to advance to next song in loop
@@ -177,7 +185,10 @@
 	// Expose advance function to components
 	setContext("advanceLoop", advanceLoop);
 
-	function fitViewToNodes() {
+	async function fitViewToNodes() {
+		// Only proceed if nodes are ready
+		if (!$nodesReady) return;
+		
 		let fitToNodes;
 
 		if (activeController?.fitViewNodes) {
@@ -190,21 +201,20 @@
 			fitToNodes = [
 				...new Map(activeTree.nodes.map((node) => [node.id, node])).values()
 			];
-			// fitToNodes = activeTree.nodes;
 		}
 
-		window.setTimeout(() => {
-			fitView({
-				nodes: fitToNodes,
-				padding: fitToNodes.length === 2 ? 0.2 : 0.05,
-				duration: 500,
-				minZoom: 0.1,
-				maxZoom: 2,
-				includeHiddenNodes: false,
-				width: $viewport.width,
-				height: window.innerHeight
-			});
-		}, 250);
+		await tick();  // Wait for any pending DOM updates
+		
+		fitView({
+			nodes: fitToNodes,
+			padding: fitToNodes.length === 2 ? 0.2 : 0.05,
+			duration: 500,
+			minZoom: 0.1,
+			maxZoom: 2,
+			includeHiddenNodes: false,
+			width: $viewport.width,
+			height: window.innerHeight
+		});
 	}
 
 	function updateSecondaryLabels() {
@@ -249,9 +259,8 @@
 		$edgeHighlights = $edgeHighlights;
 	}
 
-	// Handle state changes when controller changes
-	$: if (previousIndex !== activeController.index) {
-		// fit the view
+	// Watch for node readiness and controller changes
+	$: if ($nodesReady && previousIndex !== activeController.index) {
 		fitViewToNodes();
 
 		// Reset all loops

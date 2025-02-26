@@ -41,17 +41,13 @@
 	let activeTree;
 	let activeController;
 
-	// Debounce function to prevent too many rapid calls
-	function debounce(func, wait) {
-		let timeout;
-		return function executedFunction(...args) {
-			const later = () => {
-				clearTimeout(timeout);
-				func(...args);
-			};
-			clearTimeout(timeout);
-			timeout = setTimeout(later, wait);
-		};
+	// Track previous width from the store
+	let previousStoreWidth = 0;
+
+	// Watch viewport width changes
+	$: if (isReady && $viewport.width !== 0 && $viewport.width !== previousStoreWidth) {
+		previousStoreWidth = $viewport.width;
+		init();
 	}
 
 	$: {
@@ -72,15 +68,6 @@
 
 	onMount(async () => {
 		await init();
-		
-		// Add resize event listener with debouncing
-		const debouncedInit = debounce(() => init(), 250);
-		window.addEventListener('resize', debouncedInit);
-
-		// Cleanup
-		return () => {
-			window.removeEventListener('resize', debouncedInit);
-		};
 	});
 
 	$: if (isReady) {
