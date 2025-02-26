@@ -7,7 +7,7 @@
 	// Check if the image exists before rendering it
 	async function checkImage() {
 		try {
-			const response = await fetch(`${base}/assets/cover_art/${data.id}.png`);
+			const response = await fetch(`${base}/assets/cover_art_jpegs/${data.id}.jpeg`);
 			imageExists = response.ok;
 		} catch (error) {
 			imageExists = false;
@@ -19,9 +19,9 @@
 
 <div class="cover-art">
 	{#if imageExists}
-		<img src="{base}/assets/cover_art/{data.id}.png" alt={data.title} />
+		<img src="{base}/assets/cover_art_jpegs/{data.id}.jpeg" alt={data.title} />
 	{:else}
-		<img src="{base}/assets/cover_art/missing.png" alt={data.title} />
+		<img src="{base}/assets/cover_art_jpegs/missing.jpeg" alt={data.title} />
 	{/if}
 	<!-- <div class="placeholder"></div> -->
 	{#if data.eventText}

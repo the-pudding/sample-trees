@@ -53,7 +53,7 @@
 	type="target"
 	position={Position.Top}
 	style="background: #555; opacity: 0"
-	{isConnectable}
+	isConnectable={isConnectable}
 />
 
 <div

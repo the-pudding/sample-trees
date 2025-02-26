@@ -1,5 +1,6 @@
 <script>
-	import { getSmoothStepPath } from "@xyflow/svelte";
+	import { getSmoothStepPath, getBezierPath } from "@xyflow/svelte";
+	import { getContext } from "svelte";
 
 	export let id;
 	export let sourceX;
@@ -12,16 +13,42 @@
 
 	$$restProps;
 
-	// Create a straight path between source and target, with null checks
-	$: path =
-		sourceX != null && sourceY != null && targetX != null && targetY != null
-			? `M ${sourceX},${sourceY}L ${targetX},${targetY}`
-			: "";
+	const activeController = getContext("activeController");
+	const edgeHighlights = getContext("edgeHighlights");
+
+	console.log(activeController)
+
+	$: highlight = $edgeHighlights
+		.map((edgeId) => `${edgeId}-${$activeController.tree}`)
+		.includes(id);
+
+	// $: $edgeHighlights.length && console.log($edgeHighlights);
+
+	// Create path based on activeTree
+	$: path = $activeController.tree === "king_2"
+		? `M ${sourceX},${sourceY}L ${targetX},${targetY}`  // Straight line for king_2
+		: $activeController.tree === "funky_3"
+			? getBezierPath({                               // Bezier path for funky_3
+				sourceX,
+				sourceY,
+				sourcePosition,
+				targetX,
+				targetY,
+				targetPosition
+			})[0]
+			: getSmoothStepPath({                          // Smooth step for others
+				sourceX,
+				sourceY,
+				sourcePosition,
+				targetX,
+				targetY,
+				targetPosition
+			})[0];
 </script>
 
 {#if path}
 	<path
-		class="simple-edge"
+		class="simple-edge {highlight ? 'highlighted' : ''}"
 		{id}
 		d={path}
 		fill="none"
@@ -33,5 +60,10 @@
 <style>
 	.simple-edge {
 		pointer-events: none;
+	}
+
+	.simple-edge.highlighted {
+		stroke: #ff0000;
+		stroke-width: 2px;
 	}
 </style>

@@ -29,10 +29,15 @@ export default async function generateFlow(s) {
 		if (controllerLinks[0] == treeKey) {
 			treeEdges = edges.filter((edge) => edge.tree == treeKey);
 			isPacked = true;
+			// method = "elk";
 			method = "dagreTwo";
 			if(treeKey == "king_2") {
 				method = "elkTwo";
 			}
+			// if(treeKey == "funky_3") {
+			// 	method = "elk";
+			// }
+
 			// method = "dagreTwo";
 		} else {
 			let trueIds = controllerLinks.map((id) => `${id}-${treeKey}`);
@@ -57,7 +62,8 @@ export default async function generateFlow(s) {
 
 	const layout = await generateLayout(tree.nodes, tree.edges, {
 		isPacked,
-		method
+		method,
+		treeKey
 	});
 
 	return layout;

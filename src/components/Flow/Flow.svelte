@@ -22,6 +22,7 @@
 	export let activeController;
 	export let slides = [];
 	export let offset = 0;
+	export let isFullTree = false;
 
 	// Create dimensions store
 	const textHeight = 30;
@@ -84,6 +85,11 @@
 
 	const secondaryLabels = writable({});
 	setContext("secondaryLabels", secondaryLabels);
+
+	// Create edge highlights store
+	const edgeHighlights = writable([]);
+	setContext("edgeHighlights", edgeHighlights);
+	updateEdgeHighlights();
 
 	// Update progress when offset changes
 	$: if ($controllerStore?.component?.type == "crossfade") {
@@ -198,6 +204,48 @@
 		}, 250);
 	}
 
+	function updateSecondaryLabels() {
+		// Update secondary labels
+		if (activeController?.secondaryLabel) {
+			let labels = activeController?.secondaryLabel
+				.replaceAll(/\n+/g, "")
+				.split(";");
+
+			labels.forEach((l) => {
+				if (l.trim() === "") return;
+				let parts = l.split(".");
+				let id = parts[0].trim();
+				let key = parts[1].trim();
+				let value = parts[2].trim();
+
+				// If the id doesn't exist yet, initialize it as an object
+				if (!$secondaryLabels[id]) {
+					$secondaryLabels[id] = {};
+				}
+
+				// Add or update the property
+				$secondaryLabels[id][key] = value;
+			});
+		} else {
+			$secondaryLabels = {};
+		}
+	}
+
+	function updateEdgeHighlights() {
+		// Update edge highlights
+		if (activeController?.edgeHighlight) {
+			const highlightedEdges = activeController.edgeHighlight
+				.split(",")
+				.map((id) => id.trim());
+
+			$edgeHighlights = highlightedEdges;
+		} else {
+			$edgeHighlights = [];
+		}
+
+		$edgeHighlights = $edgeHighlights;
+	}
+
 	// Handle state changes when controller changes
 	$: if (previousIndex !== activeController.index) {
 		
@@ -236,36 +284,14 @@
 		previousIndex = activeController.index;
 	}
 
-	function updateSecondaryLabels() {
-		// Update secondary labels
-		if (activeController?.secondaryLabel) {
-			let labels = activeController?.secondaryLabel
-				.replaceAll(/\n+/g, "")
-				.split(";");
-
-			labels.forEach((l) => {
-				if (l.trim() === "") return;
-				let parts = l.split(".");
-				let id = parts[0].trim();
-				let key = parts[1].trim();
-				let value = parts[2].trim();
-
-				// If the id doesn't exist yet, initialize it as an object
-				if (!$secondaryLabels[id]) {
-					$secondaryLabels[id] = {};
-				}
-
-				// Add or update the property
-				$secondaryLabels[id][key] = value;
-			});
-		} else {
-			$secondaryLabels = {};
-		}
-	}
-
 	// Handle the special case for the wrap1 controller
 	$: if (activeController?.component?.id == "258574") {
 		updateSecondaryLabels();
+	}
+
+	if (isFullTree) {
+		updateSecondaryLabels();
+		updateEdgeHighlights();
 	}
 
 	// Change the connection line type to 'straight'
@@ -288,6 +314,9 @@
 			{connectionLineType}
 			minZoom={0.1}
 			maxZoom={2}
+			nodesDraggable={false}
+			nodesConnectable={false}
+			elementsSelectable={false}
 		>
 			<Background bgColor="#f0f0f0" patternColor="#f0f0f0" />
 		</SvelteFlow>
