@@ -6,6 +6,7 @@ import * as d3 from 'd3';
 import viewport from "$stores/viewport.js";
 
 import { Position } from "@xyflow/svelte";
+import DarkModeToggle from "../../components/helpers/DarkModeToggle.svelte";
 
 // Function to generate the layout using Dagre or ELK
 export default async function generateLayout(
@@ -17,6 +18,7 @@ export default async function generateLayout(
   const direction = options?.["rankdir"] === "LR" ? "LR" : "TB"; // Layout direction
   const isPacked = options?.["isPacked"];
   const isHorizontal = direction === "LR";
+  const treeKey = options?.["treeKey"];
 
   const textHeight = 30;
   const waveformHeight = 30;
@@ -104,15 +106,17 @@ export default async function generateLayout(
       marginx: padding,
       marginy: padding * 2,
       ranker: 'network-simplex', // Changed to network-simplex for better distribution
-      align: 'UL', // Changed to UL for better width distribution
+      // align: 'UL', // Changed to UL for better width distribution
       acyclicer: 'greedy'
     });
+
+    let bigNodes = [233667,234409]
 
     // Add nodes with calculated dimensions
     inputNodes.forEach((node) => {
       dagreGraph.setNode(node.id, {
-        width:+node.id == 233667 ? circleSize*2 : circleSize,
-        height: +node.id == 233667 ? circleSize*2 : circleSize,
+        width: bigNodes.indexOf(+node.id) > -1 ? circleSize*2 : circleSize,
+        height: bigNodes.indexOf(+node.id) ? circleSize*2 : circleSize,
         level: nodeMap.get(node.id).level
       });
     });
@@ -156,12 +160,20 @@ export default async function generateLayout(
           const level = nodeMap.get(node.id).level;
           const nodesInLevel = levels.get(level);
           
-          const x = (dagreNode.x - minX) * scale + xOffset;
-          const y = (dagreNode.y - minY) * (scaleY * 0.9) + yOffset;
+          let x = (dagreNode.x - minX) * scale + xOffset;
+          let y = (dagreNode.y - minY) * (scaleY * 0.9) + yOffset;
+
+          // Force center a specific node (e.g., node with ID 233667)
+          if (node.id === "234409" || node.id === "233667") {
+            x = viewportWidth / 2;  // Center horizontally
+          }
 
           return {
             ...node,
             type: 'simple',
+            connectable: false,
+            selectable: false,
+            draggable: false,
             position: { x, y },
             sourcePosition: Position.Bottom,
             targetPosition: Position.Top,
@@ -175,12 +187,10 @@ export default async function generateLayout(
           ...edge,
           data: {
             ...edge.data,
-            method: method  // Add method to edge data
+            method: method
           },
-          type: "custom"
+          type: treeKey == "funky_1" ? "bezier" : "simple"
         }))
-
-        // edges: inputEdges
       };
     } catch (error) {
       console.error("Error during DagreTwo layout:", error);
@@ -224,6 +234,9 @@ export default async function generateLayout(
           const dagreNode = dagreGraph.node(node.id);
           return {
             ...node,
+            connectable: false,
+            selectable: false,
+            draggable: false,
             position: {
               x: dagreNode.x - nodeWidth / 2, // Adjust position for top-left anchor
               y: dagreNode.y - nodeHeight / 2,
@@ -278,9 +291,6 @@ export default async function generateLayout(
     const maxNodeWidth = Math.floor(availableWidth / (maxNodesInLevel));  // Removed +1 to allow larger nodes
     const maxNodeHeight = Math.floor(availableHeight / (numLevels));      // Removed +1 to allow larger nodes
     
-    console.log(maxNodesInLevel)
-
-
     // Increase maximum node size by using a larger fraction of screen
     let nodeSize = Math.min(
       maxNodeWidth,

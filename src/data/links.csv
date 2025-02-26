@@ -1828,7 +1828,8 @@ id,start_node_id,end_node_id,relationship_type,tree,remove,S_NAME,E_NAME,type,fl
 15265,235321,253610,SAMPLES,king,,The Show,Inspector Gadget,,,15265-king,235321-253610king
 3026,233262,235321,SAMPLES,king,,Show & Prove,The Show,,,3026-king,233262-235321king
 3030,241459,233262,SAMPLES,king,,Shimmy Shimmy Ya,Show & Prove,,,3030-king,241459-233262king
-88888888059,233265,241459,,king,,What If…,Shimmy Shimmy Ya,,,88888888059-king,
+88888888059,233265,241459,,king_2,,What If…,Shimmy Shimmy Ya,,,88888888059-king_2,233265-241459king_2
+88888888059,233265,241459,,king,,What If…,Shimmy Shimmy Ya,,,88888888059-king,233265-241459king
 19590,261164,236382,SAMPLES,funky_2,,Welcome to the Terrordome,You’re Gonna Get Yours,,,19590-funky_2,261164-236382funky_2
 1308,232544,234395,SAMPLES,king_2,,Got Your Money,Children’s Story,,,1308-king_2,232544-234395king_2
 1310,234397,232544,SAMPLES,king_2,,Money,Got Your Money,,,1310-king_2,234397-232544king_2

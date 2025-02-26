@@ -196,6 +196,7 @@
 			width: 100%;
 			max-width: 400px;
 			padding: 1rem;
+			margin: 0 auto;
 		}
 	}
 </style>
