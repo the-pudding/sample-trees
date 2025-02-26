@@ -135,7 +135,9 @@
 	}
 
 	:global(.svelte-flow__node) {
-		transition: transform 0.5s ease;
+		@media only screen and (min-width: 40rem) {
+			transition: transform 0.5s ease;
+		}
 	}
 
 	.node {

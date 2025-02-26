@@ -100,6 +100,9 @@
 				$controllerStore.focusNode == crossfadeData.source
 					? offset / 2
 					: offset / 2 + 0.5;
+
+				console.log(crossfadeData.progress);
+
 			crossfades.set($crossfades);
 		}
 	}
@@ -245,6 +248,7 @@
 
 	// Handle state changes when controller changes
 	$: if (previousIndex !== activeController.index) {
+		
 		// fit the view
 		fitViewToNodes();
 
