@@ -38,8 +38,8 @@
 		top: 0;
 		left: 0;
 		width: 100%;
-		height: 100dvh;
-		background: #f0f0f0;
+		height: 100vh;
+		background: var(--color-bg);
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
@@ -149,33 +149,33 @@
 	.buttons {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 10px;
 		align-items: center;
 	}
 
 	button {
-		padding: 0.75rem 1.5rem;
-		border-radius: 4px;
+		padding: 0.5rem 2.5rem;
+		border-radius: 5px;
 		font-family: var(--sans);
 		font-size: 1rem;
 		cursor: pointer;
 		transition: all 0.2s ease;
 		min-width: 200px;
+		font-weight: 600;
+		-webkit-font-smoothing: antialiased;
 
 		&.primary {
-			background: #4169e1;
-			color: white;
-			border: none;
-
-			&:hover {
-				background: #3158d0;
-			}
+			background: var(--color-pink);
+			border: 1.5px solid var(--color-pink-stroke);
+			color: #fff;
+			font-size: 24px;
 		}
 
 		&.secondary {
-			background: transparent;
-			border: 1px solid #666;
-			color: #666;
+			background: var(--color-dark);
+			border: 1.5px solid var(--color-dark-stroke);
+			color: #fff;
+			font-size: 18px;
 
 			&:hover {
 				background: #eee;

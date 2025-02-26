@@ -331,7 +331,7 @@
 			nodesConnectable={false}
 			elementsSelectable={false}
 		>
-			<Background bgColor="#f0f0f0" patternColor="#f0f0f0" />
+			<!-- <Background bgColor="#f0f0f0" patternColor="#f0f0f0" /> -->
 		</SvelteFlow>
 	</div>
 {/key}

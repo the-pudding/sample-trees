@@ -20,8 +20,12 @@
 	--border-radius: 2px;
 	--font-body: var(--sans);
 	--font-form: var(--sans);
-	--color-bg: #f0f0f0;
+	--color-bg: #FDF9F0;
 	--color-fg: var(--color-gray-900);
+	--color-pink: #FF49B0;
+	--color-pink-stroke: #B41E73;
+	--color-dark: #434343;
+	--color-dark-stroke: #292929;
 	--color-primary: var(--color-black);
 	--color-link: var(--color-black);
 	--color-focus: var(--color-red);
@@ -72,6 +76,10 @@ h1 {
 	font-size: var(--48px, 48px);
 	font-weight: 400;
 	text-align: center;
+	font-weight: 600;
+    letter-spacing: -3px;
+    line-height: 1.1;
+    text-align: center;
 }
 
 h2 {
@@ -101,4 +109,12 @@ p {
 
 .svelte-flow__attribution {
 	display: none;
+}
+
+.svelte-flow__background {
+	background: var(--color-bg);
+}
+
+#content .svelte-flow {
+	background: var(--color-bg);
 }

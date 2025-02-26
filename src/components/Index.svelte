@@ -160,6 +160,12 @@
 	<Footer />
 {/if}
 
+<<<<<<< HEAD
+=======
+<div class="noise-overlay" style="background: url('assets/noise-light.png');">
+</div>
+
+>>>>>>> 1f5263f (visual design updates)
 <style lang="scss">
 	.disable-scroll {
 		overflow: hidden;
@@ -167,5 +173,16 @@
 		width: 100dvw;
 		position: fixed;
 		pointer-events: none;
+	}
+
+	.noise-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 1;
+		pointer-events: none;
+		z-index: 10000;
 	}
 </style>
