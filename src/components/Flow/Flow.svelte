@@ -240,7 +240,6 @@
 			$edgeHighlights = [];
 		}
 
-		console.log($edgeHighlights);
 		$edgeHighlights = $edgeHighlights;
 	}
 
@@ -311,6 +310,9 @@
 			{connectionLineType}
 			minZoom={0.1}
 			maxZoom={2}
+			nodesDraggable={false}
+			nodesConnectable={false}
+			elementsSelectable={false}
 		>
 			<Background bgColor="#f0f0f0" patternColor="#f0f0f0" />
 		</SvelteFlow>
