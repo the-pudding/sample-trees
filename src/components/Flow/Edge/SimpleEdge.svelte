@@ -16,8 +16,6 @@
 	const activeController = getContext("activeController");
 	const edgeHighlights = getContext("edgeHighlights");
 
-	console.log(activeController)
-
 	$: highlight = $edgeHighlights
 		.map((edgeId) => `${edgeId}-${$activeController.tree}`)
 		.includes(id);

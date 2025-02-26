@@ -30,10 +30,15 @@
 	const playheadHeight = 6;
 	const waveformGap = 4; // TODO this might need to by dynamic or zoom dependent
 
+	$: hasComponent = activeController?.component;
+
 	$: nodeHeight = Math.min(
-		$viewport.height / 2 - textHeight - waveformHeight,
-		220
+		$viewport.height / 2 - (hasComponent ? textHeight - waveformHeight : 0),
+		hasComponent ? 240 : 300
 	);
+
+	$: console.log(nodeHeight);
+
 	$: nodeWidth = nodeHeight * 0.75;
 
 	const dimensions = writable({
@@ -100,8 +105,6 @@
 				$controllerStore.focusNode == crossfadeData.source
 					? offset / 2
 					: offset / 2 + 0.5;
-
-				console.log(crossfadeData.progress);
 
 			crossfades.set($crossfades);
 		}
@@ -248,7 +251,6 @@
 
 	// Handle state changes when controller changes
 	$: if (previousIndex !== activeController.index) {
-		
 		// fit the view
 		fitViewToNodes();
 

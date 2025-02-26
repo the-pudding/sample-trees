@@ -19,7 +19,6 @@
 
 	let isReady = false;
 	let hasStarted = false;
-	let render;
 
 	let imageUrls;
 
@@ -116,15 +115,7 @@
 
 	onMount(async () => {
 		// Run both tasks in parallel
-		await Promise.all([
-			Promise.all(nestedSlides.map((slide, i) => generateFlow(slide))).then(
-				(result) => {
-					render = result;
-				}
-			),
-			preloadImages()
-		]);
-
+		await preloadImages();
 		isReady = true;
 
 		// Initial check
@@ -168,7 +159,6 @@
 {#if hasStarted}
 	<Footer />
 {/if}
-
 
 <style lang="scss">
 	.disable-scroll {
