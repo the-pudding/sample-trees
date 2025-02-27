@@ -9,7 +9,6 @@
 	import { fade } from "svelte/transition";
 	import viewport from "$stores/viewport";
 
-
 	// Components
 	import Flow from "./Flow/Flow.svelte";
 
@@ -45,7 +44,11 @@
 	let previousStoreWidth = 0;
 
 	// Watch viewport width changes
-	$: if (isReady && $viewport.width !== 0 && $viewport.width !== previousStoreWidth) {
+	$: if (
+		isReady &&
+		$viewport.width !== 0 &&
+		$viewport.width !== previousStoreWidth
+	) {
 		previousStoreWidth = $viewport.width;
 		init();
 	}
@@ -78,7 +81,6 @@
 	$: {
 		activeController = { ...activeSlideContent?.controller, index, progress };
 	}
-
 
 	async function init() {
 		isReady = false;
@@ -115,27 +117,27 @@
 		<div slot="background">
 			{#if isReady}
 				{#if activeSlideContent}
-					<div
-						class="full-tree-container"
-						class:visible={activeController.links == activeController.tree}
-						class:show-highlighted-edges={activeController.edgeHighlight}
-					>
-						{#await fullTree then fullTreeResult}
-							{#if fullTreeResult}
-								<SvelteFlowProvider>
-									<Flow
-										activeTree={fullTreeResult}
-										activeController={fullTreeController}
-										{offset}
-										isFullTree={true}
-									/>
-								</SvelteFlowProvider>
-							{/if}
-						{/await}
-					</div>
+					{#if $activeSectionId == key}
+						<div
+							class="full-tree-container"
+							class:visible={activeController.links == activeController.tree}
+							class:show-highlighted-edges={activeController.edgeHighlight}
+						>
+							{#await fullTree then fullTreeResult}
+								{#if fullTreeResult}
+									<SvelteFlowProvider>
+										<Flow
+											activeTree={fullTreeResult}
+											activeController={fullTreeController}
+											{offset}
+											isFullTree={true}
+										/>
+									</SvelteFlowProvider>
+								{/if}
+							{/await}
+						</div>
 
-					{#if activeTree}
-						{#if $activeSectionId == key}
+						{#if activeTree}
 							<div transition:fade={{ duration: 500 }}>
 								<SvelteFlowProvider>
 									<Flow {activeTree} {activeController} {slides} {offset} />
@@ -152,9 +154,9 @@
 				<section
 					class="slide"
 					style="
-						height:{!slide.text ? $viewport.height*.25 : $viewport.height}px;
-						padding-top:{i == 0 ? $viewport.height/2 : ''}px;
-						padding-bottom:{i == slides.length - 1 ? $viewport.height/2 : ''}px;
+						height:{!slide.text ? $viewport.height * 0.25 : $viewport.height}px;
+						padding-top:{i == 0 ? $viewport.height / 2 : ''}px;
+						padding-bottom:{i == slides.length - 1 ? $viewport.height / 2 : ''}px;
 					"
 					class:spacer={!slide.text}
 				>
@@ -221,7 +223,6 @@
 			padding: 1rem;
 			transform: translateY(25vh);
 			margin: 0 auto;
-
 		}
 	}
 </style>
