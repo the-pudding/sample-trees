@@ -1514,7 +1514,6 @@ id,start_node_id,end_node_id,relationship_type,tree,remove,S_NAME,E_NAME,type,fl
 56859,251520,248775,SAMPLES,funky_2,,Freestyle Yo MTV RAPS,South Bronx,,,56859-funky_2,251520-248775funky_2
 56862,251523,248775,SAMPLES,funky_3,,Jenny from the Block,South Bronx,,,56862-funky_3,251523-248775funky_3
 56862,251523,248775,SAMPLES,funky_2,,Jenny from the Block,South Bronx,,,56862-funky_2,251523-248775funky_2
-56867,251527,248775,SAMPLES,funky_3,,Jenny From the Block (Rap Version),South Bronx,,,56867-funky_3,251527-248775funky_3
 56867,251527,248775,SAMPLES,funky_2,,Jenny From the Block (Rap Version),South Bronx,,,56867-funky_2,251527-248775funky_2
 56861,251522,248775,SAMPLES,funky_3,,K.I.M.,South Bronx,,,56861-funky_3,251522-248775funky_3
 56861,251522,248775,SAMPLES,funky_2,,K.I.M.,South Bronx,,,56861-funky_2,251522-248775funky_2
