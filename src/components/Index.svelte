@@ -1,7 +1,5 @@
 <script>
-	import { setContext } from "svelte";
-	import { onMount } from "svelte";
-	import { SvelteFlowProvider } from "@xyflow/svelte";
+	import { onMount, tick } from "svelte";
 	import { activeSectionId } from "$stores/misc.js";
 	import { base } from "$app/paths";
 	import Footer from "./Footer.svelte";
@@ -14,11 +12,15 @@
 	import flatSlides from "$data/slides.csv";
 	import Title from "./Title.svelte";
 	import AudioToggle from "./AudioToggle.svelte";
+	import viewport from "$stores/viewport";
+
 
 	import Section from "./Section.svelte";
 
 	let isReady = false;
 	let hasStarted = false;
+	let viewportHeight = 0;
+	let mounted = false;
 
 	let imageUrls;
 
@@ -40,7 +42,7 @@
 
 		const BATCH_SIZE = 100;
 		const totalImages = imageUrls.length;
-
+	
 		for (let i = 0; i < totalImages; i += BATCH_SIZE) {
 			const batch = imageUrls.slice(i, i + BATCH_SIZE);
 			await Promise.all(
@@ -54,10 +56,16 @@
 				)
 			);
 		}
+
 	}
 
-	function handleStart() {
+	async function handleStart() {
 		hasStarted = true;
+
+		await tick();
+		const el = document.getElementById("scroll-to-start");
+		el.scrollIntoView({ behavior: "smooth", block: "center" });
+
 	}
 
 	function checkSectionVisibility() {
@@ -114,6 +122,9 @@
 	const groupedSlides = groupBy(nestedSlides, "section");
 
 	onMount(async () => {
+		mounted = true;
+		viewportHeight = $viewport.height;
+		console.log(viewportHeight)
 		// Run both tasks in parallel
 		await preloadImages();
 		isReady = true;
@@ -145,27 +156,29 @@
 	{/if}
 </svelte:head>
 
-{#if !hasStarted}
+<!-- {#if !hasStarted} -->
 	<Title {isReady} onStart={handleStart} />
+<!-- {/if} -->
+
+{#if mounted}
+	<div transition:fade style="display: {hasStarted ? 'block' : 'none'};" class:disable-scroll={!hasStarted}>
+		<AudioToggle />
+		{#each Object.entries(groupedSlides) as [key, content], i}
+			<!-- {#if i == 0} -->
+				<Section {key} {content} sectionIndex={i} {viewportHeight} />
+			<!-- {/if} -->
+		{/each}
+	</div>
 {/if}
 
-<div transition:fade class:disable-scroll={!hasStarted}>
-	<AudioToggle />
-	{#each Object.entries(groupedSlides) as [key, content], i}
-		<Section {key} {content} sectionIndex={i} />
-	{/each}
-</div>
 
 {#if hasStarted}
 	<Footer />
 {/if}
 
-<<<<<<< HEAD
-=======
 <div class="noise-overlay" style="background: url('assets/noise-light.png');">
 </div>
 
->>>>>>> 1f5263f (visual design updates)
 <style lang="scss">
 	.disable-scroll {
 		overflow: hidden;

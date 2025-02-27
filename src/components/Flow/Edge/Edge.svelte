@@ -43,7 +43,6 @@
 		targetY,
 		targetPosition
 	});
-
 	// Calculate crossfader dimensions
 	$: crossfadeStart =
 		sourceY + $dimensions.waveformHeight - $dimensions.waveformGap;
@@ -64,7 +63,7 @@
 
 {#if $activeController?.component?.type == "crossfade" && $activeController?.component?.id == id}
 	<EdgeLabelRenderer>
-		<Waveform
+		<!-- <Waveform
 			position="top"
 			id={source}
 			waveColor="#fefbd7"
@@ -75,8 +74,8 @@
 			{targetY}
 			link_id={id.split("-")[0]}
 		/>
-
-		<Waveform
+ -->
+		<!-- <Waveform
 			position="bottom"
 			id={target}
 			waveColor="#a3c69b"
@@ -86,7 +85,7 @@
 			{labelX}
 			{targetY}
 			link_id={id.split("-")[0]}
-		/>
+		/> -->
 
 		<Crossfade {labelX} {sourceY} {targetY} {progressY} />
 	</EdgeLabelRenderer>

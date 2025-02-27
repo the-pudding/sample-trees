@@ -34,14 +34,14 @@
 
 	// Update target for mobile animation
 	$: {
-		if (isMobile) {
-			targetY_mobile = progressY;
-			if (!rafId) {
-				rafId = requestAnimationFrame(animate);
-			}
-		} else {
+		// if (isMobile) {
+		// 	targetY_mobile = progressY;
+		// 	if (!rafId) {
+		// 		rafId = requestAnimationFrame(animate);
+		// 	}
+		// } else {
 			currentY = progressY;
-		}
+		// }
 	}
 </script>
 
@@ -103,11 +103,11 @@
 
 	.crossfader {
 		position: absolute;
-		font-size: 12pt;
-		pointer-events: all;
+		// font-size: 12pt;
+		// pointer-events: all;
 		will-change: transform;
 		transform: translate3d(-50%, -50%, 0) translate3d(var(--x), var(--y), 0);
-
+		transition: none;
 		&__playhead {
 			width: 20px;
 			height: var(--playhead-height);

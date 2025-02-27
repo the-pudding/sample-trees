@@ -22,6 +22,8 @@
 	--font-form: var(--sans);
 	--color-bg: #FDF9F0;
 	--color-fg: var(--color-gray-900);
+	--color-blue: #0078bf;
+	--color-blue-stroke: #3D5588;
 	--color-pink: #FF49B0;
 	--color-pink-stroke: #B41E73;
 	--color-dark: #434343;

@@ -33,10 +33,10 @@
 			volume: $isMuted ? 0 : volume,
 			url: `${base}/assets/audio/${link_id}-${id}.mp3`,
 			height: $dimensions.waveformHeight - barHeightPadding*2,
-			barWidth: 1,
+			// barWidth: 1,
 			barAlign: "center",
 			normalize: true,
-			barGap: 1,
+			// barGap: 1,
 			barRadius: 0
 		});
 

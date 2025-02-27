@@ -23,6 +23,11 @@
 	export let slides = [];
 	export let offset = 0;
 	export let isFullTree = false;
+	export let viewportHeight;
+
+    let fitViewKey = 0;
+
+
 
 	// Create dimensions store
 	const textHeight = 30;
@@ -33,7 +38,7 @@
 	$: hasComponent = activeController?.component;
 
 	$: nodeHeight = Math.min(
-		$viewport.height / 2 - (hasComponent ? textHeight - waveformHeight : 0),
+		viewportHeight / 2 - (hasComponent ? textHeight - waveformHeight : 0),
 		hasComponent ? 240 : 300
 	);
 
@@ -204,16 +209,17 @@
 		}
 
 		await tick();  // Wait for any pending DOM updates
-		
+		console.log("fitToNodes", fitToNodes, viewportHeight,$viewport.width);
+
 		fitView({
 			nodes: fitToNodes,
-			padding: fitToNodes.length === 2 ? 0.2 : 0.05,
-			duration: 500,
+			// padding: fitToNodes.length === 2 ? 0.2 : 0.05,
+			duration: 1000,
 			minZoom: 0.1,
 			maxZoom: 2,
-			includeHiddenNodes: false,
+			// includeHiddenNodes: false,
 			width: $viewport.width,
-			height: window.innerHeight
+			height: viewportHeight
 		});
 	}
 
@@ -311,12 +317,12 @@
 	onMount(() => {
 		setTimeout(() => {
 			fitViewToNodes();
-		}, 1000);
+		}, 100);
 	});
 </script>
 
 {#key flowKey}
-	<div class="flow">
+	<div class="flow matt-test">
 		<SvelteFlow
 			bind:this={flowRef}
 			{nodes}
@@ -328,7 +334,6 @@
 			minZoom={0.1}
 			maxZoom={2}
 			nodesDraggable={false}
-			nodesConnectable={false}
 			elementsSelectable={false}
 		>
 			<!-- <Background bgColor="#f0f0f0" patternColor="#f0f0f0" /> -->
