@@ -1,5 +1,6 @@
 <script>
 	// Modules
+	import { writable } from "svelte/store";
 	import { marked } from "marked";
 	import Scroller from "@sveltejs/svelte-scroller";
 	import { onMount, getContext, setContext } from "svelte";
@@ -8,7 +9,7 @@
 	import "@xyflow/svelte/dist/style.css";
 	import { fade } from "svelte/transition";
 	import viewport from "$stores/viewport";
-
+	import { globalChangeWatcher } from "$stores/misc.js";
 	// Components
 	import Flow from "./Flow/Flow.svelte";
 
@@ -78,8 +79,105 @@
 		activeSlideContent = slides[index];
 	}
 
+	// Create a writable store for the controller
+	const controllerStore = writable(activeController);
+	setContext("activeController", controllerStore);
+
 	$: {
 		activeController = { ...activeSlideContent?.controller, index, progress };
+		// Update the store whenever activeController changes
+		controllerStore.set(activeController);
+	}
+
+	// Create crossfades store
+	const crossfades = writable({});
+	setContext("crossfades", crossfades);
+
+	// Update crossfades when slides change
+	$: {
+		const crossfadesObj = slides
+			.filter((d) => d?.controller?.component?.type == "crossfade")
+			.reduce((acc, item) => {
+				const { id } = item.controller?.component;
+				const [source, target] = id.split("_");
+
+				acc[id] = {
+					source,
+					target
+				};
+
+				return acc;
+			}, {});
+		crossfades.set(crossfadesObj);
+	}
+
+	// Update progress when offset changes
+	$: if ($controllerStore?.component?.type == "crossfade") {
+		const id = $controllerStore.component?.id;
+		const crossfadeData = $crossfades[id];
+		if (crossfadeData) {
+			crossfadeData.progress =
+				$controllerStore.focusNode == crossfadeData.source
+					? offset / 2
+					: offset / 2 + 0.5;
+
+			crossfades.set($crossfades);
+		}
+	}
+
+	// Create loops store
+	const loops = writable({});
+	setContext("loops", loops);
+
+	// Update loops when slides change
+	$: {
+		const loopsObj = slides
+			.filter((d) => d?.controller?.component?.type == "loop")
+			.reduce((acc, item) => {
+				const { id } = item.controller?.component;
+				const nodeIds = id.split(",");
+
+				acc[id] = {
+					sequence: nodeIds,
+					currentIndex: 0,
+					isPlaying: true
+				};
+
+				return acc;
+			}, {});
+		loops.set(loopsObj);
+	}
+
+	let previousIndex = activeController?.index;
+
+	$: if (previousIndex !== activeController?.index) {
+		$globalChangeWatcher = ++$globalChangeWatcher;
+		previousIndex = activeController.index;
+	}
+
+	$: if ($globalChangeWatcher) {
+		// Reset all loops
+		loops.update((loops) => {
+			Object.keys(loops).forEach((key) => {
+				loops[key].isPlaying = false;
+				loops[key].currentIndex = 0;
+			});
+			return loops;
+		});
+
+		// Initialize new state if this is a loop controller
+		if (activeController?.component?.type === "loop") {
+			const loopId = activeController.component.id;
+
+			// Set up loop state
+			loops.update((loops) => {
+				if (loops[loopId]) {
+					loops[loopId].isPlaying = true;
+					loops[loopId].currentIndex = 0;
+				}
+				return loops;
+			});
+		}
 	}
 
 	async function init() {
@@ -118,32 +216,32 @@
 			{#if isReady}
 				{#if activeSlideContent}
 					{#if $activeSectionId == key}
-						<div
-							class="full-tree-container"
-							class:visible={activeController.links == activeController.tree}
-							class:show-highlighted-edges={activeController.edgeHighlight}
-						>
-							{#await fullTree then fullTreeResult}
-								{#if fullTreeResult}
-									<SvelteFlowProvider>
-										<Flow
-											activeTree={fullTreeResult}
-											activeController={fullTreeController}
-											{offset}
-											isFullTree={true}
-										/>
-									</SvelteFlowProvider>
-								{/if}
-							{/await}
-						</div>
+						<div transition:fade={{ duration: 500 }}>
+							<div
+								class="full-tree-container"
+								class:visible={activeController.links == activeController.tree}
+								class:show-highlighted-edges={activeController.edgeHighlight}
+							>
+								{#await fullTree then fullTreeResult}
+									{#if fullTreeResult}
+										<SvelteFlowProvider>
+											<Flow
+												activeTree={fullTreeResult}
+												activeController={fullTreeController}
+												{offset}
+												isFullTree={true}
+											/>
+										</SvelteFlowProvider>
+									{/if}
+								{/await}
+							</div>
 
-						{#if activeTree}
-							<div transition:fade={{ duration: 500 }}>
+							{#if activeTree}
 								<SvelteFlowProvider>
 									<Flow {activeTree} {activeController} {slides} {offset} />
 								</SvelteFlowProvider>
-							</div>
-						{/if}
+							{/if}
+						</div>
 					{/if}
 				{/if}
 			{/if}
