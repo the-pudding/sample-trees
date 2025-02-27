@@ -217,33 +217,34 @@
 			{#if isReady}
 				{#if activeSlideContent}
 					{#if $activeSectionId == key}
-						<div
-							class="full-tree-container"
-							class:visible={activeController.links == activeController.tree}
-							class:show-highlighted-edges={activeController.edgeHighlight}
-						>
-							{#await fullTree then fullTreeResult}
-								{#if fullTreeResult}
-									<SvelteFlowProvider>
-										<Flow
-											activeTree={fullTreeResult}
-											activeController={fullTreeController}
-											{offset}
-											isFullTree={true}
-											{viewportHeight}
-										/>
-									</SvelteFlowProvider>
-								{/if}
-							{/await}
-						</div>
-					{/if}
+						<div transition:fade={{ duration: 500 }}>
+							<div
+								class="full-tree-container"
+								class:visible={activeController.links == activeController.tree}
+								class:show-highlighted-edges={activeController.edgeHighlight}
+							>
+								{#await fullTree then fullTreeResult}
+									{#if fullTreeResult}
+										<SvelteFlowProvider>
+											<Flow
+												activeTree={fullTreeResult}
+												activeController={fullTreeController}
+												{offset}
+												isFullTree={true}
+												{viewportHeight}
+											/>
+										</SvelteFlowProvider>
+									{/if}
+								{/await}
+							</div>
 
 							{#if activeTree}
 								<SvelteFlowProvider>
-									<Flow {activeTree} {activeController} {slides} {offset} {viewportHeight} />
+									<Flow {activeTree} {activeController} {slides} {offset} {viewportHeight}/>
 								</SvelteFlowProvider>
 							{/if}
 						</div>
+
 					{/if}
 				{/if}
 			{/if}

@@ -16,7 +16,6 @@
 	import AudioToggle from "./AudioToggle.svelte";
 	import viewport from "$stores/viewport";
 	import { pauseAllAudio } from "$utils/audio.js";
-	import viewport from "$stores/viewport";
 
 	import Section from "./Section.svelte";
 

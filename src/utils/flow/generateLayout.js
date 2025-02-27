@@ -375,8 +375,6 @@ export default async function generateLayout(
       const xOffset = (viewportWidth - graphWidth * scale) / 2;
       const yOffset = padding * 2;
 
-      // console.log(layoutedGraph.children)
-
       return {
         nodes: layoutedGraph.children.map((node) => ({
           ...node,
