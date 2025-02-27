@@ -8,7 +8,7 @@
 	} from "@xyflow/svelte";
 	import "@xyflow/svelte/dist/style.css";
 
-	import { setContext, onMount, tick } from "svelte";
+	import { setContext, getContext, onMount, tick } from "svelte";
 	import viewport from "$stores/viewport";
 
 	import Node from "./Node/Node.svelte";
@@ -65,32 +65,6 @@
 
 	setContext("dimensions", dimensions);
 
-	// Create a writable store for the controller
-	const controllerStore = writable(activeController);
-	setContext("activeController", controllerStore);
-
-	// Create crossfades store
-	const crossfades = writable({});
-	setContext("crossfades", crossfades);
-
-	// Update crossfades when slides change
-	$: {
-		const crossfadesObj = slides
-			.filter((d) => d?.controller?.component?.type == "crossfade")
-			.reduce((acc, item) => {
-				const { id } = item.controller?.component;
-				const [source, target] = id.split("_");
-
-				acc[id] = {
-					source,
-					target
-				};
-
-				return acc;
-			}, {});
-		crossfades.set(crossfadesObj);
-	}
-
 	const secondaryLabels = writable({});
 	setContext("secondaryLabels", secondaryLabels);
 
@@ -98,46 +72,6 @@
 	const edgeHighlights = writable([]);
 	setContext("edgeHighlights", edgeHighlights);
 	updateEdgeHighlights();
-
-	// Update progress when offset changes
-	$: if ($controllerStore?.component?.type == "crossfade") {
-		const id = $controllerStore.component?.id;
-		const crossfadeData = $crossfades[id];
-		if (crossfadeData) {
-			crossfadeData.progress =
-				$controllerStore.focusNode == crossfadeData.source
-					? offset / 2
-					: offset / 2 + 0.5;
-
-			crossfades.set($crossfades);
-		}
-	}
-
-	// Update the store whenever activeController changes
-	$: controllerStore.set(activeController);
-
-	// Create loops store
-	const loops = writable({});
-	setContext("loops", loops);
-
-	// Update loops when slides change
-	$: {
-		const loopsObj = slides
-			.filter((d) => d?.controller?.component?.type == "loop")
-			.reduce((acc, item) => {
-				const { id } = item.controller?.component;
-				const nodeIds = id.split(",");
-
-				acc[id] = {
-					sequence: nodeIds,
-					currentIndex: 0,
-					isPlaying: true
-				};
-
-				return acc;
-			}, {});
-		loops.set(loopsObj);
-	}
 
 	let flowRef;
 	let previousIndex = activeController.index;
@@ -167,8 +101,8 @@
 	$: if (activeTree) {
 		nodes.set(activeTree.nodes);
 		edges.set(activeTree.edges);
-		nodesReady.set(false);  // Reset readiness when tree changes
-		
+		nodesReady.set(false); // Reset readiness when tree changes
+
 		// Use tick to wait for DOM updates after nodes change
 		tick().then(() => {
 			// Small delay to ensure nodes are fully rendered
@@ -176,24 +110,10 @@
 		});
 	}
 
-	// Function to advance to next song in loop
-	function advanceLoop(loopId) {
-		loops.update((loops) => {
-			const loop = loops[loopId];
-			if (loop && loop.isPlaying) {
-				loop.currentIndex = (loop.currentIndex + 1) % loop.sequence.length;
-			}
-			return loops;
-		});
-	}
-
-	// Expose advance function to components
-	setContext("advanceLoop", advanceLoop);
-
 	async function fitViewToNodes() {
 		// Only proceed if nodes are ready
 		if (!$nodesReady) return;
-		
+
 		let fitToNodes;
 
 		if (activeController?.fitViewNodes) {
@@ -209,7 +129,6 @@
 		}
 
 		await tick();  // Wait for any pending DOM updates
-		console.log("fitToNodes", fitToNodes, viewportHeight,$viewport.width);
 
 		fitView({
 			nodes: fitToNodes,
@@ -268,29 +187,6 @@
 	// Watch for node readiness and controller changes
 	$: if ($nodesReady && previousIndex !== activeController.index) {
 		fitViewToNodes();
-
-		// Reset all loops
-		loops.update((loops) => {
-			Object.keys(loops).forEach((key) => {
-				loops[key].isPlaying = false;
-				loops[key].currentIndex = 0;
-			});
-			return loops;
-		});
-
-		// Initialize new state if this is a loop controller
-		if (activeController?.component?.type === "loop") {
-			const loopId = activeController.component.id;
-
-			// Set up loop state
-			loops.update((loops) => {
-				if (loops[loopId]) {
-					loops[loopId].isPlaying = true;
-					loops[loopId].currentIndex = 0;
-				}
-				return loops;
-			});
-		}
 
 		if (activeController.links === activeController.tree) {
 			flowKey += 1;

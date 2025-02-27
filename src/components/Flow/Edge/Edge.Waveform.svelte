@@ -2,8 +2,9 @@
 	import { onMount } from "svelte";
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
-	import { playerTimes, isMuted } from "$stores/misc.js";
+	import { playerTimes, isMuted, currentAudioSource, isPlaying, globalAudioPlayer } from "$stores/misc.js";
 	import { getContext } from "svelte";
+	import { handlePlay, handlePause } from "$utils/audio.js";
 
 	$$restProps;
 
@@ -18,8 +19,8 @@
 	export let link_id;
 
 	const dimensions = getContext("dimensions");
-	const volume = .1;
 	const barHeightPadding = 3;
+	const audioUrl = `${base}/assets/audio/${link_id}-${id}.mp3`;
 
 	let wavesurfer;
 	let isReady = false;
@@ -30,9 +31,9 @@
 			container: waveformRef,
 			waveColor: waveColor,
 			progressColor: progressColor,
-			volume: $isMuted ? 0 : volume,
-			url: `${base}/assets/audio/${link_id}-${id}.mp3`,
-			height: $dimensions.waveformHeight - barHeightPadding*2,
+			volume: 0, // Always muted since we're using global player
+			url: audioUrl,
+			height: $dimensions.waveformHeight - barHeightPadding * 2,
 			// barWidth: 1,
 			barAlign: "center",
 			normalize: true,
@@ -44,24 +45,42 @@
 		wavesurfer.on("ready", () => {
 			isReady = true;
 			if (play) {
-				wavesurfer.setVolume($isMuted ? 0 : volume);
-				wavesurfer.play();
+				handlePlay(audioUrl, id);
 			}
 		});
 
-		// Replay on finish
-		wavesurfer.on("finish", () => {
-			wavesurfer.play();
-		});
+		// Sync waveform progress with global player
+		const updateTimer = setInterval(() => {
+			if (isReady && $globalAudioPlayer && $currentAudioSource === audioUrl) {
+				wavesurfer.setTime($globalAudioPlayer.currentTime);
+			}
+		}, 50);
 
 		return () => {
-			wavesurfer.destroy();
+			clearInterval(updateTimer);
+			if (wavesurfer) {
+				wavesurfer.destroy();
+			}
 		};
 	});
 
-	// Update volume when mute state changes
+	// Handle play/pause changes
+	$: if (isReady) {
+		if (play && $currentAudioSource !== audioUrl) {
+			handlePlay(audioUrl, id);
+		} else if (!play && $currentAudioSource === audioUrl) {
+			handlePause(audioUrl, id);
+		}
+	}
+
+	// Keep waveform progress in sync with global player
+	$: if (isReady && $globalAudioPlayer && $currentAudioSource === audioUrl) {
+		wavesurfer.setTime($globalAudioPlayer.currentTime);
+	}
+
+	// Update mute state changes
 	$: if (wavesurfer && isReady) {
-		wavesurfer.setVolume($isMuted ? 0 : volume);
+		wavesurfer.setMuted($isMuted);
 	}
 
 	// Debounce play/pause changes to avoid conflicts
@@ -71,14 +90,15 @@
 		playPauseTimeout = setTimeout(() => {
 			if (play && !wavesurfer.isPlaying()) {
 				wavesurfer.setTime($playerTimes[id] || 0);
-				wavesurfer.setVolume($isMuted ? 0 : volume);
-				wavesurfer.play();
+				wavesurfer.setMuted($isMuted);
+				handlePlay(audioUrl, id);
 			} else if (!play && wavesurfer.isPlaying()) {
 				$playerTimes[id] = wavesurfer.getCurrentTime();
 				wavesurfer.pause();
 			}
 		}, 100);
 	}
+
 </script>
 
 <div
@@ -88,7 +108,8 @@
 		: `translate(${labelX}px, ${targetY - $dimensions.waveformHeight + $dimensions.waveformGap}px)`}"
 	style:--node-height="{$dimensions.nodeHeight}px"
 	style:--node-width="{$dimensions.nodeWidth}px"
-	style:--waveform-height="{$dimensions.waveformHeight - barHeightPadding*2}px"
+	style:--waveform-height="{$dimensions.waveformHeight -
+		barHeightPadding * 2}px"
 	style:--bar-height-padding="{barHeightPadding}px"
 >
 	<div
@@ -110,18 +131,12 @@
 	}
 
 	.waveform {
-		// height: var(--waveform-height);
 		width: 100%;
 		background: var(--bg);
 		padding-top: var(--bar-height-padding);
 		padding-bottom: var(--bar-height-padding);
-		:global(canvas) {
-			// transform: scale(1, 0.5);
-			// transform-origin: 0 0;
-		}
 	}
 
-	/* Optional: Make sure the canvas inherits the height */
 	.waveform canvas {
 		height: 100% !important;
 	}
