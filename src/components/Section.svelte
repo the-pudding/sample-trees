@@ -9,7 +9,6 @@
 	import { fade } from "svelte/transition";
 	import viewport from "$stores/viewport";
 
-
 	// Components
 	import Flow from "./Flow/Flow.svelte";
 
@@ -46,7 +45,11 @@
 	let previousStoreWidth = 0;
 
 	// Watch viewport width changes
-	$: if (isReady && $viewport.width !== 0 && $viewport.width !== previousStoreWidth) {
+	$: if (
+		isReady &&
+		$viewport.width !== 0 &&
+		$viewport.width !== previousStoreWidth
+	) {
 		previousStoreWidth = $viewport.width;
 		init();
 	}
@@ -79,9 +82,6 @@
 	$: {
 		activeController = { ...activeSlideContent?.controller, index, progress };
 	}
-
-	$: console.log($activeSectionId);
-
 
 	async function init() {
 		isReady = false;
@@ -140,8 +140,7 @@
 						</div>
 					{/if}
 
-					{#if activeTree}
-						{#if $activeSectionId == key}
+						{#if activeTree}
 							<div transition:fade={{ duration: 500 }}>
 								<SvelteFlowProvider>
 									<Flow {activeTree} {activeController} {slides} {offset} {viewportHeight} />
@@ -245,7 +244,6 @@
 				opacity: 0.1;
 				
 			}
-
 		}
 	}
 </style>
