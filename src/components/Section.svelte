@@ -10,6 +10,8 @@
 	import { fade } from "svelte/transition";
 	import viewport from "$stores/viewport";
 	import { globalChangeWatcher } from "$stores/misc.js";
+
+	import Slide from "./Slide.svelte";
 	// Components
 	import Flow from "./Flow/Flow.svelte";
 
@@ -159,7 +161,6 @@
 	let previousGlobalChangeWatcher = $globalChangeWatcher;
 
 	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
-
 		// Reset all loops
 		loops.update((loops) => {
 			Object.keys(loops).forEach((key) => {
@@ -261,25 +262,7 @@
 
 		<div class="foreground" slot="foreground">
 			{#each slides as slide, i}
-				<section
-					class="slide"
-					style="
-						height:{!slide.text ? viewportHeight*.25 : viewportHeight}px;
-						padding-top:{i == 0 ? '' : ''}px;
-						padding-bottom:{i == slides.length - 1 ? viewportHeight/2 : ''}px;
-					"
-					class:spacer={!slide.text}
-				>
-					{#if slide.text}
-						<div
-							class="slide-text"
-							id={sectionIndex == 0 && i == 0 ? "scroll-to-start" : ""}
-						>
-							{slide.text}
-							<div class="noise-slide"></div>
-						</div>
-					{/if}
-				</section>
+				<Slide {slides} {slide} {viewportHeight} {i} {sectionIndex} />
 			{/each}
 		</div>
 	</Scroller>
@@ -322,40 +305,5 @@
 		margin: 0 auto;
 		max-width: 1200px;
 		padding: 1rem;
-	}
-
-	.slide {
-		display: flex;
-		justify-content: flex-start;
-		align-items: flex-start;
-
-		pointer-events: none;
-		position: relative;
-
-		.slide-text {
-			width: fit-content;
-			height: fit-content;
-			max-width: 300px;
-			padding: 1rem;
-			transform: translateY(25vh);
-			margin: 0;
-			background: rgba(0, 0, 0, .95);
-			color: white;
-			border-radius: 3px;
-			margin-inline-start: 1rem;
-			min-width: 300px;
-
-
-
-			.noise-slide {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background-image: url("assets/noise-light.png");
-				opacity: 0.1;
-			}
-		}
 	}
 </style>
