@@ -25,10 +25,6 @@
 	export let isFullTree = false;
 	export let viewportHeight;
 
-    let fitViewKey = 0;
-
-
-
 	// Create dimensions store
 	const textHeight = 30;
 	const waveformHeight = 20;
@@ -322,7 +318,7 @@
 </script>
 
 {#key flowKey}
-	<div class="flow matt-test">
+	<div class="flow">
 		<SvelteFlow
 			bind:this={flowRef}
 			{nodes}

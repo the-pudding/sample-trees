@@ -111,13 +111,13 @@
 	<CoverArt {data} />
 
 	{#if isInLoop}
-		<!-- <Waveform
+		<Waveform
 			id={data.id}
 			waveColor="#fefbd7"
 			progressColor="#CBB600"
 			play={isCurrentlyPlaying}
 			{loopId}
-		/> -->
+		/>
 	{/if}
 </div>
 
