@@ -264,9 +264,9 @@
 				<section
 					class="slide"
 					style="
-						height:{!slide.text ? viewportHeight * 0.25 : viewportHeight}px;
-						padding-top:{i == 0 ? viewportHeight / 2 : ''}px;
-						padding-bottom:{i == slides.length - 1 ? viewportHeight / 2 : ''}px;
+						height:{!slide.text ? viewportHeight*.25 : viewportHeight}px;
+						padding-top:{i == 0 ? '' : ''}px;
+						padding-bottom:{i == slides.length - 1 ? viewportHeight/2 : ''}px;
 					"
 					class:spacer={!slide.text}
 				>
@@ -326,22 +326,26 @@
 
 	.slide {
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: flex-start;
 
 		pointer-events: none;
 		position: relative;
 
 		.slide-text {
-			width: 100%;
+			width: fit-content;
 			height: fit-content;
-			max-width: 400px;
+			max-width: 300px;
 			padding: 1rem;
 			transform: translateY(25vh);
-			margin: 0 auto;
-			background: rgba(0, 0, 0, 0.95);
+			margin: 0;
+			background: rgba(0, 0, 0, .95);
 			color: white;
 			border-radius: 3px;
+			margin-inline-start: 1rem;
+			min-width: 300px;
+
+
 
 			.noise-slide {
 				position: absolute;
