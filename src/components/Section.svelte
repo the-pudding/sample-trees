@@ -156,7 +156,9 @@
 		previousIndex = activeController.index;
 	}
 
-	$: if ($globalChangeWatcher) {
+	let previousGlobalChangeWatcher = $globalChangeWatcher;
+
+	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
 		// Reset all loops
 		loops.update((loops) => {
 			Object.keys(loops).forEach((key) => {
@@ -165,6 +167,7 @@
 			});
 			return loops;
 		});
+		previousGlobalChangeWatcher = $globalChangeWatcher;
 
 		// Initialize new state if this is a loop controller
 		if (activeController?.component?.type === "loop") {

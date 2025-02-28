@@ -127,7 +127,6 @@
 	onMount(async () => {
 		mounted = true;
 		viewportHeight = $viewport.height;
-		console.log(viewportHeight)
 		// Run both tasks in parallel
 		await preloadImages();
 		isReady = true;
@@ -145,9 +144,13 @@
 		};
 	});
 
-	$: if ($globalChangeWatcher) {
+	let previousGlobalChangeWatcher = $globalChangeWatcher;
+	
+	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
 		pauseAllAudio();
+		previousGlobalChangeWatcher = $globalChangeWatcher;
 	}
+
 </script>
 
 <svelte:head>

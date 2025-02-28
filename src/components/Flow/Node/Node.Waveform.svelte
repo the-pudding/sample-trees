@@ -21,6 +21,8 @@
 	let waveformRef;
 
 	const loops = getContext("loops");
+
+	$: console.log("test")
 	// Function to advance to next song in loop
 	function advanceLoop(loopId) {
 		loops.update((loops) => {
