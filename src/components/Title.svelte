@@ -13,45 +13,73 @@
 </script>
 
 <div class="title-screen" transition:fade>
-	<Header />
-	<h1>The Genealogy of Samples</h1>
-	{#if isReady}
-		<div class="buttons">
-			<button class="primary" on:click={() => handleStart(false)}>
-				Begin (with music!)
-			</button>
-			<button class="secondary" on:click={() => handleStart(true)}>
-				Stay Muted
-			</button>
+	<div class="header" style="position: absolute; top: 0; left: 0; right:0;margin: 0 auto; width: 170px;">
+		<Header />
+	</div>
+	
+	<div class="content">
+		<img class="title-tree" src="assets/tree.jpg" alt="">
+		<div class="text-content">
+			<h1>This is a project about shared DNA in music.</h1>
+			{#if isReady}
+				<div class="buttons">
+					<button class="primary" on:click={() => handleStart(false)}>
+						Begin (with music!)
+					</button>
+					<button class="secondary" on:click={() => handleStart(true)}>
+						Stay Muted
+					</button>
+				</div>
+			{:else}
+				<div class="loading">
+					<div class="loader"></div>
+					Loading...
+				</div>
+			{/if}
 		</div>
-	{:else}
-		<div class="loading">
-			<div class="loader"></div>
-			Loading...
-		</div>
-	{/if}
+	</div>
 </div>
 
 <style lang="scss">
 	.title-screen {
-		// position: fixed;
-		// top: 0;
-		// left: 0;
 		width: 100%;
 		height: 100vh;
 		background: var(--color-bg);
 		display: flex;
-		justify-content: space-around;
-		align-items: center;
 		flex-direction: column;
 		z-index: 9999;
+	}
+
+	.content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 2rem;
+		min-height: 0; // Important for Firefox
+	}
+
+	.title-tree {
+		max-width: 400px;
+		width: 100%;
+		height: auto;
+		object-fit: contain;
+		flex: 1;
+		min-height: 0; // Important for Firefox
+	}
+
+	.text-content {
 		text-align: center;
 	}
 
 	h1 {
 		font-family: var(--sans);
-		font-size: 2.5rem;
-		margin-bottom: 2rem;
+		font-size: 28px;
+		letter-spacing: -1.5px;
+		font-weight: 600;
+		margin-top: 0rem;
+		margin-bottom: 1rem;
 	}
 
 	.loading {
@@ -166,14 +194,14 @@
 
 		&.primary {
 			background: var(--color-pink);
-			border: 1.5px solid var(--color-pink-stroke);
+			// border: 1.5px solid var(--color-pink-stroke);
 			color: #fff;
 			font-size: 24px;
 		}
 
 		&.secondary {
 			background: var(--color-dark);
-			border: 1.5px solid var(--color-dark-stroke);
+			// border: 1.5px solid var(--color-dark-stroke);
 			color: #fff;
 			font-size: 18px;
 

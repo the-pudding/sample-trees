@@ -34,7 +34,7 @@
 			volume: 0, // Always muted since we're using global player
 			url: audioUrl,
 			height: $dimensions.waveformHeight - barHeightPadding * 2,
-			barWidth: 1,
+			// barWidth: 1,
 			barAlign: "center",
 			normalize: true,
 			// barGap: 1,

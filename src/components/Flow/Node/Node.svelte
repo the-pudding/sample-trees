@@ -221,15 +221,15 @@
 
 	.secondary-label {
 		position: absolute;
-		width: 150px;
+		width: max-content;
 		font-weight: bold;
 		font-size: 1rem;
 
 		&.top {
-			text-align: center;
+			text-align: left;
 			top: 0px;
-			transform: translate(0, -100%);
-			left: 0;
+			transform: translate(-50%, -100%);
+			left: 50%;
 			right: 0;
 			margin: 0 auto;
 		}

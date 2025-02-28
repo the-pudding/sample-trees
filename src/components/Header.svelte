@@ -6,8 +6,9 @@
 <header>
 	<div class="wordmark">
 		<a href="https://pudding.cool" aria-label="The Pudding" target="_self"
-			>{@html wordmark}</a
-		>
+			>
+				<img src='assets/secondary.png' alt="pudding logo" />
+		</a>
 	</div>
 </header>
 
@@ -16,7 +17,8 @@
 		max-width: 14em;
 		margin: 0 auto;
 		padding: 32px 0;
-		transform: rotate(-4deg);
+		transform: translateY(-.5rem);
+		/* transform: rotate(-4deg); */
 	}
 
 	.wordmark a {
