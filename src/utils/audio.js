@@ -26,6 +26,7 @@ export function handlePause(audioUrl, id) {
 
 export function pauseAllAudio() {
     const player = get(globalAudioPlayer);
+
     if (player) {
         player.pause();
         currentAudioSource.set(null);

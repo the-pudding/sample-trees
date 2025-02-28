@@ -64,9 +64,12 @@ export const globalAudioPlayer = derived(
         if ($audioElement) {
             $audioElement.muted = $isMuted;
             if ($currentAudioSource) {
-                // Reset play count when source changes
-                playCount = 0;
-                $audioElement.src = $currentAudioSource;
+                // Only set source if it's changed
+                if ($audioElement.src !== $currentAudioSource) {
+                    // Reset play count when source changes
+                    playCount = 0;
+                    $audioElement.src = $currentAudioSource;
+                }
             }
         }
         return $audioElement;
