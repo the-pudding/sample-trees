@@ -43,7 +43,6 @@
 		targetY,
 		targetPosition
 	});
-
 	// Calculate crossfader dimensions
 	$: crossfadeStart =
 		sourceY + $dimensions.waveformHeight - $dimensions.waveformGap;

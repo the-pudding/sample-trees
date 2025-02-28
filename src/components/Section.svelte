@@ -19,6 +19,7 @@
 	export let key;
 	export let content;
 	export let sectionIndex;
+	export let viewportHeight;
 
 	let sectionRef;
 
@@ -229,16 +230,16 @@
 												activeTree={fullTreeResult}
 												activeController={fullTreeController}
 												{offset}
+                        {viewportHeight}
 												isFullTree={true}
 											/>
 										</SvelteFlowProvider>
 									{/if}
 								{/await}
 							</div>
-
 							{#if activeTree}
 								<SvelteFlowProvider>
-									<Flow {activeTree} {activeController} {slides} {offset} />
+									<Flow {activeTree} {activeController} {slides} {offset} {viewportHeight} />
 								</SvelteFlowProvider>
 							{/if}
 						</div>
@@ -252,14 +253,18 @@
 				<section
 					class="slide"
 					style="
-						height:{!slide.text ? $viewport.height * 0.25 : $viewport.height}px;
-						padding-top:{i == 0 ? $viewport.height / 2 : ''}px;
-						padding-bottom:{i == slides.length - 1 ? $viewport.height / 2 : ''}px;
+						height:{!slide.text ? viewportHeight*.25 : viewportHeight}px;
+						padding-top:{i == 0 ? viewportHeight/2 : ''}px;
+						padding-bottom:{i == slides.length - 1 ? viewportHeight/2 : ''}px;
 					"
 					class:spacer={!slide.text}
 				>
 					{#if slide.text}
-						<p>{slide.text}</p>
+						<div class="slide-text"
+						id="{sectionIndex == 0 && i == 0 ? 'scroll-to-start' : ''}"
+						>{slide.text}
+							<div class="noise-slide"></div>
+						</div>
 					{/if}
 				</section>
 			{/each}
@@ -302,7 +307,7 @@
 
 	.content {
 		margin: 0 auto;
-		max-width: 700px;
+		max-width: 1200px;
 		padding: 1rem;
 	}
 
@@ -312,15 +317,29 @@
 		align-items: flex-start;
 
 		pointer-events: none;
+		position: relative;
 
-		p {
-			background: white;
+		.slide-text {
 			width: 100%;
 			height: fit-content;
 			max-width: 400px;
 			padding: 1rem;
 			transform: translateY(25vh);
 			margin: 0 auto;
+			background: rgba(0, 0, 0, .95);
+			color: white;
+			border-radius: 3px;
+
+			.noise-slide {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-image: url('assets/noise-light.png');
+				opacity: 0.1;
+				
+			}
 		}
 	}
 </style>

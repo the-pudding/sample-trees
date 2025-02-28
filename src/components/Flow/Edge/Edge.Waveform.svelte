@@ -37,7 +37,7 @@
 			barWidth: 1,
 			barAlign: "center",
 			normalize: true,
-			barGap: 1,
+			// barGap: 1,
 			barRadius: 0
 		});
 

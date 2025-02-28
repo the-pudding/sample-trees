@@ -105,10 +105,9 @@
 		position: absolute;
 		// font-size: 12pt;
 		// pointer-events: all;
-		transition: none;
 		will-change: transform;
 		transform: translate3d(-50%, -50%, 0) translate3d(var(--x), var(--y), 0);
-
+		transition: none;
 		&__playhead {
 			width: 20px;
 			height: var(--playhead-height);

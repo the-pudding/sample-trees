@@ -141,8 +141,7 @@
 	}
 
 	.node {
-		max-width: var(--node-width);
-		max-height: var(--node-height);
+		// height: var(--node-height);
 		position: relative;
 		font-size: var(--font-size, 12px);
 		z-index: 1000;
@@ -153,6 +152,7 @@
 		width: 100%;
 		flex-direction: column;
 		transition: opacity 0.5s;
+		width: var(--node-width);
 
 		&.source.crossfade {
 			flex-direction: column-reverse;
