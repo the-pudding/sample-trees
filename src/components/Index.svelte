@@ -127,7 +127,6 @@
 	onMount(async () => {
 		mounted = true;
 		viewportHeight = $viewport.height;
-		console.log(viewportHeight)
 		// Run both tasks in parallel
 		await preloadImages();
 		isReady = true;
