@@ -3,15 +3,13 @@ How does this…,,open,sticky,open,88888888071,"999999999026,999999999025",,,,tr
 Become this?,,open,sticky,open,"88888888072,88888888071","999999999027,999999999026",,,,true,88888888072-open,crossfade
 # Do you know where your music comes from?,,cold,inline,,,"243164,252744",,,,,,
 "Some songs may be pretty obvious, because they grow out of iconic sounds, such as the bass from “Under Pressure,” which is passed down to “Ice Ice Baby.”",,cold,sticky,cold,88888888057,"243164,252744",,,,true,88888888057-cold,crossfade
-"# But many songs have a far more complex and concealed musical history, spanning genres, cultures, and even centuries.
-
-# This is a project about shared DNA in music.",,intro,inline,,,,,,,,,crossfade
+"## But many songs have a far more complex and concealed musical history, spanning genres, cultures, and even centuries.",,intro,inline,,,,,,,,,crossfade
 Orchestral music for a play in 1875 can become electronic music for a cartoon in 1983.,,intro,sticky,hit,67872,"253610,64739",,,,true,67872-hit,crossfade
 Which can be transformed by a minor rap group...,,intro,sticky,hit,"13504,67872","234958,253610",,,,true,13504-hit,crossfade
 ...which then presents a rap giant with the lyrics to start his breakout hit…,,intro,sticky,hit,"12882,13504,67872","234780,234958",,,,true,12882-hit,crossfade
 "...and eventually end up in the back-and-forth of diss tracks in the rap rivalry between Biggie Smalls and Tupac Shakur.
 
-In 1996, over 120 years after “In the Hall of the Mountain King,” 2pac released the song “Hit ’Em Up”—an escalation in the beef that, three months later, led to his murder.",,intro,sticky,hit,"4047,12823,12882,13504,67872","233667,234899,234780",,,,,,
+In 1996, over 120 years after “In the Hall of the Mountain King,” 2pac released the song <span data-inline-audio-id=""233667"">“Hit ’Em Up”</span>—an escalation in the beef that, three months later, led to his murder.",,intro,sticky,hit,"4047,12823,12882,13504,67872","233667,234899,234780",,,,,,
 "“Hit ’Em Up’s” lineage depicts the many kinds of musical DNA that's passed down, over time. In this example, each generation is connected by a sample—where a song reuses part of an original recording—or an interpolation—where a song uses a re-recording of sound.",,intro,sticky,hit,"4047,12823,12882,13504,67872",,,"64739.top.1895;
 64739.right.Great Great Great Grandparent;
 253610.right.Great Great Grandparent;
@@ -21,7 +19,7 @@ In 1996, over 120 years after “In the Hall of the Mountain King,” 2pac relea
 233667.bottom.1996",,,,
 "This isn’t “Hit ’Em Up’s” only lineage, but one of many, connected through samples, interpolations, covers and remixes.
 
-Another lineage begins with the smooth R&B passed down from Dionne Warwick’s “Walk on By.” Next, Isaac Hayes reinterprets the song and slows down the tempo.",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068","232485,271914",,,,true,1218-hit,crossfade
+Another lineage begins with the smooth R&B passed down from Dionne Warwick’s “Walk on By.” Next, Isaac Hayes reinterprets the song and slows down the tempo.",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068","232485,271914","64739,253610",,,true,1218-hit,crossfade
 "This catches the ear of Biggie Smalls and forms the basis of his track “Warning,” which starts a chain of Biggie and Junior M.A.F.I.A. samples, eventually sampled by, once again, “Hit ’Em Up.”",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068",,"253610,64739,234958,234780,234899","271914.top.1964;
 233667.bottom.1996",,,,
 And there’s the soul of Tom Jones’ “Looking Out My Window.”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","241514,999999999001","232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",,,true,88888888001-hit,crossfade

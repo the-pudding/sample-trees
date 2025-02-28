@@ -1,9 +1,33 @@
 <script>
+	import { marked } from "marked";
+	import InlineAudio from "./Flow/InlineAudio.svelte";
+    
 	export let slides;
 	export let slide;
 	export let viewportHeight;
 	export let i;
 	export let sectionIndex;
+
+	function transformHtml(html) {
+		// Create a temporary div to parse the HTML
+		const div = document.createElement('div');
+		div.innerHTML = html;
+
+		// Find all spans with data-id
+		const audioSpans = div.querySelectorAll('span[data-inline-audio-id]');
+
+		audioSpans.forEach(span => {
+			const id = span.getAttribute('data-inline-audio-id');
+			const text = span.textContent;
+			// Replace the span with our custom component marker
+			span.outerHTML = `<inline-audio data-inline-audio-id="${id}" data-text="${text}"></inline-audio>`;
+		});
+
+		return div.innerHTML;
+	}
+
+	// Process the markdown and then transform audio spans
+	$: processedHtml = slide.text ? transformHtml(marked(slide.text)) : '';
 </script>
 
 <section
@@ -20,7 +44,15 @@
 			class="slide-text"
 			id={sectionIndex == 0 && i == 0 ? "scroll-to-start" : ""}
 		>
-			{slide.text}
+			{#each processedHtml.split(/<inline-audio[^>]*>/) as text, index (index)}
+				{@html text}
+				{#if index < processedHtml.match(/<inline-audio[^>]*>/g)?.length}
+					{@const match = processedHtml.match(/<inline-audio[^>]*>/g)[index]}
+					{@const id = match.match(/data-inline-audio-id="([^"]*)/)[1]}
+					{@const songText = match.match(/data-text="([^"]*)/)[1]}
+					<InlineAudio id={id} text={songText} />
+				{/if}
+			{/each}
 		</div>
 	{/if}
 </section>
@@ -46,6 +78,7 @@
 			border-radius: 3px;
 			margin-inline-start: 1rem;
 			min-width: 300px;
+			pointer-events: all;
 
 			&::after {
 				content: "";
@@ -56,6 +89,7 @@
 				height: 100%;
 				background-image: url("assets/noise-light.png");
 				opacity: 0.1;
+				pointer-events: none;
 			}
 		}
 	}
