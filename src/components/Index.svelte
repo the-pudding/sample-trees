@@ -1,6 +1,9 @@
 <script>
 	import { onMount, tick } from "svelte";
 	import { activeSectionId } from "$stores/misc.js";
+	import { setContext } from "svelte";
+	import { SvelteFlowProvider } from "@xyflow/svelte";
+	import { activeSectionId, globalChangeWatcher } from "$stores/misc.js";
 	import { base } from "$app/paths";
 	import Footer from "./Footer.svelte";
 
@@ -13,7 +16,7 @@
 	import Title from "./Title.svelte";
 	import AudioToggle from "./AudioToggle.svelte";
 	import viewport from "$stores/viewport";
-
+	import { pauseAllAudio } from "$utils/audio.js";
 
 	import Section from "./Section.svelte";
 
@@ -87,6 +90,7 @@
 
 		if (mostVisibleSection && mostVisibleSection !== $activeSectionId) {
 			$activeSectionId = mostVisibleSection;
+			$globalChangeWatcher = ++$globalChangeWatcher;
 		}
 	}
 
@@ -141,6 +145,10 @@
 			window.removeEventListener("scroll", checkSectionVisibility);
 		};
 	});
+
+	$: if ($globalChangeWatcher) {
+		pauseAllAudio();
+	}
 </script>
 
 <svelte:head>

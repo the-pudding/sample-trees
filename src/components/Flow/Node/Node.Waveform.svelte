@@ -2,8 +2,9 @@
 	import { onMount, onDestroy } from "svelte";
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
-	import { playerTimes, isMuted } from "$stores/misc.js";
+	import { playerTimes, isMuted, currentAudioSource, isPlaying, globalAudioPlayer } from "$stores/misc.js";
 	import { getContext } from "svelte";
+	import { handlePlay, handlePause } from "$utils/audio.js";
 
 	$$restProps;
 
@@ -14,12 +15,22 @@
 	export let loopId;
 
 	const dimensions = getContext("dimensions");
-	const advanceLoop = getContext("advanceLoop");
-	const volume = .05;
-
+	const audioUrl = `${base}/assets/audio/${id}.mp3`;
 	let wavesurfer;
 	let isReady = false;
 	let waveformRef;
+
+	const loops = getContext("loops");
+	// Function to advance to next song in loop
+	function advanceLoop(loopId) {
+		loops.update((loops) => {
+			const loop = loops[loopId];
+			if (loop && loop.isPlaying) {
+				loop.currentIndex = (loop.currentIndex + 1) % loop.sequence.length;
+			}
+			return loops;
+		});
+	}
 
 	onMount(() => {
 		const dpr = 1;
@@ -28,9 +39,9 @@
 			container: waveformRef,
 			waveColor: waveColor,
 			progressColor: progressColor,
-			url: `${base}/assets/audio/${id}.mp3`,
+			url: audioUrl,
 			height: $dimensions.waveformHeight * dpr,
-			volume: $isMuted ? 0 : volume,
+			volume: 0, // Always muted since we're using global player
 			pixelRatio: dpr,
 			normalize: true,
 			barWidth: 1,
@@ -41,54 +52,49 @@
 		// Mark as ready once the file is loaded
 		wavesurfer.on("ready", () => {
 			isReady = true;
-			// Start playing if we should be playing
 			if (play) {
-				wavesurfer.setVolume($isMuted ? 0 : volume);
-				wavesurfer.play();
+				handlePlay(audioUrl, id);
 			}
 		});
 
-		// When song finishes, advance to next in loop
-		wavesurfer.on("finish", () => {
-			if (loopId) {
-				advanceLoop(loopId);
+		// When song finishes in loop mode
+		$globalAudioPlayer?.addEventListener('ended', () => {
+			if (loopId && $currentAudioSource === audioUrl) {
+						advanceLoop(loopId);
 			}
 		});
 
-		wavesurfer.on("timeupdate", (currentTime) => {
-			$playerTimes[id] = currentTime;
-		});
-	});
-
-	onDestroy(() => {
-		if (wavesurfer) {
-			if (wavesurfer.isPlaying()) {
-				$playerTimes[id] = wavesurfer.getCurrentTime();
-				wavesurfer.pause();
+		// Sync waveform progress with global player
+		const updateTimer = setInterval(() => {
+			if (isReady && $globalAudioPlayer && $currentAudioSource === audioUrl) {
+				wavesurfer.setTime($globalAudioPlayer.currentTime);
 			}
-			wavesurfer.destroy();
-		}
+		}, 50);
+
+		return () => {
+			clearInterval(updateTimer);
+			if (wavesurfer) {
+				if ($currentAudioSource === audioUrl) {
+					$playerTimes[id] = $globalAudioPlayer?.currentTime || 0;
+					handlePause(audioUrl, id);
+				}
+				wavesurfer.destroy();
+			}
+		};
 	});
 
 	// Handle play/pause changes
-	$: if (wavesurfer && isReady) {
-		if (play && !wavesurfer.isPlaying()) {
-			// Only play if we have a valid time or are starting from the beginning
-			const startTime = $playerTimes[id] || 0;
-			if (startTime >= 0) {
-				wavesurfer.setTime(startTime);
-				wavesurfer.setVolume($isMuted ? 0 : volume);
-				wavesurfer.play();
-			}
-		} else if (!play && wavesurfer.isPlaying()) {
-			$playerTimes[id] = wavesurfer.getCurrentTime();
-			wavesurfer.pause();
+	$: if (isReady) {
+		if (play && $currentAudioSource !== audioUrl) {
+				handlePlay(audioUrl, id);
+		} else if (!play && $currentAudioSource === audioUrl) {
+			handlePause(audioUrl, id);
 		}
 	}
 
-	// Update volume when mute state changes
-	$: if (wavesurfer && isReady) {
-		wavesurfer.setVolume($isMuted ? 0 : volume);
+	// Keep waveform progress in sync with global player
+	$: if (isReady && $globalAudioPlayer && $currentAudioSource === audioUrl) {
+		wavesurfer.setTime($globalAudioPlayer.currentTime);
 	}
 </script>
 
