@@ -133,9 +133,13 @@
 		};
 	});
 
-	$: if ($globalChangeWatcher) {
+	let previousGlobalChangeWatcher = $globalChangeWatcher;
+	
+	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
 		pauseAllAudio();
+		previousGlobalChangeWatcher = $globalChangeWatcher;
 	}
+
 </script>
 
 <svelte:head>
