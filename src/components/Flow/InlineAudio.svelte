@@ -64,9 +64,9 @@
 {:else}
 	<button class="inline-audio" on:click={togglePlay}>
 		{#if isToggled}
-			<Pause size={16} />
+			<Pause size={16} color='rgba(0, 0, 0, 0.95)' />
 		{:else}
-			<Play size={16} />
+			<Play size={16} color='rgba(0, 0, 0, 0.95)' />
 		{/if}
 		<span class="text">{text}</span>
 	</button>
@@ -83,15 +83,16 @@
 		cursor: pointer;
 		padding: 0;
 		font: inherit;
+		background: var(--color-green);
+		padding-right: 5px;
+
 
 		&:hover {
 			color: #cbb600;
 		}
 
 		.text {
-			text-decoration: underline;
-			text-decoration-style: dotted;
-			text-underline-offset: 2px;
+			color: rgba(0, 0, 0, 0.95);
 		}
 	}
 </style>

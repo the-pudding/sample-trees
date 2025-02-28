@@ -46,13 +46,33 @@
 
 {#if path}
 	<path
-		class="simple-edge {highlight ? 'highlighted' : ''}"
+		class="simple-edge"
 		{id}
 		d={path}
 		fill="none"
-		stroke="#ccc"
+		stroke="#aaa"
 		stroke-width="1"
 	/>
+	{#if highlight}
+		<path
+			class="simple-edge {highlight ? 'highlighted' : ''}"
+			{id}
+			d={path}
+			fill="none"
+			stroke="#ccc"
+			stroke-width="1"
+		/>
+		<path
+			class="simple-edge"
+			{id}
+			d={path}
+			fill="none"
+			stroke="#333"
+			stroke-width="1"
+		/>
+	{/if}
+
+
 {/if}
 
 <style lang="scss">
@@ -61,8 +81,9 @@
 	}
 
 	:global(.show-highlighted-edges .simple-edge.highlighted) {
-		stroke: #ff0000;
-		stroke-width: 3px;
+		stroke: var(--color-pink);
+		stroke-width: 6px;
+		stroke-opacity: .7;
 		z-index: 10000;
 	}
 

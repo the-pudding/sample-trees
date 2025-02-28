@@ -34,7 +34,7 @@
 	class="slide"
 	style="
 						height:{!slide.text ? viewportHeight * 0.25 : viewportHeight}px;
-						padding-top:{i == 0 ? '' : ''}px;
+						padding-top:{i == 0 ? viewportHeight * 0.25 : ''}px;
 						padding-bottom:{i == slides.length - 1 ? viewportHeight / 2 : ''}px;
 					"
 	class:spacer={!slide.text}
@@ -58,6 +58,9 @@
 </section>
 
 <style lang="scss">
+	#scroll-to-start {
+		margin-bottom: 100px;
+	}
 	.slide {
 		display: flex;
 		justify-content: flex-start;
