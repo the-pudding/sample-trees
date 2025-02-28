@@ -156,7 +156,10 @@
 		previousIndex = activeController.index;
 	}
 
-	$: if ($globalChangeWatcher) {
+	let previousGlobalChangeWatcher = $globalChangeWatcher;
+
+	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
+
 		// Reset all loops
 		loops.update((loops) => {
 			Object.keys(loops).forEach((key) => {
@@ -179,6 +182,8 @@
 				return loops;
 			});
 		}
+
+		previousGlobalChangeWatcher = $globalChangeWatcher;
 	}
 
 	async function init() {
@@ -230,7 +235,7 @@
 												activeTree={fullTreeResult}
 												activeController={fullTreeController}
 												{offset}
-                        {viewportHeight}
+												{viewportHeight}
 												isFullTree={true}
 											/>
 										</SvelteFlowProvider>
@@ -239,7 +244,13 @@
 							</div>
 							{#if activeTree}
 								<SvelteFlowProvider>
-									<Flow {activeTree} {activeController} {slides} {offset} {viewportHeight} />
+									<Flow
+										{activeTree}
+										{activeController}
+										{slides}
+										{offset}
+										{viewportHeight}
+									/>
 								</SvelteFlowProvider>
 							{/if}
 						</div>
@@ -260,9 +271,11 @@
 					class:spacer={!slide.text}
 				>
 					{#if slide.text}
-						<div class="slide-text"
-						id="{sectionIndex == 0 && i == 0 ? 'scroll-to-start' : ''}"
-						>{slide.text}
+						<div
+							class="slide-text"
+							id={sectionIndex == 0 && i == 0 ? "scroll-to-start" : ""}
+						>
+							{slide.text}
 							<div class="noise-slide"></div>
 						</div>
 					{/if}
@@ -340,9 +353,8 @@
 				left: 0;
 				width: 100%;
 				height: 100%;
-				background-image: url('assets/noise-light.png');
+				background-image: url("assets/noise-light.png");
 				opacity: 0.1;
-				
 			}
 		}
 	}

@@ -4,7 +4,7 @@
 	import WaveSurfer from "wavesurfer.js";
 	import { playerTimes, isMuted, currentAudioSource, isPlaying, globalAudioPlayer } from "$stores/misc.js";
 	import { getContext } from "svelte";
-	import { handlePlay, handlePause } from "$utils/audio.js";
+	import { handlePlay, handlePause, advanceLoop } from "$utils/audio.js";
 
 	$$restProps;
 
@@ -21,16 +21,6 @@
 	let waveformRef;
 
 	const loops = getContext("loops");
-	// Function to advance to next song in loop
-	function advanceLoop(loopId) {
-		loops.update((loops) => {
-			const loop = loops[loopId];
-			if (loop && loop.isPlaying) {
-				loop.currentIndex = (loop.currentIndex + 1) % loop.sequence.length;
-			}
-			return loops;
-		});
-	}
 
 	onMount(() => {
 		const dpr = 1;
@@ -52,22 +42,33 @@
 		// Mark as ready once the file is loaded
 		wavesurfer.on("ready", () => {
 			isReady = true;
-			if (play) {
-				handlePlay(audioUrl, id);
+			// Only auto-play if this is the current node in the loop sequence
+			if (play && loopId) {
+				const loop = $loops[loopId];
+				if (loop && loop.sequence[loop.currentIndex] === id) {
+					handlePlay(audioUrl, id, true);
+				}
+			} else if (play && !loopId) {
+				// For non-loop playback
+				handlePlay(audioUrl, id, true);
 			}
 		});
-
+		
 		// When song finishes in loop mode
 		$globalAudioPlayer?.addEventListener('ended', () => {
 			if (loopId && $currentAudioSource === audioUrl) {
-						advanceLoop(loopId);
+				advanceLoop(loops, loopId);
 			}
 		});
 
 		// Sync waveform progress with global player
 		const updateTimer = setInterval(() => {
 			if (isReady && $globalAudioPlayer && $currentAudioSource === audioUrl) {
-				wavesurfer.setTime($globalAudioPlayer.currentTime);
+				const currentTime = $globalAudioPlayer.currentTime;
+				// Only update if the time has actually changed
+				if (currentTime !== wavesurfer.getCurrentTime()) {
+					wavesurfer.setTime(currentTime);
+				}
 			}
 		}, 50);
 
@@ -86,15 +87,10 @@
 	// Handle play/pause changes
 	$: if (isReady) {
 		if (play && $currentAudioSource !== audioUrl) {
-				handlePlay(audioUrl, id);
+			handlePlay(audioUrl, id, true);
 		} else if (!play && $currentAudioSource === audioUrl) {
 			handlePause(audioUrl, id);
 		}
-	}
-
-	// Keep waveform progress in sync with global player
-	$: if (isReady && $globalAudioPlayer && $currentAudioSource === audioUrl) {
-		wavesurfer.setTime($globalAudioPlayer.currentTime);
 	}
 </script>
 
