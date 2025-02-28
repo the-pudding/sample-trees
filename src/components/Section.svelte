@@ -159,6 +159,7 @@
 	let previousGlobalChangeWatcher = $globalChangeWatcher;
 
 	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
+
 		// Reset all loops
 		loops.update((loops) => {
 			Object.keys(loops).forEach((key) => {
@@ -167,7 +168,6 @@
 			});
 			return loops;
 		});
-		previousGlobalChangeWatcher = $globalChangeWatcher;
 
 		// Initialize new state if this is a loop controller
 		if (activeController?.component?.type === "loop") {
@@ -182,6 +182,8 @@
 				return loops;
 			});
 		}
+
+		previousGlobalChangeWatcher = $globalChangeWatcher;
 	}
 
 	async function init() {
@@ -233,7 +235,7 @@
 												activeTree={fullTreeResult}
 												activeController={fullTreeController}
 												{offset}
-                        {viewportHeight}
+												{viewportHeight}
 												isFullTree={true}
 											/>
 										</SvelteFlowProvider>
@@ -242,7 +244,13 @@
 							</div>
 							{#if activeTree}
 								<SvelteFlowProvider>
-									<Flow {activeTree} {activeController} {slides} {offset} {viewportHeight} />
+									<Flow
+										{activeTree}
+										{activeController}
+										{slides}
+										{offset}
+										{viewportHeight}
+									/>
 								</SvelteFlowProvider>
 							{/if}
 						</div>
@@ -256,16 +264,18 @@
 				<section
 					class="slide"
 					style="
-						height:{!slide.text ? viewportHeight*.25 : viewportHeight}px;
-						padding-top:{i == 0 ? viewportHeight/2 : ''}px;
-						padding-bottom:{i == slides.length - 1 ? viewportHeight/2 : ''}px;
+						height:{!slide.text ? viewportHeight * 0.25 : viewportHeight}px;
+						padding-top:{i == 0 ? viewportHeight / 2 : ''}px;
+						padding-bottom:{i == slides.length - 1 ? viewportHeight / 2 : ''}px;
 					"
 					class:spacer={!slide.text}
 				>
 					{#if slide.text}
-						<div class="slide-text"
-						id="{sectionIndex == 0 && i == 0 ? 'scroll-to-start' : ''}"
-						>{slide.text}
+						<div
+							class="slide-text"
+							id={sectionIndex == 0 && i == 0 ? "scroll-to-start" : ""}
+						>
+							{slide.text}
 							<div class="noise-slide"></div>
 						</div>
 					{/if}
@@ -329,7 +339,7 @@
 			padding: 1rem;
 			transform: translateY(25vh);
 			margin: 0 auto;
-			background: rgba(0, 0, 0, .95);
+			background: rgba(0, 0, 0, 0.95);
 			color: white;
 			border-radius: 3px;
 
@@ -339,9 +349,8 @@
 				left: 0;
 				width: 100%;
 				height: 100%;
-				background-image: url('assets/noise-light.png');
+				background-image: url("assets/noise-light.png");
 				opacity: 0.1;
-				
 			}
 		}
 	}
