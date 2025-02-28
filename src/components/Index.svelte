@@ -1,6 +1,5 @@
 <script>
 	import { onMount, tick } from "svelte";
-	import { activeSectionId } from "$stores/misc.js";
 	import { setContext } from "svelte";
 	import { SvelteFlowProvider } from "@xyflow/svelte";
 	import { activeSectionId, globalChangeWatcher } from "$stores/misc.js";
