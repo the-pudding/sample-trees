@@ -14,13 +14,13 @@
 		div.innerHTML = html;
 
 		// Find all spans with data-id
-		const audioSpans = div.querySelectorAll('span[data-id]');
-        console.log(audioSpans);
+		const audioSpans = div.querySelectorAll('span[data-inline-audio-id]');
+
 		audioSpans.forEach(span => {
-			const id = span.getAttribute('data-id');
+			const id = span.getAttribute('data-inline-audio-id');
 			const text = span.textContent;
 			// Replace the span with our custom component marker
-			span.outerHTML = `<inline-audio data-id="${id}" data-text="${text}"></inline-audio>`;
+			span.outerHTML = `<inline-audio data-inline-audio-id="${id}" data-text="${text}"></inline-audio>`;
 		});
 
 		return div.innerHTML;
@@ -48,7 +48,7 @@
 				{@html text}
 				{#if index < processedHtml.match(/<inline-audio[^>]*>/g)?.length}
 					{@const match = processedHtml.match(/<inline-audio[^>]*>/g)[index]}
-					{@const id = match.match(/data-id="([^"]*)/)[1]}
+					{@const id = match.match(/data-inline-audio-id="([^"]*)/)[1]}
 					{@const songText = match.match(/data-text="([^"]*)/)[1]}
 					<InlineAudio id={id} text={songText} />
 				{/if}
