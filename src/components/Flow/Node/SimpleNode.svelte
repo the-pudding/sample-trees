@@ -104,14 +104,19 @@
 
 		.secondary-label {
 			position: absolute;
-			width: 150px;
 			font-weight: bold;
+			width: max-content;
+			font-weight: bold;
+			font-size: 1rem;
 
 			&.top {
 				text-align: center;
 				top: 0px;
-				transform: translate(0, -100%);
-				left: 0;
+				right: 0;
+				margin: 0 auto;
+				text-align: left;
+				transform: translate(-50%, -100%);
+				left: 50%;
 				right: 0;
 				margin: 0 auto;
 			}

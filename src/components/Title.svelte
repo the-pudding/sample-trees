@@ -76,10 +76,11 @@
 	h1 {
 		font-family: var(--sans);
 		font-size: 28px;
-		letter-spacing: -1.5px;
-		font-weight: 600;
+		letter-spacing: initial;
+		font-weight: 400;
 		margin-top: 0rem;
-		margin-bottom: 1rem;
+		margin-bottom: 1.5rem;
+
 	}
 
 	.loading {
@@ -196,17 +197,21 @@
 			background: var(--color-pink);
 			// border: 1.5px solid var(--color-pink-stroke);
 			color: #fff;
-			font-size: 24px;
+			font-size: 20px;
+
+			&:hover {
+				background: var(--color-pink-stroke);
+			}
 		}
 
 		&.secondary {
 			background: var(--color-dark);
 			// border: 1.5px solid var(--color-dark-stroke);
 			color: #fff;
-			font-size: 18px;
+			font-size: 16px;
 
 			&:hover {
-				background: #eee;
+				background: #000;
 			}
 		}
 	}

@@ -66,7 +66,11 @@
 
 		await tick();
 		const el = document.getElementById("scroll-to-start");
-		el.scrollIntoView({ behavior: "smooth", block: "center" });
+		const y = el.getBoundingClientRect().top - viewportHeight*.75;
+
+		window.scrollTo({top: y, behavior: 'smooth'});
+
+		// el.scrollIntoView({ behavior: "smooth", block: "end" });
 
 	}
 

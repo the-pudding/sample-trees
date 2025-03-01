@@ -28,6 +28,9 @@
 	--color-pink-stroke: #B41E73;
 	--color-dark: #434343;
 	--color-dark-stroke: #292929;
+
+	--color-green: #62c2b1;
+
 	--color-primary: var(--color-black);
 	--color-link: var(--color-black);
 	--color-focus: var(--color-red);
@@ -86,6 +89,9 @@ h1 {
 
 h2 {
 	font-size: var(--36px, 36px);
+	font-weight: 400;
+	font-size: 24px;
+	max-width: 500px;
 }
 
 h3 {
@@ -126,3 +132,6 @@ p {
 #content .svelte-flow {
 	background: var(--color-bg);
 }
+
+
+
