@@ -64,9 +64,9 @@
 {:else}
 	<button class="inline-audio" on:click={togglePlay}>
 		{#if isToggled}
-			<Pause size={16} color='rgba(0, 0, 0, 0.95)' />
+			<Pause size={16} color="rgba(0, 0, 0, 0.95)" />
 		{:else}
-			<Play size={16} color='rgba(0, 0, 0, 0.95)' />
+			<Play size={16} color="rgba(0, 0, 0, 0.95)" />
 		{/if}
 		<span class="text">{text}</span>
 	</button>
@@ -86,13 +86,19 @@
 		background: var(--color-green);
 		padding-right: 5px;
 
-
 		&:hover {
 			color: #cbb600;
 		}
 
 		.text {
 			color: rgba(0, 0, 0, 0.95);
+		}
+	}
+
+	:global {
+		.lucide-play,
+		.lucide-pause {
+			fill: rgba(0, 0, 0, 0.95);
 		}
 	}
 </style>

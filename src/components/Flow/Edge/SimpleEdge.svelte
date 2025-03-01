@@ -23,25 +23,28 @@
 	// $: $edgeHighlights.length && console.log($edgeHighlights);
 
 	// Create path based on activeTree
-	$: path = $activeController.tree === "king_2"
-		? `M ${sourceX},${sourceY}L ${targetX},${targetY}`  // Straight line for king_2
-		: $activeController.tree === "funky_3"
-			? getBezierPath({                               // Bezier path for funky_3
-				sourceX,
-				sourceY,
-				sourcePosition,
-				targetX,
-				targetY,
-				targetPosition
-			})[0]
-			: getSmoothStepPath({                          // Smooth step for others
-				sourceX,
-				sourceY,
-				sourcePosition,
-				targetX,
-				targetY,
-				targetPosition
-			})[0];
+	$: path =
+		$activeController.tree === "king_2"
+			? `M ${sourceX},${sourceY}L ${targetX},${targetY}` // Straight line for king_2
+			: $activeController.tree === "funky_3"
+				? getBezierPath({
+						// Bezier path for funky_3
+						sourceX,
+						sourceY,
+						sourcePosition,
+						targetX,
+						targetY,
+						targetPosition
+					})[0]
+				: getSmoothStepPath({
+						// Smooth step for others
+						sourceX,
+						sourceY,
+						sourcePosition,
+						targetX,
+						targetY,
+						targetPosition
+					})[0];
 </script>
 
 {#if path}
@@ -71,8 +74,6 @@
 			stroke-width="1"
 		/>
 	{/if}
-
-
 {/if}
 
 <style lang="scss">
@@ -83,7 +84,7 @@
 	:global(.show-highlighted-edges .simple-edge.highlighted) {
 		stroke: var(--color-pink);
 		stroke-width: 6px;
-		stroke-opacity: .7;
+		stroke-opacity: 0.7;
 		z-index: 10000;
 	}
 
@@ -92,4 +93,5 @@
 			z-index: 1 !important;
 		}
 	}
+
 </style>

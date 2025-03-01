@@ -133,21 +133,5 @@ p {
 	background: var(--color-bg);
 }
 
-.slide-text p:first-of-type {
-	margin-top: 0;
-	margin-bottom: 0;
-}
 
 
-.lucide-play, .lucide-pause {
-	fill: rgba(0, 0, 0, 0.95);
-}
-
-.highlight {
-	background: var(--color-pink);
-    padding: 2px 3px;
-    color: black;
-    font-weight: 600;
-    border-radius: 3px;
-    margin-right: 3px;
-}
