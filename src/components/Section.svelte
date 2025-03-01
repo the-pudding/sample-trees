@@ -10,6 +10,7 @@
 	import { fade } from "svelte/transition";
 	import viewport from "$stores/viewport";
 	import { globalChangeWatcher } from "$stores/misc.js";
+	import Shelf from "./Shelf.svelte";
 
 	import Slide from "./Slide.svelte";
 	// Components
@@ -208,7 +209,15 @@
 <section class="section" bind:this={sectionRef} data-id={key}>
 	<!-- Render "inline" items before the sticky component -->
 	{#each inlineBefore as item}
-		<div class="content">{@html marked(item.text)}</div>
+		{@const html = marked(item.text)}
+		{@const hasH1 = html.includes('<h1')}
+		{#if hasH1}
+			<div class="content">
+				<Shelf text={html} />
+			</div>
+		{:else}
+			<div class="content">{@html marked(item.text)}</div>
+		{/if}
 	{/each}
 
 	<Scroller
@@ -303,7 +312,8 @@
 
 	.content {
 		margin: 0 auto;
-		max-width: 1200px;
+		max-width: 550px;
 		padding: 1rem;
+		font-size: 22px;
 	}
 </style>

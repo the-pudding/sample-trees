@@ -33,10 +33,10 @@
 <section
 	class="slide"
 	style="
-						height:{!slide.text ? viewportHeight * 0.25 : viewportHeight}px;
-						padding-top:{i == 0 ? viewportHeight * 0.25 : ''}px;
-						padding-bottom:{i == slides.length - 1 ? viewportHeight / 2 : ''}px;
-					"
+		height:{!slide.text ? viewportHeight * 0.25 : viewportHeight}px;
+		padding-top:{i == 0 ? viewportHeight * 0.25 : ''}px;
+		padding-bottom:{i == slides.length - 1 ? viewportHeight / 2 : ''}px;
+	"
 	class:spacer={!slide.text}
 >
 	{#if slide.text}
@@ -101,6 +101,28 @@
 		.slide-text p:first-of-type {
 			margin-top: 0;
 			margin-bottom: 0;
+		}
+
+		.h1-wrapper {
+			position: relative;
+			margin: 2rem 0;
+			
+			h1 {
+				margin: 0;
+				font-size: 1.5rem;
+				line-height: 1.3;
+			}
+
+			.h1-decorator {
+				position: absolute;
+				left: -1rem;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 4px;
+				height: 100%;
+				background: var(--color-pink);
+				border-radius: 2px;
+			}
 		}
 
 		.highlight {

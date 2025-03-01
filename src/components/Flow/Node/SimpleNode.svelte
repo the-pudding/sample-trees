@@ -104,10 +104,9 @@
 
 		.secondary-label {
 			position: absolute;
-			font-weight: bold;
 			width: max-content;
-			font-weight: bold;
-			font-size: 1rem;
+			font-size: 12px;
+    		font-weight: 600;
 
 			&.top {
 				text-align: center;

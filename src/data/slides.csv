@@ -55,10 +55,11 @@ It is how “In The Hall of the Mountain King” affects music across 5 generati
 MD: need to add missing links from ""the worst"" and ""what if""",dna,sticky,king_2,king_2,,,64739.right.Mountain King,"15265,3026,3030,88888888059,67872",,,
 "Each connection continues a musical lineage or, at the least, influences the development of the features of a song.
 
-The connections in these musical family trees may be a borrowed beat, loaned lyrics, or a multipurpose melody. Let’s look at examples of each one.",,,inline,,,,,,,,,
+The connections in these musical family trees may be a borrowed beat, loaned lyrics, or a multipurpose melody. Let’s look at examples of each one.",,beat,inline,,,,,,,,,
 "# BORROWED BEATS
 
-Some songs have introduced beats that have directly been sampled by hundreds, or even thousands, of other songs.",,,inline,,,,,,,,,
+",,beat,inline,,,,,,,,,
+"Some songs have introduced beats that have directly been sampled by hundreds, or even thousands, of other songs.",,beat,inline,,,,,,,,,
 "These are X samples of James Brown’s 1970 track “Funky Drummer,” which is used in everything from George Michael’s “Freedom! '90”, to Alanis Morissette’s “Head Over Feet,” to Ed Sheeran’s “Shirtsleeves.” 
 
 And once you hear it, you’ll hear it everywhere; the song has among the most “descendants” in music history.","ideally a radial chart with Funky Drummer in the center.
@@ -68,11 +69,11 @@ We need to figure out a way, in this layout, to highlight some nodes—I'm not s
 nodes to annotate/highlight: 11175, 88888888060,11201",beat,sticky,funky_1,funky_1,,,234409.right.Funky Drummer,,,,
 Because the beat doesn’t just pass down to one generation.,,beat2,sticky,funky_3,11215,"248775,234409",,,,true,11215-funky_3,crossfade
 It leads “South Bronx” to shape the sound of another Bronx artist’s hit.,,beat2,sticky,funky_3,"56862,11215","251523,248775",,,,true,56862-funky_3,crossfade
-"“Jenny From the Block” is only one of a whole second generation of songs that originate from Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer.” There’s also Will Smith’s “Wild Wild West”, “(I Can’t Help) Falling In Love With You” by UB40, and “Bring ‘Em Out” by T.I. ","note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat2,sticky,funky_3,funky_3,,,234409.right.Funky Drummer,"56862,58155",,,
-"As they say, the beat goes on…",,beat2,sticky,funky_3,funky_3,,,,,,,
+"“Jenny From the Block” is only one of a whole second generation of songs that originate from Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer.” There’s also Will Smith’s “Wild Wild West”, “(I Can’t Help) Falling In Love With You” by UB40, and “Bring ‘Em Out” by T.I. ","note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat2,sticky,funky_3,funky_3,,,234409.right.Funky Drummer,"56862,11215",,,
 "# LOANED LYRICS
 
-While a beat sets the foundation for a song, lyrics are some of the most easily transmittable DNA: a few words can easily fit into otherwise very different songs.",no viz,lyrics,inline,,,,,,,,,
+",no viz,lyrics,inline,,,,,,,,,
+"While a beat sets the foundation for a song, lyrics are some of the most easily transmittable DNA: a few words can easily fit into otherwise very different songs.",,lyrics,inline,,,,,,,,,
 "Here's an example of lyrics slightly evolving through generations: A Tribe Called Quest released “Can I Kick It?” in 1990, itself a song built on Lou Reed’s “Walk on the Wild Side” from 1972. When Q-Tip asks if he can kick it, the rest of the Tribe responds.",,lyrics,sticky,kick,"54235,19201",,"247659,251388",,,,236303,loop
 "Robbie Williams then used the line in 2000s “Rock DJ.” Williams [said](https://www.youtube.com/watch?v=BnaPtu2sshs) he, “Really struggled to write the lyrics. So what I’ve just done is I’ve robbed loads of really old rap lyrics.”
 
@@ -91,7 +92,8 @@ But then Chuck D uses the line to talk about the bass singing register.,,lyrics,
 "While we don’t know which lyric inspired Charley Crockett for his 2019 record “How Low Can You Go,” Crockett  used  the phrase  to describe what a romantic interest is doing to his heart.",,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031","999999999022,237235",,,,true,88888888028-low,crossfade
 "# MULTIPURPOSE MELODIES
 
-For most people, however, melody is the most identifiable kind of musical DN. Sampled and interpolated melodies may be instantly recognizable, hit on a subconscious familiarity even if you’re not aware there’s a sample at all, or sit right at the edge of recognition, making you think “where have I heard that before?”",no viz,melody,inline,,,,,,,,,
+",no viz,melody,inline,,,,,,,,,
+"For most people, however, melody is the most identifiable kind of musical DN. Sampled and interpolated melodies may be instantly recognizable, hit on a subconscious familiarity even if you’re not aware there’s a sample at all, or sit right at the edge of recognition, making you think “where have I heard that before?”",,melody,inline,,,,,,,,,
 "While sampling is commonly associated with hip hop, the art of sharing and borrowing melodies is a global practice, transcending every  genre.
 
 For example, where does this international selection of hits get their sound?","nodes are horizontally in a line, no links, looping audio between each node",melody,sticky,murder,,"105701,292345,292347,999999999024",,,,true,"105701,292345,292347,999999999024",loop
