@@ -23,7 +23,7 @@ const MAX_REPEATS = 3;
 // Initialize the global audio player
 if (typeof window !== 'undefined') {
     const audio = new Audio();
-    audio.volume = 0.1;
+    audio.volume = 1;
     audioElement.set(audio);
 
     // Update isPlaying state based on audio events

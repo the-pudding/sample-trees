@@ -156,3 +156,7 @@ p {
 .content p {
 	font-size: 22px;
 }
+
+.slide-text a, a:visited {
+	color: white;
+}

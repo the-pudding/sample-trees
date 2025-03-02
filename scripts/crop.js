@@ -29,10 +29,22 @@ function csvToJson(filePath) {
         });
     });
   }
-  
 
-// Function to crop an MP3 file from a start to end timestamp
-async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp) {
+  let raiseVolume = [
+    999999999025, //ray charles
+    64739, //montainking
+    234409, //funky drummer
+    118357, //chubby
+  ]
+
+  let lowerVolume = [
+    234473, //rihanna
+    105701, //shaky
+  ]
+
+
+// Function to crop an MP3 file from a start to end timestamp and set volume level
+async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp, volume = 0.1) {
     const startInSeconds = timeToSeconds(startTimestamp);
     const endInSeconds = timeToSeconds(endTimestamp);
     const duration = endInSeconds - startInSeconds;
@@ -40,11 +52,12 @@ async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp) {
     if (duration <= 0) {
       throw new Error('Invalid timestamps: End timestamp must be greater than start timestamp');
     }
-  
+    
     return new Promise((resolve, reject) => {
       ffmpeg(inputPath)
         .setStartTime(startInSeconds)     // Start time in seconds
-        .setDuration(duration+1)            // Duration in seconds
+        .setDuration(duration + 1)        // Duration in seconds
+        .audioFilters(`volume=${volume}`) // Set volume level
         .output(outputPath)
         .on('end', () => {
           console.log(`Successfully cropped ${inputPath} to ${outputPath}`);
@@ -103,15 +116,30 @@ async function main() {
           const startTimestampC = song.c_time_start; // Example: start cropping at 10 seconds
           const endTimestampC = song.c_time_end;   // Example: stop cropping at 20 seconds
   
+          let volumeP = .1;
+          let volumeC = .1;
+
+
+          if(raiseVolume.includes(parseInt(song.p_id))){
+            volumeP = .5;
+          }
+          else if(lowerVolume.includes(parseInt(song.p_id))){
+            volumeP = .08;
+          }
+
+          if(raiseVolume.includes(parseInt(song.c_id))){
+            volumeC = .5;
+          }
+          else if(lowerVolume.includes(parseInt(song.c_id))){
+            volumeP = .08;
+          }
+
           try {
-              cropMp3(inputFileP, outputFileP, startTimestampP, endTimestampP);
-              cropMp3(inputFileC, outputFileC, startTimestampC, endTimestampC);
+              cropMp3(inputFileP, outputFileP, startTimestampP, endTimestampP, volumeP);
+              cropMp3(inputFileC, outputFileC, startTimestampC, endTimestampC, volumeC);
 
-              cropMp3(inputFileP, outputFilePalt, startTimestampP, endTimestampP);
-              cropMp3(inputFileC, outputFileCalt, startTimestampC, endTimestampC);
-
-              
-
+              cropMp3(inputFileP, outputFilePalt, startTimestampP, endTimestampP,volumeP);
+              cropMp3(inputFileC, outputFileCalt, startTimestampC, endTimestampC,volumeC);
           } catch (err) {
               console.error('Failed to crop MP3:', err);
           }

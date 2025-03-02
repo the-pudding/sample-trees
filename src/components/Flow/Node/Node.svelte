@@ -231,7 +231,7 @@
 			transform: translate(-50%, -100%);
 			left: 50%;
 			right: 0;
-			margin: 0 auto;
+			margin: 0;
 		}
 		&.right {
 			right: calc(var(--node-width) * -1);
