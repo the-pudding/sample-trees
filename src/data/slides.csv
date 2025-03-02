@@ -20,7 +20,8 @@ In 1996, over 120 years after “In the Hall of the Mountain King,” 2pac relea
 "This isn’t “Hit ’Em Up’s” only lineage, but one of many, connected through samples, interpolations, covers and remixes.
 
 Another lineage begins with the smooth R&B passed down from Dionne Warwick’s “Walk on By.” Next, Isaac Hayes reinterprets the song and slows down the tempo.",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068","232485,271914","64739,253610",,,true,1218-hit,crossfade
-"This catches the ear of Biggie Smalls and forms the basis of his track “Warning,” which starts a chain of Biggie and Junior M.A.F.I.A. samples, eventually sampled by, once again, “Hit ’Em Up.”",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068",,"253610,64739,234958,234780,234899","271914.top.1964;
+This catches the ear of Biggie Smalls and forms the basis of his track “Warning”... ,,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068","232485,234129",,,,true,1208-hit,crossfade
+"…and just a few more generations below “Warning” is once again, “Hit ’Em Up.”",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068",,"253610,64739,234958,234780,234899","271914.top.1964;
 233667.bottom.1996",,,,
 And there’s the soul of Tom Jones’ “Looking Out My Window.”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","241514,999999999001","232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",,,true,88888888001-hit,crossfade
 "Brooklyn rap group Stetsasonic brings Tom Jones’ drums into rap rhythms. Their iconic line “Go Brooklyn” sets out a chain of beats, and lyrics set to those beats, that inspires the opening of the last verse of “Hit ’Em Up.”",,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,"232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",233667.bottom.1996,,,,
@@ -39,7 +40,8 @@ Some of “Hit ’Em Up’s” ancestors are directly audible in the final produ
 
 ",,dna,inline,,,,,,,,,
 "### When we consider samples, remixes, interpolations, and covers as  musical family ties, we can trace how the DNA of one song can lead to a very different genre and culture. We can see how very different songs might actually be related. ",,dna,inline,,,,,,,,,
-"First, let’s return to the lineage between “In the Hall of the Mountain King” and “Big Poppa.”",,dna,sticky,king,"4047,12823,12882,13504,67872",,,,,,,
+"First, let’s return to the lineage between “In the Hall of the Mountain King” and “Big Poppa.”",,dna,sticky,king,"4047,12823,12882,13504,67872",,,"64739.top.Mountain King;
+233667.right.Hit ’Em Up",,,,
 "The descendants of “In the Hall of the Mountain King” include Jhene Aiko’s “The Worst,” a great-great-great grandchild of “In the Hall of the Mountain King” due to a shared lineage with Big Poppa.",,dna,sticky,king,"88888888058,45521,4047,12823,12882,13504,67872",,"233667,234899","244143.bottom.The Worst;
 64739.top.Mountain King",,,,
 "But if we take a different route through the family tree, we can even see “In the Hall of the Mountain King” make its way to Korean rap in J-Hope’s song “What if…”",,dna,sticky,king,"15265,3026,3030,88888888059,88888888058,45521,4047,12823,12882,13504,67872",,"233667,234899,234780,244142,234958,244133,244143","233265.bottom.What If;
@@ -69,7 +71,7 @@ We need to figure out a way, in this layout, to highlight some nodes—I'm not s
 nodes to annotate/highlight: 11175, 88888888060,11201",beat,sticky,funky_1,funky_1,,,234409.right.Funky Drummer,,,,
 Because the beat doesn’t just pass down to one generation.,,beat2,sticky,funky_3,11215,"248775,234409",,,,true,11215-funky_3,crossfade
 It leads “South Bronx” to shape the sound of another Bronx artist’s hit.,,beat2,sticky,funky_3,"56862,11215","251523,248775",,,,true,56862-funky_3,crossfade
-"“Jenny From the Block” is only one of a whole second generation of songs that originate from Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer.” There’s also Will Smith’s “Wild Wild West”, “(I Can’t Help) Falling In Love With You” by UB40, and “Bring ‘Em Out” by T.I. ","note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat2,sticky,funky_3,funky_3,,,234409.right.Funky Drummer,"56862,11215",,,
+"“Jenny From the Block” is only one of a whole second generation of songs that originate from Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer.” There’s also Will Smith’s “Wild Wild West”, “(I Can’t Help) Falling In Love With You” by UB40, and “Bring ‘Em Out” by T.I. ","note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat2,sticky,funky_3,funky_3,,,234409.right.Funky Drummer,"56862,11215,58155,58095",,,
 "# LOANED LYRICS
 
 ",no viz,lyrics,inline,,,,,,,,,

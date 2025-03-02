@@ -20,7 +20,7 @@ export default [
 	},
 	{
 		"id": "1_mo6m8ue4KuNpuDrQLV5-r-jCc4gpyEJD1Te8_Hsffw",
-		"gid": "1845913332",
+		"gid": "1044745109",
 		"filepath": "src/data/slides.csv"
 	}
 ]
