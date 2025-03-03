@@ -2,7 +2,13 @@
 	import { onMount } from "svelte";
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
-	import { playerTimes, isMuted, currentAudioSource, isPlaying, globalAudioPlayer } from "$stores/misc.js";
+	import {
+		playerTimes,
+		isMuted,
+		currentAudioSource,
+		isPlaying,
+		globalAudioPlayer
+	} from "$stores/misc.js";
 	import { getContext } from "svelte";
 	import { handlePlay, handlePause } from "$utils/audio.js";
 
@@ -65,40 +71,14 @@
 	});
 
 	// Handle play/pause changes
-	$: if (isReady) {
-		if (play && $currentAudioSource !== audioUrl) {
+	$: if (wavesurfer && isReady) {
+		if (play && !wavesurfer.isPlaying()) {
+			wavesurfer.setMuted($isMuted);
 			handlePlay(audioUrl, id);
-		} else if (!play && $currentAudioSource === audioUrl) {
-			handlePause(audioUrl, id);
+		} else if (!play && wavesurfer.isPlaying()) {
+			wavesurfer.pause();
 		}
 	}
-
-	// Keep waveform progress in sync with global player
-	$: if (isReady && $globalAudioPlayer && $currentAudioSource === audioUrl) {
-		wavesurfer.setTime($globalAudioPlayer.currentTime);
-	}
-
-	// Update mute state changes
-	$: if (wavesurfer && isReady) {
-		wavesurfer.setMuted($isMuted);
-	}
-
-	// Debounce play/pause changes to avoid conflicts
-	let playPauseTimeout;
-	$: if (wavesurfer && isReady) {
-		clearTimeout(playPauseTimeout);
-		playPauseTimeout = setTimeout(() => {
-			if (play && !wavesurfer.isPlaying()) {
-				wavesurfer.setTime($playerTimes[id] || 0);
-				wavesurfer.setMuted($isMuted);
-				handlePlay(audioUrl, id);
-			} else if (!play && wavesurfer.isPlaying()) {
-				$playerTimes[id] = wavesurfer.getCurrentTime();
-				wavesurfer.pause();
-			}
-		}, 100);
-	}
-
 </script>
 
 <div
