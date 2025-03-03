@@ -1645,7 +1645,7 @@ id,start_node_id,end_node_id,relationship_type,tree,remove,S_NAME,E_NAME,type,fl
 1218,232485,271914,SAMPLES,hit,,Walk on By,Walk on By,,1,1218-hit,232485-271914hit
 3819,269830,233585,SAMPLES,hit,TRUE,Down To The Grissle,N.T.,,,3819-hit,269830-233585hit
 3944,233667,233659,SAMPLES,hit,,Hit ’Em Up,Don’t Look Any Further,,,3944-hit,233667-233659hit
-3945,234148,233659,SAMPLES,hit,,Gettin’ Money (Get Money Remix),Don’t Look Any Further,,,3945-hit,234148-233659hit
+3945,234148,233659,SAMPLES,hit,TRUE,Gettin’ Money (Get Money Remix),Don’t Look Any Further,,,3945-hit,234148-233659hit
 3946,233659,240512,INTERPOLATES,hit,,Don’t Look Any Further,Blind Man Can See It,,,3946-hit,233659-240512hit
 3962,233663,244364,SAMPLES,hit,,Brooklyn’s In The House,Planetary Citizen,,,3962-hit,233663-244364hit
 3963,233663,235060,SAMPLES,hit,,Brooklyn’s In The House,Rock Box,,,3963-hit,233663-235060hit
