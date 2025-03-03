@@ -3,14 +3,13 @@
 	import { base } from "$app/paths";
 	import WaveSurfer from "wavesurfer.js";
 	import {
-		playerTimes,
 		isMuted,
 		currentAudioSource,
-		isPlaying,
 		globalAudioPlayer
 	} from "$stores/misc.js";
 	import { getContext } from "svelte";
 	import { handlePlay, handlePause } from "$utils/audio.js";
+	import { blendHexColors } from "$utils/colors.js";
 
 	$$restProps;
 
@@ -95,8 +94,9 @@
 	<div
 		bind:this={waveformRef}
 		id="waveform-{id}"
-		style:--bg="{progressColor}30"
-		class="waveform"
+		style:--bg={blendHexColors(progressColor, "#fdfaf2", 0.3)}
+		class="waveform {position}"
+		class:active={$currentAudioSource ? $currentAudioSource.includes(id) : true}
 	>
 		<!-- The waveform will be rendered here -->
 	</div>
@@ -115,6 +115,24 @@
 		background: var(--bg);
 		padding-top: var(--bar-height-padding);
 		padding-bottom: var(--bar-height-padding);
+
+		transition: all 0.25s;
+
+		&:not(.active) {
+			opacity: 0.5;
+		}
+
+		&.active {
+			transform: scale(1.1);
+
+			&.top {
+				transform-origin: top;
+			}
+
+			&.bottom {
+				transform-origin: bottom;
+			}
+		}
 	}
 
 	.waveform canvas {

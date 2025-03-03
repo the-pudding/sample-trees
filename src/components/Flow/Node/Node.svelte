@@ -3,7 +3,11 @@
 	import CoverArt from "./Node.CoverArt.svelte";
 	import { getContext } from "svelte";
 	import Waveform from "./Node.Waveform.svelte";
-	import { activeSectionId } from "$stores/misc.js";
+	import {
+		activeSectionId,
+		currentAudioSource,
+		lastActiveNode
+	} from "$stores/misc.js";
 
 	export let data;
 	export let isConnectable = false;
@@ -47,21 +51,25 @@
 		(!$activeController?.component?.id == "258574" &&
 			$activeController?.component?.type === "loop" &&
 			!isCurrentlyPlaying);
+
+	$: if ($currentAudioSource?.includes(data.id)) {
+		$lastActiveNode = data.id;
+	}
 </script>
 
 <Handle
 	type="target"
 	position={Position.Top}
 	style="background: #555; opacity: 0"
-	isConnectable={isConnectable}
+	{isConnectable}
 />
 
 <div
 	class="node {$activeController?.component?.type || ''}"
 	class:source={isSource}
 	class:target={isTarget}
-	class:focus={$activeController.focusNode == data.id}
 	class:faded={shouldBeFaded}
+	class:active={$lastActiveNode == data.id}
 	style:--node-height="{$dimensions.nodeHeight}px"
 	style:--node-width="{$dimensions.nodeWidth}px"
 	style:--base-font-size={fontSize}
@@ -154,21 +162,29 @@
 		transition: opacity 0.5s;
 		width: var(--node-width);
 
-		&.source.crossfade {
-			flex-direction: column-reverse;
-			:global(.text) {
-				transform: translate(0px, 5px);
+		&.crossfade {
+			transition: transform 0.25s;
+			&.source,
+			&.target {
+				&.active {
+					transform: scale(1.1);
+				}
+			}
+
+			&.source {
+				flex-direction: column-reverse;
+				:global(.text) {
+					transform: translate(0px, 5px);
+				}
+
+				transform-origin: top;
+			}
+
+			&.target {
+				flex-direction: column;
+				transform-origin: bottom;
 			}
 		}
-
-		&.target.crossfade {
-			flex-direction: column;
-		}
-
-		&.focus {
-			transform: scale(1);
-		}
-
 		&.faded {
 			opacity: 0.25;
 		}

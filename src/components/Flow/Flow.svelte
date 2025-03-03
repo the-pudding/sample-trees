@@ -10,7 +10,6 @@
 
 	import { setContext, getContext, onMount, tick } from "svelte";
 	import viewport from "$stores/viewport";
-
 	import Node from "./Node/Node.svelte";
 	import Edge from "./Edge/Edge.svelte";
 	import SimpleNode from "./Node/SimpleNode.svelte";
@@ -123,7 +122,6 @@
 				...new Map(activeTree.nodes.map((node) => [node.id, node])).values()
 			];
 		}
-
 
 		await tick(); // Wait for any pending DOM updates
 
