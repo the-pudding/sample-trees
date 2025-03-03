@@ -125,38 +125,10 @@ p {
 	display: none;
 }
 
-.svelte-flow__background {
-	background: var(--color-bg);
-}
 
-#content .svelte-flow {
-	background: var(--color-bg);
-}
 
-.cover h1 {
-    margin: 0;
-    padding-top: 10px;
-    font-size: 24px;
-    letter-spacing: -0.7px;
-    text-transform: uppercase;
-    line-height: 1.1;
-    position: absolute;
-    text-align: center;
-    left: 0;
-    width: 100%;
-    background-image: linear-gradient(45deg, #000000, #5b5b5b, #000000);
-    color: transparent;
-    background-clip: text;
-    bottom: 20px;
-    max-width: calc(100% - 30px);
-    right: 0;
-    margin: 0 auto;
-}
 
 .content p {
 	font-size: 22px;
 }
 
-.slide-text a, a:visited {
-	color: white;
-}

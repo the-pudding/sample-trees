@@ -106,7 +106,7 @@
 		.h1-wrapper {
 			position: relative;
 			margin: 2rem 0;
-			
+
 			h1 {
 				margin: 0;
 				font-size: 1.5rem;
@@ -132,6 +132,11 @@
 			font-weight: 600;
 			border-radius: 3px;
 			margin-right: 3px;
+		}
+
+		.slide-text a,
+		a:visited {
+			color: white;
 		}
 	}
 </style>

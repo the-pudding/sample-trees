@@ -23,7 +23,7 @@
 	export let offset = 0;
 	export let isFullTree = false;
 	export let viewportHeight;
-
+	export let sectionBgColor;
 	// Create dimensions store
 	const textHeight = 30;
 	const waveformHeight = 20;
@@ -210,6 +210,7 @@
 			fitViewToNodes();
 		}, 100);
 	});
+
 </script>
 
 {#key flowKey}
@@ -227,7 +228,7 @@
 			nodesDraggable={false}
 			elementsSelectable={false}
 		>
-			<!-- <Background bgColor="#f0f0f0" patternColor="#f0f0f0" /> -->
+			<Background bgColor={sectionBgColor} patternColor={sectionBgColor} />
 		</SvelteFlow>
 	</div>
 {/key}
