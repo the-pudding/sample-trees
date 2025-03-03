@@ -21,8 +21,8 @@ In 1996, over 120 years after “In the Hall of the Mountain King,” 2pac relea
 233667.bottom.1996",,,,
 "This isn’t “Hit ’Em Up’s” only lineage, but one of many, connected through samples, interpolations, covers and remixes.
 
-Another lineage begins with the smooth R&B passed down from Dionne Warwick’s “Walk on By.” Next, Isaac Hayes reinterprets the song and slows down the tempo.",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068","232485,271914","64739,253610",,,true,1218-hit,crossfade
-This catches the ear of Biggie Smalls and forms the basis of his track “Warning”... ,,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068","234129,232485",,,,true,1208-hit,crossfade
+Another lineage begins with the smooth R&B passed down from Dionne Warwick’s “Walk on By.” Next, Isaac Hayes reinterprets the song and slows down the tempo.",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068","232485,271914","253610,64739,234958,234780,234899",,,true,1218-hit,crossfade
+This catches the ear of Biggie Smalls and forms the basis of his track “Warning”... ,,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068","234129,232485","253610,64739,234958,234780,234899",,,true,1208-hit,crossfade
 "…and just a few more generations below “Warning” is once again, “Hit ’Em Up.”",,intro,sticky,hit,"1208,1218,560,561,4048,4047,12823,12882,13504,67872,88888888068",,"253610,64739,234958,234780,234899","271914.top.1964;
 233667.bottom.1996",,,,
 And there’s the soul of Tom Jones’ “Looking Out My Window.”,,intro,sticky,hit,"4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068","241514,999999999001","232485,271914,234129,232162,234148,253610,64739,234958,234780,234899",,,true,88888888001-hit,crossfade
@@ -65,7 +65,7 @@ J-Hope reinterprets the riff from “Shimmy Shimmy Ya” on the track “What if
 MD: need to add missing links from ""the worst"" and ""what if""",dna,sticky,king_2,king_2,,,64739.right.Mountain King,"15265,3026,3030,88888888059,67872",,,
 "Each connection continues a musical lineage or, at the least, influences the development of the features of a song.
 
-The connections in these musical family trees may be a borrowed beat, loaned lyrics, or a multipurpose melody. Let’s look at examples of each one.",,beat,inline,,,,,,,,,
+The connections in these musical family trees may be a borrowed beat, loaned lyrics, or a multipurpose melody. Let’s look at examples of each one.",,dna,inline,,,,,,,,,
 "# BORROWED BEATS
 
 ",,beat,inline,,,,,,,,,
@@ -82,7 +82,7 @@ It leads “South Bronx” to shape the sound of another Bronx artist’s hit.,,
 "“Jenny From the Block” is only one of a whole second generation of songs that originate from Clyde Stubblefield’s improvised drum break 5 minutes and 35 seconds into “Funky Drummer.” There’s also Will Smith’s “Wild Wild West”, “(I Can’t Help) Falling In Love With You” by UB40, and “Bring ‘Em Out” by T.I. ","note that this is merging both the funky_1 and funky_2 trees. I could also make a funky_3 tree that's just the two trees combined, if that's easier.",beat2,sticky,funky_3,funky_3,,,234409.right.Funky Drummer,"56862,11215,58155,58095",,,
 "# LOANED LYRICS
 
-",no viz,lyrics,inline,,,,,,,,,
+",no viz,lyrics-pre,inline,,,,,,,,,
 "While a beat sets the foundation for a song, lyrics are some of the most easily transmittable DNA: a few words can easily fit into otherwise very different songs.",,lyrics,inline,,,,,,,,,
 "Here's an example of lyrics slightly evolving through generations: A Tribe Called Quest released “Can I Kick It?” in 1990, itself a song built on Lou Reed’s “Walk on the Wild Side” from 1972. When Q-Tip asks if he can kick it, the rest of the Tribe responds.",,lyrics,sticky,kick,"54235,19201",,"247659,251388",,,,236303,loop
 "Robbie Williams then used the line in 2000s “Rock DJ.” Williams [said](https://www.youtube.com/watch?v=BnaPtu2sshs) he, “Really struggled to write the lyrics. So what I’ve just done is I’ve robbed loads of really old rap lyrics.”
@@ -102,8 +102,8 @@ But then Chuck D uses the line to talk about the bass singing register.,,lyrics,
 "While we don’t know which lyric inspired Charley Crockett for his 2019 record “How Low Can You Go,” Crockett  used  the phrase  to describe what a romantic interest is doing to his heart.",,lyrics,sticky,low,"88888888028,88888888029,88888888030,88888888031","999999999022,237235",,,,true,88888888028-low,crossfade
 "# MULTIPURPOSE MELODIES
 
-",no viz,melody,inline,,,,,,,,,
-"For most people, however, melody is the most identifiable kind of musical DN. Sampled and interpolated melodies may be instantly recognizable, hit on a subconscious familiarity even if you’re not aware there’s a sample at all, or sit right at the edge of recognition, making you think “where have I heard that before?”",,melody,inline,,,,,,,,,
+",no viz,melody-pre,inline,,,,,,,,,
+"For most people, however, melody is the most identifiable kind of musical DN. Sampled and interpolated melodies may be instantly recognizable, hit on a subconscious familiarity even if you’re not aware there’s a sample at all, or sit right at the edge of recognition, making you think “where have I heard that before?”",,melody-pre,inline,,,,,,,,,
 "While sampling is commonly associated with hip hop, the art of sharing and borrowing melodies is a global practice, transcending every  genre.
 
 For example, where does this international selection of hits get their sound?","nodes are horizontally in a line, no links, looping audio between each node",melody,sticky,murder,,"105701,292345,292347,999999999024",,,,true,"105701,292345,292347,999999999024",loop
@@ -115,11 +115,11 @@ But “Murder She Wrote” is actually only one of  many songs based on a sound 
 Once a melody enters our musical family in this way, the original source can fade into obscurity, even as the sound continues to pass on and evolve. The descendents of this generation of songs will be informed by what a few Jamaican studio musicians recorded in 1962, even if they’ve never given them a second of thought.",,melody,sticky,murder,"73469,73497,73479,88888888067,88888888066,88888888062,88888888063,88888888064,88888888065","302743,256139,279390,257494,279400","306957,105701,292345,292347,999999999024",,,true,,
 "And while some sounds spread far and wide, the evolution of sampling has also made sampling layer on layer (deep).
 
-Sampling has become so widespread and so sophisticated, that you can have hits that not only have a wide range of ancestors – they also actually sound like those ancestors. Artists and producers can create incredibly complex and catchy sounds, drawing from a wide range of sources.",,wrap1,inline,,,,,,,,,
+Sampling has become so widespread and so sophisticated, that you can have hits that not only have a wide range of ancestors – they also actually sound like those ancestors. Artists and producers can create incredibly complex and catchy sounds, drawing from a wide range of sources.",,wrap-pre,inline,,,,,,,,,
 "Let’s look at the song “Shake It” by Kay Flock featuring Cardi B, Dougie B, and Bory 300. This sample heavy song took off on TikTok before it was even released, and then was one of the New York Times top songs of 2022.",,wrap1,sticky,shake,"79003,78998,78999",,,"81845.top.Melody;
 276583.top.Lyrics;
 80750.top.Bass",,true,258574,loop
 "In just this segment, there’s a tune from Buffalo Springfield and Fun Boy Three, lyrics from Akon’s <span data-inline-audio-id=""276583"">Bananza</span>, a clap beat from Sean Paul’s <span data-inline-audio-id=""81845"">Temperature</span> and an earlier riddim, and a bass line from a previous Kay Flock song <span data-inline-audio-id=""80750"">Is Ya Ready</span>, all combined together.
 
-The song, produced by Elias Beats, also represents how generational and cross-genre sampling has been turbocharged. Beatmakers like Elias Beats now produce sample-based beats and post them online for free for anyone to build a song around. His YouTube channel has drill beats built around everything from “Hips Don’t Lie” to “Just Dance” to “I Want it That Way” or “Gangnam Style.” Diverse musical DNA from all kinds of traditions and genres are being mixed up and spread out in new and surprising ways.",,wrap2,inline,,,,,,,true,,
+The song, produced by Elias Beats, also represents how generational and cross-genre sampling has been turbocharged. Beatmakers like Elias Beats now produce sample-based beats and post them online for free for anyone to build a song around. His YouTube channel has drill beats built around everything from “Hips Don’t Lie” to “Just Dance” to “I Want it That Way” or “Gangnam Style.” Diverse musical DNA from all kinds of traditions and genres are being mixed up and spread out in new and surprising ways.",,wrap2-pre,inline,,,,,,,true,,
 "Then again– there’s something to sticking to the classics, too.",,wrap2,sticky,conclusion,88888888061,"999999999023,243164",,,,true,88888888061-conclusion,crossfade
