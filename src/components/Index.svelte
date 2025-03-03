@@ -151,7 +151,6 @@
 	let previousGlobalChangeWatcher = $globalChangeWatcher;
 	
 	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
-		console.log('[Index] Global change watcher updated:', $globalChangeWatcher);
 		pauseAllAudio();
 		previousGlobalChangeWatcher = $globalChangeWatcher;
 	}

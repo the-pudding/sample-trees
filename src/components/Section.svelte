@@ -210,7 +210,7 @@
 	<!-- Render "inline" items before the sticky component -->
 	{#each inlineBefore as item}
 		{@const html = marked(item.text)}
-		{@const hasH1 = html.includes('<h1')}
+		{@const hasH1 = html.includes("<h1")}
 		{#if hasH1}
 			<div class="content">
 				<Shelf text={html} />
@@ -277,7 +277,15 @@
 	</Scroller>
 
 	{#each inlineAfter as item}
-		<div class="content">{@html marked(item.text)}</div>
+		{@const html = marked(item.text)}
+		{@const hasH1 = html.includes("<h1")}
+		{#if hasH1}
+			<div class="content">
+				<Shelf text={html} />
+			</div>
+		{:else}
+			<div class="content">{@html marked(item.text)}</div>
+		{/if}
 	{/each}
 </section>
 
