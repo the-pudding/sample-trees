@@ -90,7 +90,7 @@
 				mostVisibleSection = section.dataset.id;
 			}
 		});
-
+		
 		if (mostVisibleSection && mostVisibleSection !== $activeSectionId) {
 			$activeSectionId = mostVisibleSection;
 			$globalChangeWatcher = ++$globalChangeWatcher;
@@ -151,6 +151,7 @@
 	let previousGlobalChangeWatcher = $globalChangeWatcher;
 	
 	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
+		console.log('[Index] Global change watcher updated:', $globalChangeWatcher);
 		pauseAllAudio();
 		previousGlobalChangeWatcher = $globalChangeWatcher;
 	}
