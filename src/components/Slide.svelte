@@ -145,5 +145,10 @@
 			border-radius: 3px;
 			margin-right: 3px;
 		}
+
+		.slide-text a,
+		a:visited {
+			color: white;
+		}
 	}
 </style>

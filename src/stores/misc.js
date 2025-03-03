@@ -77,3 +77,10 @@ export const globalAudioPlayer = derived(
 );
 
 export const lastActiveNode = writable(null);
+
+export const sectionBGColors = {
+	dna: "#fefbd7",
+	beat: "#fae1dd",
+	lyrics: "#e8e8e4",
+	melody: "#e5fcf5"
+};

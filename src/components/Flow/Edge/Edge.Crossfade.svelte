@@ -9,27 +9,10 @@
 	export let progressY;
 
 	let currentY = progressY;
-	let targetY_mobile = progressY;
-	let rafId;
 	let isMobile = false;
-
-	function animate() {
-		const diff = targetY_mobile - currentY;
-		if (Math.abs(diff) > 0.1) {
-			currentY += diff * 0.2;
-			rafId = requestAnimationFrame(animate);
-		} else {
-			currentY = targetY_mobile;
-			rafId = null;
-		}
-	}
 
 	onMount(() => {
 		isMobile = window.matchMedia("(max-width: 40rem)").matches;
-	});
-
-	onDestroy(() => {
-		if (rafId) cancelAnimationFrame(rafId);
 	});
 
 	// Update target for mobile animation

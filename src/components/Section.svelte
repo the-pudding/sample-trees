@@ -9,7 +9,7 @@
 	import "@xyflow/svelte/dist/style.css";
 	import { fade } from "svelte/transition";
 	import viewport from "$stores/viewport";
-	import { globalChangeWatcher } from "$stores/misc.js";
+	import { globalChangeWatcher, sectionBGColors } from "$stores/misc.js";
 	import Shelf from "./Shelf.svelte";
 
 	import Slide from "./Slide.svelte";
@@ -18,6 +18,7 @@
 
 	// Utils
 	import generateFlow from "$utils/flow/generateFlow";
+	import getCSSVariableValue from "$utils/getCSSVariableValue";
 
 	export let key;
 	export let content;
@@ -204,9 +205,19 @@
 
 		isReady = true;
 	}
+
+	const sectionBgColor =
+		sectionBGColors[key.split("-")[0]] || getCSSVariableValue("--color-bg");
+
+	$: console.log(sectionBgColor);
 </script>
 
-<section class="section" bind:this={sectionRef} data-id={key}>
+<section
+	class="section"
+	bind:this={sectionRef}
+	data-id={key}
+	style:--section-bg-color={sectionBgColor}
+>
 	<!-- Render "inline" items before the sticky component -->
 	{#each inlineBefore as item}
 		{@const html = marked(item.text)}
@@ -247,6 +258,7 @@
 												{offset}
 												{viewportHeight}
 												isFullTree={true}
+												{sectionBgColor}
 											/>
 										</SvelteFlowProvider>
 									{/if}
@@ -260,6 +272,7 @@
 										{slides}
 										{offset}
 										{viewportHeight}
+										{sectionBgColor}
 									/>
 								</SvelteFlowProvider>
 							{/if}
@@ -323,5 +336,9 @@
 		max-width: 550px;
 		padding: 1rem;
 		font-size: 22px;
+	}
+
+	.section {
+		background: var(--section-bg-color);
 	}
 </style>
