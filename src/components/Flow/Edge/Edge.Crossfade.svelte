@@ -33,16 +33,7 @@
 	});
 
 	// Update target for mobile animation
-	$: {
-		// if (isMobile) {
-		// 	targetY_mobile = progressY;
-		// 	if (!rafId) {
-		// 		rafId = requestAnimationFrame(animate);
-		// 	}
-		// } else {
-			currentY = progressY;
-		// }
-	}
+	$: currentY = progressY;
 </script>
 
 <div
@@ -108,6 +99,7 @@
 		will-change: transform;
 		transform: translate3d(-50%, -50%, 0) translate3d(var(--x), var(--y), 0);
 		transition: none;
+		z-index: 10000;
 		&__playhead {
 			width: 20px;
 			height: var(--playhead-height);
