@@ -69,6 +69,18 @@
 		pointer-events: none;
 		position: relative;
 
+		&::after {
+			content: "";
+			position: absolute;
+			top: 50%;
+			right: 1px;
+			width: 10px;
+			height: 10px;
+			background: black;
+			opacity: 0.25;
+			border-radius: 50%;
+		}
+
 		.slide-text {
 			width: fit-content;
 			height: fit-content;
@@ -106,7 +118,7 @@
 		.h1-wrapper {
 			position: relative;
 			margin: 2rem 0;
-			
+
 			h1 {
 				margin: 0;
 				font-size: 1.5rem;
