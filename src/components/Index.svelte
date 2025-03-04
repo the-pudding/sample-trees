@@ -1,5 +1,6 @@
 <script>
 	import { onMount, tick } from "svelte";
+
 	import { setContext } from "svelte";
 	import { SvelteFlowProvider } from "@xyflow/svelte";
 	import { activeSectionId, globalChangeWatcher } from "$stores/misc.js";
@@ -189,10 +190,7 @@
 	<Footer />
 {/if}
 
-<div
-	class="noise-overlay"
-	style="background: url('assets/noise-light.png');"
-></div>
+<div class="noise-overlay"></div>
 
 <style lang="scss">
 	.disable-scroll {
@@ -211,6 +209,7 @@
 		height: 100%;
 		opacity: 1;
 		pointer-events: none;
-		z-index: 10000;
+		z-index: 10;
+		background-image: var(--noise-texture-url);
 	}
 </style>
