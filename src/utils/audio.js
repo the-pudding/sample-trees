@@ -57,8 +57,15 @@ export function advanceLoop(loops, loopId) {
 	loops.update((loops) => {
 		const loop = loops[loopId];
 		if (loop && loop.isPlaying) {
-			const prevIndex = loop.currentIndex;
-			loop.currentIndex = (loop.currentIndex + 1) % loop.sequence.length;
+			// Check if we're at the end of the sequence
+			if (loop.currentIndex === loop.sequence.length - 1) {
+				// If at the end, stop playing
+				loop.isPlaying = false;
+				loop.currentIndex = 0;
+			} else {
+				// Otherwise, advance to next item
+				loop.currentIndex = loop.currentIndex + 1;
+			}
 		}
 		return loops;
 	});
