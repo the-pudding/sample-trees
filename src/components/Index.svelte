@@ -44,7 +44,7 @@
 
 		const BATCH_SIZE = 100;
 		const totalImages = imageUrls.length;
-	
+
 		for (let i = 0; i < totalImages; i += BATCH_SIZE) {
 			const batch = imageUrls.slice(i, i + BATCH_SIZE);
 			await Promise.all(
@@ -58,7 +58,6 @@
 				)
 			);
 		}
-
 	}
 
 	async function handleStart() {
@@ -66,12 +65,11 @@
 
 		await tick();
 		const el = document.getElementById("scroll-to-start");
-		const y = el.getBoundingClientRect().top - viewportHeight*.75;
+		const y = el.getBoundingClientRect().top - viewportHeight * 0.75;
 
-		window.scrollTo({top: y, behavior: 'smooth'});
+		window.scrollTo({ top: y, behavior: "smooth" });
 
 		// el.scrollIntoView({ behavior: "smooth", block: "end" });
-
 	}
 
 	function checkSectionVisibility() {
@@ -79,7 +77,7 @@
 		let maxVisibleRatio = 0;
 		let mostVisibleSection = null;
 
-		document.querySelectorAll("section.section").forEach((section) => {
+		document.querySelectorAll(".section").forEach((section) => {
 			const rect = section.getBoundingClientRect();
 			const visibleHeight =
 				Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
@@ -90,7 +88,7 @@
 				mostVisibleSection = section.dataset.id;
 			}
 		});
-		
+
 		if (mostVisibleSection && mostVisibleSection !== $activeSectionId) {
 			$activeSectionId = mostVisibleSection;
 			$globalChangeWatcher = ++$globalChangeWatcher;
@@ -149,12 +147,11 @@
 	});
 
 	let previousGlobalChangeWatcher = $globalChangeWatcher;
-	
+
 	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
 		pauseAllAudio();
 		previousGlobalChangeWatcher = $globalChangeWatcher;
 	}
-
 </script>
 
 <svelte:head>
@@ -170,28 +167,31 @@
 	{/if}
 </svelte:head>
 
-<!-- {#if !hasStarted} -->
-	<Title {isReady} onStart={handleStart} />
-<!-- {/if} -->
+<Title {isReady} onStart={handleStart} />
 
 {#if mounted}
-	<div transition:fade style="display: {hasStarted ? 'block' : 'none'};" class:disable-scroll={!hasStarted}>
+	<div
+		transition:fade
+		style="display: {hasStarted ? 'block' : 'none'};"
+		class:disable-scroll={!hasStarted}
+	>
 		<AudioToggle />
 		{#each Object.entries(groupedSlides) as [key, content], i}
 			<!-- {#if i == 0} -->
-				<Section {key} {content} sectionIndex={i} {viewportHeight} />
+			<Section {key} {content} sectionIndex={i} {viewportHeight} />
 			<!-- {/if} -->
 		{/each}
 	</div>
 {/if}
 
-
 {#if hasStarted}
 	<Footer />
 {/if}
 
-<div class="noise-overlay" style="background: url('assets/noise-light.png');">
-</div>
+<div
+	class="noise-overlay"
+	style="background: url('assets/noise-light.png');"
+></div>
 
 <style lang="scss">
 	.disable-scroll {
