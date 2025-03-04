@@ -9,8 +9,6 @@
 	export let hydrateInlineAudio;
 	// Process the markdown and then transform audio spans
 	$: processedHtml = slide.text ? marked(slide.text) : "";
-
-	
 </script>
 
 <section
@@ -24,7 +22,7 @@
 >
 	{#if slide.text}
 		<div
-			class="slide-text"
+			class="slide-text noise-overlay "
 			id={sectionIndex == 0 && i == 0 ? "scroll-to-start" : ""}
 			use:hydrateInlineAudio
 		>
@@ -44,6 +42,7 @@
 
 		pointer-events: none;
 		position: relative;
+
 
 		&::after {
 			content: "";
@@ -70,18 +69,9 @@
 			margin-inline-start: 1rem;
 			min-width: 300px;
 			pointer-events: all;
+			z-index: 100;
 
-			&::after {
-				content: "";
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background-image: url("assets/noise-light.png");
-				opacity: 0.1;
-				pointer-events: none;
-			}
+
 		}
 	}
 
