@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="title-screen" transition:fade>
+<div class="title-screen section" data-id="title" transition:fade>
 	<div class="header" style="position: absolute; top: 0; left: 0; right:0;margin: 0 auto; width: 170px;">
 		<Header />
 	</div>

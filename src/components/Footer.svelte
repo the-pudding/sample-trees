@@ -60,7 +60,7 @@
 	});
 </script>
 
-<footer>
+<footer class="section" data-id="footer">
 	<div class="c">
 		<div class="top">
 			<section class="text">
