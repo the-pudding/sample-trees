@@ -2,7 +2,7 @@
 	import { fade } from "svelte/transition";
 	import { isMuted } from "$stores/misc.js";
 	import Header from "./Header.svelte";
-
+	import { base } from "$app/paths";
 	export let isReady = false;
 	export let onStart;
 
@@ -18,7 +18,7 @@
 	</div>
 	
 	<div class="content">
-		<img class="title-tree" src="assets/tree.jpg" alt="">
+		<img class="title-tree" src="{base}/assets/tree.jpg" alt="">
 		<div class="text-content">
 			<h1>This is a project about shared DNA in music.</h1>
 			{#if isReady}

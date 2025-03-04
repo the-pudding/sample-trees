@@ -22,7 +22,7 @@
 >
 	{#if slide.text}
 		<div
-			class="slide-text noise-overlay "
+			class="slide-text noise-overlay"
 			id={sectionIndex == 0 && i == 0 ? "scroll-to-start" : ""}
 			use:hydrateInlineAudio
 		>
