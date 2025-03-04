@@ -7,7 +7,7 @@
     }
 </script>
 
-<button class="audio-toggle" on:click={toggleMute}>
+<button class="audio-toggle noise-overlay" on:click={toggleMute}>
     {#if $isMuted}
         <VolumeX size={20} />
     {:else}

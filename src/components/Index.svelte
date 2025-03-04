@@ -210,6 +210,5 @@
 		opacity: 1;
 		pointer-events: none;
 		z-index: 10;
-		background-image: var(--noise-texture-url);
 	}
 </style>
