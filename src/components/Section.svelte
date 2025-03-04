@@ -376,4 +376,8 @@
 	.section {
 		background: var(--section-bg-color);
 	}
+
+	:global(svelte-scroller-foreground) {
+		z-index: 100 !important;
+	}
 </style>
