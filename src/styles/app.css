@@ -125,6 +125,9 @@ p {
 	display: none;
 }
 
+#content .svelte-flow {
+	background: none;
+}
 
 
 
@@ -132,3 +135,26 @@ p {
 	font-size: 22px;
 }
 
+.melody, .lyrics, .beats {
+	background: var(--color-pink);
+	padding: 0px 3px;
+	color: black;
+	font-weight: 600;
+	border-radius: 3px;
+	margin-right: 3px;
+	font-weight: 400;
+    display: inline-block;
+    font-size: .95em;
+}
+
+.melody {
+	background: #a7f6a7;
+}
+
+.lyrics {
+	background-color: #b3b0ff;
+}
+
+.beats {
+	background-color: #f09a8f;
+}

@@ -284,7 +284,6 @@
 												{offset}
 												{viewportHeight}
 												isFullTree={true}
-												{sectionBgColor}
 											/>
 										</SvelteFlowProvider>
 									{/if}
@@ -298,7 +297,6 @@
 										{slides}
 										{offset}
 										{viewportHeight}
-										{sectionBgColor}
 									/>
 								</SvelteFlowProvider>
 							{/if}

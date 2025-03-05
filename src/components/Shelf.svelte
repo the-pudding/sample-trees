@@ -13,7 +13,7 @@
 		data-shadow-color="16,26,64"
 		style="transform: perspective(730px) rotateX(4deg) rotateY(0deg); box-shadow: rgba(16, 26, 64, 0) 0px 0px 1px, rgba(16, 26, 64, 0.1) 0px 4px 3px, rgba(16, 26, 64, 0.1) -2px 12px 6px, rgba(16, 26, 64, 0.1) -3px 23px 10px, rgba(16, 26, 64, 0.1) -6px 39px 15px, rgba(16, 26, 64, 0.1) -10px 60px 21px;"
 	>
-		<div
+	<div
 			class="plastic"
 			style="background: url('{base}/assets/images/plastic-small.jpg')"
 		></div>

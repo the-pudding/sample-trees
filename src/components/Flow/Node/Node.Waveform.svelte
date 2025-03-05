@@ -34,8 +34,8 @@
 			volume: 0, // Always muted since we're using global player
 			pixelRatio: dpr,
 			normalize: true,
-			barWidth: 1,
-			barGap: 1,
+			// barWidth: 1,
+			// barGap: 1,
 			barRadius: 0
 		});
 
