@@ -237,7 +237,7 @@
 </script>
 
 <section
-	class="section"
+	class="section section-{key}"
 	bind:this={sectionRef}
 	data-id={key}
 	style:--section-bg-color={sectionBgColor}
@@ -248,7 +248,8 @@
 		{@const hasH1 = html.includes("<h1")}
 		{#if hasH1}
 			<div class="content">
-				<Shelf text={html} />
+				{@html html}
+				<!-- <Shelf text={html} /> -->
 			</div>
 		{:else}
 			<div class="content" use:hydrateInlineAudio>
@@ -325,7 +326,8 @@
 		{@const hasH1 = html.includes("<h1")}
 		{#if hasH1}
 			<div class="content">
-				<Shelf text={html} />
+				{@html html}
+				<!-- <Shelf text={html} /> -->
 			</div>
 		{:else}
 			<div class="content" use:hydrateInlineAudio>
@@ -371,7 +373,7 @@
 		font-size: 22px;
 	}
 
-	.section {
-		background: var(--section-bg-color);
-	}
+	// .section {
+	// 	background: linear-gradient(180deg, var(--section-bg-color) 0%, var(--color-bg) 300px);
+	// }
 </style>

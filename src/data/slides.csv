@@ -1,7 +1,9 @@
 text,notes,section,type,controller.tree,controller.links,controller.fitViewNodes,controller.fadedNodes,controller.secondaryLabel,controller.edgeHighlight,controller.showPrimaryText,controller.component.id,controller.component.type
 What if today’s most iconic sounds aren’t just from today…,,open,sticky,open,88888888071,"999999999026,999999999025",,,,true,88888888071-open,crossfade
 ...but are inherited from a family of sound…,,open,sticky,open,"88888888072,88888888071","999999999027,999999999026",,,,true,88888888072-open,crossfade
-# How sound is passed down and transformed over generations,,cold,inline,,,"243164,252744",,,,,,
+"# How sound is passed down and transformed over generations
+
+#### By [Stephen Lurie](https://pudding.cool/author/stephen-lurie/). Graphics by [Jared Whalen](https://pudding.cool/author/jared-whalen/)",,cold,inline,,,"243164,252744",,,,,,
 "Some musical inheritance is pretty obvious, because it shares iconic sounds, such as the bass from “Under Pressure,” which is passed down to “Ice Ice Baby.”",,cold,sticky,cold,88888888057,"243164,252744",,,,true,88888888057-cold,crossfade
 "## But many songs have a far more complex and concealed musical history, spanning genres, cultures, and even centuries.
 
@@ -44,9 +46,7 @@ Altogether, “Hit ’Em Up” is the descendent of a larger history, a culminat
 Some of “Hit ’Em Up’s” ancestors are directly audible in the final product; others are not. But all of these tracks were influences, big and small, in the generational development of “Hit ’Em Up.”
 ",,intro,sticky,hit,hit,,,"64739.top.Mountain King;
 233667.right.Hit ’Em Up","3946,3944,4049,20493,20584,88888888001,1208,1218,560,561,4048,4047,12823,12882,13504,67872,12882,12823,88888888068",,,
-"# Musical cousins
-
-",,dna,inline,,,,,,,,,
+# Musical cousins,,dna,inline,,,,,,,,,
 "### When we consider samples, remixes, interpolations, and covers as  musical family ties, we can trace how the DNA of one song can spread across genres and cultures. We can see how very different songs might actually be related.",,dna,inline,,,,,,,,,
 Let’s return to the lineage between “In the Hall of the Mountain King” and “Big Poppa.”,,dna,sticky,king,"4047,12823,12882,13504,67872",,,"64739.top.Mountain King;
 233667.right.Hit ’Em Up",,,,
@@ -101,7 +101,7 @@ But then Chuck D uses the line to talk about the bass singing register.,,lyrics,
 "# MULTIPURPOSE MELODIES
 
 ",no viz,melody-pre,inline,,,,,,,,,
-"For most people, however, melody is the most identifiable kind of musical DN. Sampled and interpolated melodies may be instantly recognizable, hit on a subconscious familiarity even if you’re not aware there’s a sample at all, or sit right at the edge of recognition, making you think “where have I heard that before?”",,melody-pre,inline,,,,,,,,,
+"For most people, however, melody is the most identifiable kind of musical DNA. Sampled and interpolated melodies may be instantly recognizable, hit on a subconscious familiarity even if you’re not aware there’s a sample at all, or sit right at the edge of recognition, making you think “where have I heard that before?”",,melody-pre,inline,,,,,,,,,
 "While sampling is commonly associated with hip hop, the art of sharing and borrowing melodies is a global practice, transcending every  genre.
 
 For example, where does this international selection of hits get their sound?","nodes are horizontally in a line, no links, looping audio between each node",melody,sticky,murder,,"105701,292345,292347,999999999024",,,,true,"105701,292345,292347,999999999024",loop

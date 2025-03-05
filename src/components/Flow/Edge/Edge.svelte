@@ -18,10 +18,10 @@
 	const edgeHighlights = getContext("edgeHighlights");
 
 	const edgeColoring = {
-		"67872-hit": "green",
-		"88888888001-hit": "red",
-		"4047-hit": "blue",
-		"12823-hit": "blue"
+		"67872-hit": "#235ba8",
+		"88888888001-hit": "#FF4C65",
+		"4047-hit": "#bb8b41",
+		"12823-hit": "#bb8b41"
 	}
 
 	export let id;

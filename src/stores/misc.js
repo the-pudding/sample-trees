@@ -75,8 +75,20 @@ export const globalAudioPlayer = derived(
 export const lastActiveNode = writable(null);
 
 export const sectionBGColors = {
-	dna: "#fefce3",
-	beat: "#fceeec",
-	lyrics: "#f1f1ef",
-	melody: "#eafdea"
+	dna: "#FDF9F0",
+	beat: "#FF4C65",//"#fceeec",
+	lyrics: "#bb8b41",//"#f1f1ef",
+	melody: "#235ba8",//"#eafdea" 
 };
+
+// "67872-hit": "#235ba8",
+// "88888888001-hit": "#FF4C65",
+// "4047-hit": "#ff7477",
+// "12823-hit": "#ff7477"
+
+
+//lake = "#235ba8"
+//coral = "#ff8e91"
+//fluorescent yellow = "#f7ff00"
+//flu red = "#FF4C65"
+//flu green = "#44d62c"
