@@ -217,6 +217,7 @@
 		audioSpans.forEach((span) => {
 			const id = span.getAttribute("data-inline-audio-id");
 			const text = span.textContent;
+			span.textContent = "";
 
 			// Create the InlineAudio component
 			const audioComponent = new InlineAudio({

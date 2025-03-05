@@ -59,9 +59,9 @@
 	});
 </script>
 
-{#if $isMuted}
+<!-- {#if $isMuted}
 	{text}
-{:else}
+{:else} -->
 	<button class="inline-audio" on:click={togglePlay}>
 		{#if isToggled}
 			<Pause size={16} color="rgba(0, 0, 0, 0.95)" />
@@ -70,7 +70,7 @@
 		{/if}
 		<span class="text">{text}</span>
 	</button>
-{/if}
+<!-- {/if} -->
 
 <style lang="scss">
 	.inline-audio {
