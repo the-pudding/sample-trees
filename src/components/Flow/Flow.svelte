@@ -228,7 +228,7 @@
 			nodesDraggable={false}
 			elementsSelectable={false}
 		>
-			<Background bgColor={sectionBgColor} patternColor={sectionBgColor} />
+			<!-- <Background bgColor={sectionBgColor} patternColor={sectionBgColor} /> -->
 		</SvelteFlow>
 	</div>
 {/key}

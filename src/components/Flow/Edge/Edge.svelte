@@ -17,6 +17,13 @@
 	const dimensions = getContext("dimensions");
 	const edgeHighlights = getContext("edgeHighlights");
 
+	const edgeColoring = {
+		"67872-hit": "green",
+		"88888888001-hit": "red",
+		"4047-hit": "blue",
+		"12823-hit": "blue"
+	}
+
 	export let id;
 	export let source;
 	export let target;
@@ -28,6 +35,9 @@
 	export let targetPosition;
 	export let markerEnd = undefined;
 	export let data;
+
+
+	$: console.log(id);
 
 	$: highlight = $edgeHighlights
 		.map((edgeId) => `${edgeId}-${$activeController.tree}`)
@@ -97,12 +107,31 @@
 		class="base-edge elk-edge {highlight ? 'highlighted' : ''}"
 	/>
 {:else}
-	<BaseEdge
-		path={edgePath}
-		{markerEnd}
-		style=""
-		class="base-edge {highlight ? 'highlighted' : ''}"
-	/>
+	{@const edgeHighlight = $activeController.tree == 'hit' && $activeController.index == 13}
+	{#if edgeHighlight}
+		{@const edgeToHighlight = Object.keys(edgeColoring).indexOf(id) > -1}
+		<BaseEdge
+			path={edgePath}
+			{markerEnd}
+			zIndex={edgeToHighlight ? 10000 : 1}
+			style="stroke-opacity:{edgeToHighlight ? '1' : '0'};stroke:{edgeToHighlight ? edgeColoring[id] : ''}; stroke-width: {edgeToHighlight ? '5' : ''}px;"
+			class="base-edge"
+		/>
+		<BaseEdge
+			path={edgePath}
+			{markerEnd}
+			zIndex={edgeToHighlight ? 10000 : 1}
+			style="stroke-opacity:{edgeToHighlight ? ".3" : '0'}; stroke:{edgeToHighlight ? edgeColoring[id] : ''}; stroke-width: {edgeToHighlight ? '20' : ''}px;"
+			class="base-edge"
+		/>
+	{:else}
+		<BaseEdge
+			path={edgePath}
+			{markerEnd}
+			style=""
+			class="base-edge {highlight ? 'highlighted' : ''}"
+		/>
+	{/if}
 {/if}
 
 <style lang="scss">
