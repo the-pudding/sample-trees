@@ -16,9 +16,6 @@ export const currentAudioSource = writable(null);
 export const isPlaying = writable(false);
 export const audioElement = writable(null);
 
-// Track number of plays for current audio
-let playCount = 0;
-const MAX_REPEATS = 3;
 
 // Initialize the global audio player
 if (typeof window !== "undefined") {
@@ -67,7 +64,6 @@ export const globalAudioPlayer = derived(
 				// Only set source if it's changed
 				if ($audioElement.src !== $currentAudioSource) {
 					// Reset play count when source changes
-					playCount = 0;
 					$audioElement.src = $currentAudioSource;
 				}
 			}
@@ -79,8 +75,8 @@ export const globalAudioPlayer = derived(
 export const lastActiveNode = writable(null);
 
 export const sectionBGColors = {
-	dna: "#fefbd7",
-	beat: "#fae1dd",
-	lyrics: "#e8e8e4",
-	melody: "#e5fcf5"
+	dna: "#fefce3",
+	beat: "#fceeec",
+	lyrics: "#f1f1ef",
+	melody: "#eafdea"
 };

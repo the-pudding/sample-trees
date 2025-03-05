@@ -4,16 +4,19 @@
 </script>
 
 <div class="cover">
-	
-
-	<div class="shelf" style="background-image:url({base}/assets/images/shelf-3.png);"></div>
+	<div
+		class="shelf"
+		style="background-image: url('{base}/assets/images/shelf-3.png')"
+	></div>
 	<div
 		class="cover-img cover-img-active"
 		data-shadow-color="16,26,64"
 		style="transform: perspective(730px) rotateX(4deg) rotateY(0deg); box-shadow: rgba(16, 26, 64, 0) 0px 0px 1px, rgba(16, 26, 64, 0.1) 0px 4px 3px, rgba(16, 26, 64, 0.1) -2px 12px 6px, rgba(16, 26, 64, 0.1) -3px 23px 10px, rgba(16, 26, 64, 0.1) -6px 39px 15px, rgba(16, 26, 64, 0.1) -10px 60px 21px;"
 	>
-	
-		<div class="plastic" style="background-image:url({base}/assets/images/plastic-small.jpg);"></div>
+	<div
+			class="plastic"
+			style="background: url('{base}/assets/images/plastic-small.jpg')"
+		></div>
 		<div src="" class="img-fake" style=""></div>
 		{@html text}
 	</div>
@@ -44,8 +47,6 @@
 		content: "";
 		width: calc(100% + 2px);
 		height: calc(100% - 1px);
-		// background: url(images/plastic-small.jpg);
-		background-size: contain;
 		mix-blend-mode: screen;
 		opacity: 1;
 		z-index: 100000;
@@ -54,12 +55,8 @@
 		transform: translate(-1px, 2px);
 	}
 	.shelf {
-		// background: url(images/shelf-3.png);
-		width: 155px;
-		height: 10px;
 		background-size: contain;
 		background-repeat: no-repeat;
-		height: 17px;
 		position: absolute;
 		bottom: 0;
 		-webkit-transform: translate(-8px, 11px);

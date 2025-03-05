@@ -11,6 +11,7 @@
 	import viewport from "$stores/viewport";
 	import { globalChangeWatcher, sectionBGColors } from "$stores/misc.js";
 	import Shelf from "./Shelf.svelte";
+	import InlineAudio from "./Flow/InlineAudio.svelte";
 
 	import Slide from "./Slide.svelte";
 	// Components
@@ -209,7 +210,30 @@
 	const sectionBgColor =
 		sectionBGColors[key.split("-")[0]] || getCSSVariableValue("--color-bg");
 
-	$: console.log(sectionBgColor);
+	// Custom action to hydrate inline audio components
+	function hydrateInlineAudio(node) {
+		const audioSpans = node.querySelectorAll("span[data-inline-audio-id]");
+
+		audioSpans.forEach((span) => {
+			const id = span.getAttribute("data-inline-audio-id");
+			const text = span.textContent;
+
+			// Create the InlineAudio component
+			const audioComponent = new InlineAudio({
+				target: span,
+				props: {
+					id,
+					text
+				}
+			});
+		});
+
+		return {
+			destroy() {
+				// Cleanup will happen automatically when the node is removed
+			}
+		};
+	}
 </script>
 
 <section
@@ -227,7 +251,9 @@
 				<Shelf text={html} />
 			</div>
 		{:else}
-			<div class="content">{@html marked(item.text)}</div>
+			<div class="content" use:hydrateInlineAudio>
+				{@html marked(item.text)}
+			</div>
 		{/if}
 	{/each}
 
@@ -282,7 +308,14 @@
 
 		<div class="foreground" slot="foreground">
 			{#each slides as slide, i}
-				<Slide {slides} {slide} {viewportHeight} {i} {sectionIndex} />
+				<Slide
+					{slides}
+					{slide}
+					{viewportHeight}
+					{i}
+					{sectionIndex}
+					{hydrateInlineAudio}
+				/>
 			{/each}
 		</div>
 	</Scroller>
@@ -295,7 +328,9 @@
 				<Shelf text={html} />
 			</div>
 		{:else}
-			<div class="content">{@html marked(item.text)}</div>
+			<div class="content" use:hydrateInlineAudio>
+				{@html marked(item.text)}
+			</div>
 		{/if}
 	{/each}
 </section>
