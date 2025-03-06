@@ -83,7 +83,7 @@
 		cursor: pointer;
 		padding: 0;
 		font: inherit;
-		background: var(--color-green);
+		background: var(--color-dna);
 		padding-right: 5px;
 
 		&:hover {

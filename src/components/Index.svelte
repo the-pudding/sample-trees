@@ -24,6 +24,7 @@
 	let viewportHeight = 0;
 	let mounted = false;
 
+
 	let imageUrls;
 
 	// Preload images in batches
