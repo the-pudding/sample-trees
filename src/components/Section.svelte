@@ -9,13 +9,13 @@
 	import "@xyflow/svelte/dist/style.css";
 	import { fade } from "svelte/transition";
 	import viewport from "$stores/viewport";
-	import { globalChangeWatcher, sectionBGColors } from "$stores/misc.js";
-	import Shelf from "./Shelf.svelte";
-	import InlineAudio from "./Flow/InlineAudio.svelte";
+	import { globalChangeWatcher } from "$stores/misc.js";
 
-	import Slide from "./Slide.svelte";
 	// Components
 	import Flow from "./Flow/Flow.svelte";
+	import InlineAudio from "./Flow/InlineAudio.svelte";
+	import SectionHeader from "./SectionHeader.svelte";
+	import Slide from "./Slide.svelte";
 
 	// Utils
 	import generateFlow from "$utils/flow/generateFlow";
@@ -25,6 +25,13 @@
 	export let content;
 	export let sectionIndex;
 	export let viewportHeight;
+
+	const sectionColorsDict = {
+		dna: getCSSVariableValue("--color-dna"),
+		beat: getCSSVariableValue("--color-beats"),
+		lyrics: getCSSVariableValue("--color-lyrics"),
+		melody: getCSSVariableValue("--color-melody")
+	};
 
 	let sectionRef;
 
@@ -208,7 +215,7 @@
 	}
 
 	const sectionBgColor =
-		sectionBGColors[key.split("-")[0]] || getCSSVariableValue("--color-bg");
+		sectionColorsDict[key.split("-")[0]] || getCSSVariableValue("--color-bg");
 
 	// Custom action to hydrate inline audio components
 	function hydrateInlineAudio(node) {
@@ -241,17 +248,23 @@
 	class="section section-{key}"
 	bind:this={sectionRef}
 	data-id={key}
-	style:--section-bg-color={sectionBgColor}
+	style:--section-bg-color="{sectionBgColor}90"
 >
 	<!-- Render "inline" items before the sticky component -->
 	{#each inlineBefore as item}
 		{@const html = marked(item.text)}
 		{@const hasH1 = html.includes("<h1")}
+		{@const sectionHeader = html.includes("section-header")}
 		{#if hasH1}
-			<div class="content">
-				{@html html}
-				<!-- <Shelf text={html} /> -->
-			</div>
+			{#if sectionHeader}
+				<div class="content narrow">
+					<SectionHeader {html} />
+				</div>
+			{:else}
+				<div class="content">
+					{@html html}
+				</div>
+			{/if}
 		{:else}
 			<div class="content" use:hydrateInlineAudio>
 				{@html marked(item.text)}
@@ -325,11 +338,17 @@
 	{#each inlineAfter as item}
 		{@const html = marked(item.text)}
 		{@const hasH1 = html.includes("<h1")}
+		{@const sectionHeader = html.includes("section-header")}
 		{#if hasH1}
-			<div class="content">
-				{@html html}
-				<!-- <Shelf text={html} /> -->
-			</div>
+			{#if sectionHeader}
+				<div class="content narrow">
+					<SectionHeader {html} />
+				</div>
+			{:else}
+				<div class="content">
+					{@html html}
+				</div>
+			{/if}
 		{:else}
 			<div class="content" use:hydrateInlineAudio>
 				{@html marked(item.text)}
@@ -372,9 +391,27 @@
 		max-width: 550px;
 		padding: 1rem;
 		font-size: 22px;
+
+		&.narrow {
+			max-width: 450px;
+		}
 	}
 
 	// .section {
 	// 	background: linear-gradient(180deg, var(--section-bg-color) 0%, var(--color-bg) 300px);
 	// }
+
+	.section-dna,
+	.section-beat,
+	.section-lyrics-pre,
+	.section-melody-pre {
+		padding-top: 100px;
+		margin-top: 100px;
+		background: linear-gradient(
+			180deg,
+			var(--section-bg-color) 0%,
+			var(--color-bg) 500px
+		);
+		border-top: 2px solid black;
+	}
 </style>

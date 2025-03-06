@@ -7,7 +7,7 @@
 	} from "@xyflow/svelte";
 	import { getContext } from "svelte";
 	import { scaleLinear } from "d3-scale";
-
+	import getCSSVariableValue from "$utils/getCSSVariableValue";
 	import Waveform from "./Edge.Waveform.svelte";
 	import Crossfade from "./Edge.Crossfade.svelte";
 
@@ -17,12 +17,13 @@
 	const dimensions = getContext("dimensions");
 	const edgeHighlights = getContext("edgeHighlights");
 
-	const edgeColoring = {
-		"67872-hit": "#235ba8",
-		"88888888001-hit": "#FF4C65",
-		"4047-hit": "#bb8b41",
-		"12823-hit": "#bb8b41"
-	}
+	// Edge Coloring for specific sections
+	const edgeColoringDict = {
+		"67872-hit": getCSSVariableValue("--color-melody"),
+		"88888888001-hit": getCSSVariableValue("--color-beats"),
+		"4047-hit": getCSSVariableValue("--color-lyrics"),
+		"12823-hit": getCSSVariableValue("--color-lyrics")
+	};
 
 	export let id;
 	export let source;
@@ -35,9 +36,6 @@
 	export let targetPosition;
 	export let markerEnd = undefined;
 	export let data;
-
-
-	$: console.log(id);
 
 	$: highlight = $edgeHighlights
 		.map((edgeId) => `${edgeId}-${$activeController.tree}`)
@@ -107,21 +105,30 @@
 		class="base-edge elk-edge {highlight ? 'highlighted' : ''}"
 	/>
 {:else}
-	{@const edgeHighlight = $activeController.tree == 'hit' && $activeController.index == 13}
-	{#if edgeHighlight}
-		{@const edgeToHighlight = Object.keys(edgeColoring).indexOf(id) > -1}
+	{@const showEdgeHighlight =
+		$activeController.tree == "hit" && $activeController.index == 13}
+	{#if showEdgeHighlight}
+		{@const edgeToHighlight = Object.keys(edgeColoringDict).indexOf(id) > -1}
 		<BaseEdge
 			path={edgePath}
 			{markerEnd}
 			zIndex={edgeToHighlight ? 10000 : 1}
-			style="stroke-opacity:{edgeToHighlight ? '1' : '0'};stroke:{edgeToHighlight ? edgeColoring[id] : ''}; stroke-width: {edgeToHighlight ? '5' : ''}px;"
+			style="stroke-opacity:{edgeToHighlight
+				? '1'
+				: '0'};stroke:{edgeToHighlight
+				? edgeColoringDict[id]
+				: ''}; stroke-width: {edgeToHighlight ? '5' : ''}px;"
 			class="base-edge"
 		/>
 		<BaseEdge
 			path={edgePath}
 			{markerEnd}
 			zIndex={edgeToHighlight ? 10000 : 1}
-			style="stroke-opacity:{edgeToHighlight ? ".3" : '0'}; stroke:{edgeToHighlight ? edgeColoring[id] : ''}; stroke-width: {edgeToHighlight ? '20' : ''}px;"
+			style="stroke-opacity:{edgeToHighlight
+				? '.3'
+				: '0'}; stroke:{edgeToHighlight
+				? edgeColoringDict[id]
+				: ''}; stroke-width: {edgeToHighlight ? '20' : ''}px;"
 			class="base-edge"
 		/>
 	{:else}
@@ -143,24 +150,4 @@
 		stroke-width: 3px;
 		vector-effect: non-scaling-stroke;
 	}
-
-	:global(.base-edge:hover) {
-		stroke: #adadad;
-		stroke-width: 3px;
-	}
-
-	:global(.show-highlighted-edges .base-edge.highlighted) {
-		stroke: #ff0000;
-		stroke-width: 3px;
-		z-index: 10000;
-	}
-
-	:global {
-		svg:has(.base-edge.highlighted) {
-			z-index: 1 !important;
-		}
-		
-	}
-
-
 </style>

@@ -10,6 +10,11 @@
 		$isMuted = muted;
 		onStart();
 	}
+
+	// For testing
+	// $: if (isReady) {
+	// 	handleStart(true)
+	// }
 </script>
 
 <div class="title-screen section" data-id="title" transition:fade>

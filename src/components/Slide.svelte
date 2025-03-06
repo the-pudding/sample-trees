@@ -9,8 +9,6 @@
 	export let hydrateInlineAudio;
 	// Process the markdown and then transform audio spans
 	$: processedHtml = slide.text ? marked(slide.text) : "";
-
-	
 </script>
 
 <section
@@ -86,45 +84,47 @@
 	}
 
 	:global {
-		.slide-text p:first-of-type {
-			margin-top: 0;
-			margin-bottom: 0;
-		}
-
-		.h1-wrapper {
-			position: relative;
-			margin: 2rem 0;
-
-			h1 {
-				margin: 0;
-				font-size: 1.5rem;
-				line-height: 1.3;
+		.slide-text {
+			p:first-of-type {
+				margin-top: 0;
+				margin-bottom: 0;
 			}
 
-			.h1-decorator {
-				position: absolute;
-				left: -1rem;
-				top: 50%;
-				transform: translateY(-50%);
-				width: 4px;
-				height: 100%;
+			a,
+			a:visited {
+				color: white;
+			}
+
+			.highlight {
 				background: var(--color-pink);
-				border-radius: 2px;
+				padding: 0px 3px;
+				color: black;
+				font-weight: 600;
+				border-radius: 3px;
+				margin-right: 3px;
+				font-weight: 400;
+				display: inline-block;
+				font-size: 0.95em;
 			}
-		}
 
-		.highlight {
-			background: var(--color-pink);
-			padding: 2px 3px;
-			color: black;
-			font-weight: 600;
-			border-radius: 3px;
-			margin-right: 3px;
-		}
+			.melody,
+			.lyrics,
+			.beats {
+				font-weight: 600;
+			}
 
-		.slide-text a,
-		a:visited {
-			color: white;
+			.melody {
+				background: var(--color-melody);
+				color: white;
+			}
+
+			.lyrics {
+				background-color: var(--color-lyrics);
+			}
+
+			.beats {
+				background-color: var(--color-beats);
+			}
 		}
 	}
 </style>
