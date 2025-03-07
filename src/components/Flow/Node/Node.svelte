@@ -80,7 +80,10 @@
 			<div class="secondary-labels">
 				<div
 					class="secondary-label top"
-					style="font-size: {12 / $viewport.zoom}px;"
+					style="
+						font-size: {12 / $viewport.zoom}px;
+						color: var(--color-{$secondaryLabels[data.id].top?.toLowerCase()});
+					"
 				>
 					{$secondaryLabels[data.id].top || ""}
 				</div>

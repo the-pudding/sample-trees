@@ -23,7 +23,7 @@
 	export let offset = 0;
 	export let isFullTree = false;
 	export let viewportHeight;
-	export let sectionBgColor;
+	export let sectionBgColor = "";
 	// Create dimensions store
 	const textHeight = 30;
 	const waveformHeight = 20;
