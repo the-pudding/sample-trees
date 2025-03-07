@@ -117,7 +117,18 @@
 				? '1'
 				: '0'};stroke:{edgeToHighlight
 				? edgeColoringDict[id]
-				: ''}; stroke-width: {edgeToHighlight ? '5' : ''}px;"
+				: ''}; stroke-width: {edgeToHighlight ? '7' : ''}px;"
+			class="base-edge"
+		/>
+		<BaseEdge
+			path={edgePath}
+			{markerEnd}
+			zIndex={edgeToHighlight ? 10000 : 1}
+			style="stroke-opacity:{edgeToHighlight
+				? '.2'
+				: '0'}; stroke:{edgeToHighlight
+				? edgeColoringDict[id]
+				: ''}; stroke-width: {edgeToHighlight ? '70' : ''}px;"
 			class="base-edge"
 		/>
 		<BaseEdge
@@ -128,7 +139,7 @@
 				? '.3'
 				: '0'}; stroke:{edgeToHighlight
 				? edgeColoringDict[id]
-				: ''}; stroke-width: {edgeToHighlight ? '20' : ''}px;"
+				: ''}; stroke-width: {edgeToHighlight ? '40' : ''}px;"
 			class="base-edge"
 		/>
 	{:else}
