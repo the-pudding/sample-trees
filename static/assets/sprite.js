@@ -3,6 +3,7 @@ import Spritesmith from "spritesmith";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import sharp from 'sharp';
+import { parse } from 'json2csv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +11,7 @@ const __dirname = path.dirname(__filename);
 async function sprite() {
     return new Promise((resolve, reject) => {
         try {
-            const coverArtDir = path.join(__dirname, 'cover_art_jpegs');
+            const coverArtDir = path.join(__dirname, 'cover_art_sprite');
             let files = fs.readdirSync(coverArtDir)
                 .filter(file => file.endsWith('.jpeg'))
                 .map(file => path.join(coverArtDir, file));
@@ -28,19 +29,20 @@ async function sprite() {
                 }
 
                 try {
-                    // Save coordinates JSON
-                    const coordsPath = path.join(__dirname, 'sprites', 'coordinates.json');
-                    const coordinates = {};
+                    // Save coordinates CSV
+                    const coordsPath = path.join(__dirname, 'sprites', 'coordinates.csv');
+                    const coordinates = [];
                     
                     // Process coordinates to use just the filename without path
                     Object.entries(result.coordinates).forEach(([filepath, coords]) => {
                         // Remove .jpeg extension from filepath
                         filepath = filepath.replace('.jpeg', '');
                         const filename = path.basename(filepath);
-                        coordinates[filename] = coords;
+                        coordinates.push({ filename, ...coords });
                     });
-                    
-                    fs.writeFileSync(coordsPath, JSON.stringify(coordinates, null, 2));
+
+                    const csv = parse(coordinates);
+                    fs.writeFileSync(coordsPath, csv);
                     console.log('Saved coordinates to:', coordsPath);
 
                     // Save spritesheet as JPEG

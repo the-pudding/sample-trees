@@ -39,6 +39,8 @@
 			.map((edge) => [edge.start_node_id, edge.end_node_id])
 			.flat();
 
+
+
 		// Create array of image URLs for preloading
 		imageUrls = prerenderNodes.map(
 			(node) => `${base}/assets/cover_art_jpegs/${node}.jpeg`

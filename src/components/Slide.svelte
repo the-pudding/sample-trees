@@ -85,6 +85,7 @@
 			a,
 			a:visited {
 				color: white;
+				text-decoration: 1.5px underline #fff;
 			}
 
 			.highlight {
@@ -94,7 +95,7 @@
 				font-weight: 600;
 				border-radius: 3px;
 				margin-right: 3px;
-				font-weight: 400;
+				font-weight: 600;
 				display: inline-block;
 				font-size: 0.95em;
 			}

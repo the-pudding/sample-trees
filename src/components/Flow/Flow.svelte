@@ -74,7 +74,6 @@
 	// Initialize nodes and edges as writable stores
 	const nodes = writable(activeTree.nodes);
 	const edges = writable(activeTree.edges);
-
 	// Add a store for tracking node readiness
 	const nodesReady = writable(false);
 

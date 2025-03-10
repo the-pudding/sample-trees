@@ -2,7 +2,7 @@
 	import { Handle, useSvelteFlow } from "@xyflow/svelte";
 	import { base } from "$app/paths";
 	import { getContext } from "svelte";
-	import coordinates from "$data/coordinates.json";
+	// import coordinates from "$data/coordinates.json";
 
 	$$restProps;
 
@@ -17,10 +17,10 @@
 
 	const scale = (data.circleSize || 20) / spriteSize;
 
-	$: sprite = coordinates[data.id + ".jpeg"] || coordinates["missing.jpeg"];
+	$: sprite = [data.x,data.y] || [204,4284];
 
-	$: bgX = -(sprite.x * scale);
-	$: bgY = -(sprite.y * scale);
+	$: bgX = -(sprite[0] * scale);
+	$: bgY = -(sprite[1] * scale);
 
 	let fontSize = 14;
 	$: adjustedFontSize = fontSize / $viewport.zoom;
