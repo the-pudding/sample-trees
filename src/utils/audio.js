@@ -8,7 +8,7 @@ import { get } from "svelte/store";
 // Debounce map to track timeouts for each audio URL
 let playTimeouts = {};
 
-export function handlePlay(audioUrl, id, reset = false) {
+export function handlePlay(audioUrl, id, reset = true) {
 	// Clear any existing timeout for this audio URL
 	if (playTimeouts[audioUrl]) {
 		clearTimeout(playTimeouts[audioUrl]);
