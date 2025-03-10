@@ -55,11 +55,13 @@
 		});
 		
 		// When song finishes in loop mode
-		$globalAudioPlayer?.addEventListener('ended', () => {
-			if (loopId && $currentAudioSource === audioUrl) {
+		const handleEnded = () => {
+			if (loopId && $currentAudioSource === audioUrl && $loops[loopId]?.isPlaying) {
 				advanceLoop(loops, loopId);
 			}
-		});
+		};
+		
+		$globalAudioPlayer?.addEventListener('ended', handleEnded);
 
 		// Sync waveform progress with global player
 		const updateTimer = setInterval(() => {
@@ -81,6 +83,8 @@
 				}
 				wavesurfer.destroy();
 			}
+			// Remove the ended event listener
+			$globalAudioPlayer?.removeEventListener('ended', handleEnded);
 		};
 	});
 
