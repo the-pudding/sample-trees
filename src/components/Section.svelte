@@ -418,4 +418,8 @@
 	:global(svelte-scroller-foreground) {
 		z-index: 100 !important;
 	}
+
+	:global(svelte-scroller-foreground) {
+		z-index: 100 !important;
+	}
 </style>
