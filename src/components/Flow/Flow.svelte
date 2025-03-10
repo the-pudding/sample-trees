@@ -127,7 +127,7 @@
 
 		fitView({
 			nodes: fitToNodes,
-			// padding: fitToNodes.length === 2 ? 0.2 : 0.05,
+			padding: $viewport.width > 400 ? 0 : 0.2,
 			duration: 1000,
 			minZoom: 0.1,
 			maxZoom: 2,
