@@ -2,7 +2,7 @@
 	import { fade } from "svelte/transition";
 	import { isMuted } from "$stores/misc.js";
 	import Header from "./Header.svelte";
-
+	import { base } from "$app/paths";
 	export let isReady = false;
 	export let onStart;
 
@@ -23,15 +23,15 @@
 	</div>
 	
 	<div class="content">
-		<img class="title-tree" src="assets/tree.jpg" alt="">
+		<img class="title-tree" src="{base}/assets/tree.jpg" alt="">
 		<div class="text-content">
 			<h1>This is a project about shared DNA in music.</h1>
 			{#if isReady}
 				<div class="buttons">
-					<button class="primary" on:click={() => handleStart(false)}>
+					<button class="primary noise-overlay" on:click={() => handleStart(false)}>
 						Begin (with music!)
 					</button>
-					<button class="secondary" on:click={() => handleStart(true)}>
+					<button class="secondary noise-overlay" on:click={() => handleStart(true)}>
 						Stay Muted
 					</button>
 				</div>
@@ -185,6 +185,7 @@
 		flex-direction: column;
 		gap: 10px;
 		align-items: center;
+
 	}
 
 	button {
@@ -197,6 +198,7 @@
 		min-width: 200px;
 		font-weight: 600;
 		-webkit-font-smoothing: antialiased;
+		z-index: 100;
 
 		&.primary {
 			background: var(--color-pink);

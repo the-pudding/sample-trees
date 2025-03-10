@@ -414,4 +414,12 @@
 		);
 		border-top: 2px solid black;
 	}
+
+	:global(svelte-scroller-foreground) {
+		z-index: 100 !important;
+	}
+
+	:global(svelte-scroller-foreground) {
+		z-index: 100 !important;
+	}
 </style>
