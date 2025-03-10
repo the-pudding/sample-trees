@@ -210,8 +210,6 @@
 		}, 100);
 	});
 
-	$: console.log(nodes)
-
 </script>
 
 {#key flowKey}

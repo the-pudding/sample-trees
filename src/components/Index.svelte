@@ -35,9 +35,7 @@
 
 		const prerenderNodes = links
 			.filter((link) => prerenderLinks.includes(link.id))
-			.map((edge) => {
-				return [edge.start_node_id, edge.end_node_id]
-			})
+			.map((edge) => [edge.start_node_id, edge.end_node_id])
 			.flat();
 
 

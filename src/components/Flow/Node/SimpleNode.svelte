@@ -17,8 +17,6 @@
 
 	const scale = (data.circleSize || 20) / spriteSize;
 
-	$: console.log(data)
-
 	$: sprite = [data.x,data.y] || [204,4284];
 
 	$: bgX = -(sprite[0] * scale);
@@ -28,46 +26,45 @@
 	$: adjustedFontSize = fontSize / $viewport.zoom;
 </script>
 
-<!-- {#if bgX} -->
-	<div class="node simple-node" style:--adjusted-font-size="{adjustedFontSize}px">
-		<Handle type="target" position={targetPosition} class="handle" />
-		<div
-			class="circle"
-			title={data.title}
-			style="width: {data.circleSize}px; height: {data.circleSize}px;"
-		>
-			<div class="secondary-labels">
-				{#if $secondaryLabels[data.id]}
-					<div class="secondary-labels">
-						<div class="secondary-label top">
-							{$secondaryLabels[data.id].top || ""}
-						</div>
-
-						<div class="secondary-label right">
-							{$secondaryLabels[data.id].right || ""}
-						</div>
-						<div class="secondary-label bottom">
-							{$secondaryLabels[data.id].bottom || ""}
-						</div>
-						<div class="secondary-label left">
-							{$secondaryLabels[data.id].left || ""}
-						</div>
+<div class="node simple-node" style:--adjusted-font-size="{adjustedFontSize}px">
+	<Handle type="target" position={targetPosition} class="handle" />
+	<div
+		class="circle"
+		title={data.title}
+		style="width: {data.circleSize}px; height: {data.circleSize}px;"
+	>
+		<div class="secondary-labels">
+			{#if $secondaryLabels[data.id]}
+				<div class="secondary-labels">
+					<div class="secondary-label top">
+						{$secondaryLabels[data.id].top || ""}
 					</div>
-				{/if}
-			</div>
 
-			<div
-				class="sprite"
-				style="
-					background-image: url({base}/assets/sprites/spritesheet.jpeg);
-					background-size: calc({spritesheetWidth}px * {scale}) auto;
-					background-position: {bgX}px {bgY}px;
-				"
-			/>
+					<div class="secondary-label right">
+						{$secondaryLabels[data.id].right || ""}
+					</div>
+					<div class="secondary-label bottom">
+						{$secondaryLabels[data.id].bottom || ""}
+					</div>
+					<div class="secondary-label left">
+						{$secondaryLabels[data.id].left || ""}
+					</div>
+				</div>
+			{/if}
 		</div>
-		<Handle type="source" position={sourcePosition} class="handle" />
+
+		<div
+			class="sprite"
+			style="
+				background-image: url({base}/assets/sprites/spritesheet.jpeg);
+				background-size: calc({spritesheetWidth}px * {scale}) auto;
+				background-position: {bgX}px {bgY}px;
+			"
+		/>
 	</div>
-<!-- {/if} -->
+	<Handle type="source" position={sourcePosition} class="handle" />
+</div>
+
 <style lang="scss">
 	.node {
 		display: flex;
