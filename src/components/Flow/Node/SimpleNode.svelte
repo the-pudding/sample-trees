@@ -2,7 +2,7 @@
 	import { Handle, useSvelteFlow } from "@xyflow/svelte";
 	import { base } from "$app/paths";
 	import { getContext } from "svelte";
-	import coordinates from "$data/coordinates.json";
+	// import coordinates from "$data/coordinates.json";
 
 	$$restProps;
 
@@ -17,54 +17,57 @@
 
 	const scale = (data.circleSize || 20) / spriteSize;
 
-	$: sprite = coordinates[data.id + ".jpeg"] || coordinates["missing.jpeg"];
+	$: console.log(data)
 
-	$: bgX = -(sprite.x * scale);
-	$: bgY = -(sprite.y * scale);
+	$: sprite = [data.x,data.y] || [204,4284];
+
+	$: bgX = -(sprite[0] * scale);
+	$: bgY = -(sprite[1] * scale);
 
 	let fontSize = 14;
 	$: adjustedFontSize = fontSize / $viewport.zoom;
 </script>
 
-<div class="node simple-node" style:--adjusted-font-size="{adjustedFontSize}px">
-	<Handle type="target" position={targetPosition} class="handle" />
-	<div
-		class="circle"
-		title={data.title}
-		style="width: {data.circleSize}px; height: {data.circleSize}px;"
-	>
-		<div class="secondary-labels">
-			{#if $secondaryLabels[data.id]}
-				<div class="secondary-labels">
-					<div class="secondary-label top">
-						{$secondaryLabels[data.id].top || ""}
-					</div>
-
-					<div class="secondary-label right">
-						{$secondaryLabels[data.id].right || ""}
-					</div>
-					<div class="secondary-label bottom">
-						{$secondaryLabels[data.id].bottom || ""}
-					</div>
-					<div class="secondary-label left">
-						{$secondaryLabels[data.id].left || ""}
-					</div>
-				</div>
-			{/if}
-		</div>
-
+<!-- {#if bgX} -->
+	<div class="node simple-node" style:--adjusted-font-size="{adjustedFontSize}px">
+		<Handle type="target" position={targetPosition} class="handle" />
 		<div
-			class="sprite"
-			style="
-				background-image: url({base}/assets/sprites/spritesheet.jpeg);
-				background-size: calc({spritesheetWidth}px * {scale}) auto;
-				background-position: {bgX}px {bgY}px;
-			"
-		/>
-	</div>
-	<Handle type="source" position={sourcePosition} class="handle" />
-</div>
+			class="circle"
+			title={data.title}
+			style="width: {data.circleSize}px; height: {data.circleSize}px;"
+		>
+			<div class="secondary-labels">
+				{#if $secondaryLabels[data.id]}
+					<div class="secondary-labels">
+						<div class="secondary-label top">
+							{$secondaryLabels[data.id].top || ""}
+						</div>
 
+						<div class="secondary-label right">
+							{$secondaryLabels[data.id].right || ""}
+						</div>
+						<div class="secondary-label bottom">
+							{$secondaryLabels[data.id].bottom || ""}
+						</div>
+						<div class="secondary-label left">
+							{$secondaryLabels[data.id].left || ""}
+						</div>
+					</div>
+				{/if}
+			</div>
+
+			<div
+				class="sprite"
+				style="
+					background-image: url({base}/assets/sprites/spritesheet.jpeg);
+					background-size: calc({spritesheetWidth}px * {scale}) auto;
+					background-position: {bgX}px {bgY}px;
+				"
+			/>
+		</div>
+		<Handle type="source" position={sourcePosition} class="handle" />
+	</div>
+<!-- {/if} -->
 <style lang="scss">
 	.node {
 		display: flex;

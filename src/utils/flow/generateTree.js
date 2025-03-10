@@ -13,7 +13,8 @@ export default async function generateTree({ nodes, edges, treeKey }) {
 					featured_artists: d.featured_artists,
 					primary_artist: d.primary_artist,
 					id: d["id"],
-					url: d.url,
+					x:d.x,
+					y:d.y,
 					secondaryLabelConfig: d.secondaryLabelConfig
 				},
 				position: { x: 0, y: 0 }

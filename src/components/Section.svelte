@@ -393,7 +393,8 @@
 		font-size: 22px;
 
 		&.narrow {
-			max-width: 450px;
+			max-width: 800px;
+			margin-bottom: 100px;
 		}
 	}
 

@@ -112,7 +112,6 @@
 		<BaseEdge
 			path={edgePath}
 			{markerEnd}
-			zIndex={edgeToHighlight ? 10000 : 1}
 			style="stroke-opacity:{edgeToHighlight
 				? '1'
 				: '0'};stroke:{edgeToHighlight
@@ -123,7 +122,6 @@
 		<BaseEdge
 			path={edgePath}
 			{markerEnd}
-			zIndex={edgeToHighlight ? 10000 : 1}
 			style="stroke-opacity:{edgeToHighlight
 				? '.2'
 				: '0'}; stroke:{edgeToHighlight
@@ -134,7 +132,6 @@
 		<BaseEdge
 			path={edgePath}
 			{markerEnd}
-			zIndex={edgeToHighlight ? 10000 : 1}
 			style="stroke-opacity:{edgeToHighlight
 				? '.3'
 				: '0'}; stroke:{edgeToHighlight
