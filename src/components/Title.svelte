@@ -23,11 +23,15 @@
 	</div>
 	
 	<div class="content">
-		<img class="title-tree" src="{base}/assets/tree.jpg" alt="">
+		<img 
+			class="title-tree" 
+			src="{base}/assets/tree.jpg" 
+			alt="An illustration showing how songs are connected through shared musical elements, represented as a network of album covers"
+		>
 		<div class="text-content">
 			<h1>This is a project about shared DNA in music.</h1>
 			{#if isReady}
-				<div class="buttons">
+				<div class="buttons" role="group" aria-label="Start the experience">
 					<button class="primary noise-overlay" on:click={() => handleStart(false)}>
 						Begin (with music!)
 					</button>
@@ -36,9 +40,9 @@
 					</button>
 				</div>
 			{:else}
-				<div class="loading">
-					<div class="loader"></div>
-					Loading...
+				<div class="loading" role="status" aria-live="polite">
+					<div class="loader" aria-hidden="true"></div>
+					<span>Loading visualization data...</span>
 				</div>
 			{/if}
 		</div>
