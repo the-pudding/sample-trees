@@ -25,8 +25,16 @@
 			class="slide-text noise-overlay"
 			id={sectionIndex == 0 && i == 0 ? "scroll-to-start" : ""}
 			use:hydrateInlineAudio
+			tabindex="0"
+			role="text"
 		>
 			{@html processedHtml}
+
+			{#if slide.alt}
+				<div class="sr-only">
+					Visual description: {@html slide.alt}
+				</div>
+			{/if}
 		</div>
 	{/if}
 </section>
@@ -42,7 +50,6 @@
 
 		pointer-events: none;
 		position: relative;
-
 
 		&::after {
 			content: "";
@@ -70,8 +77,6 @@
 			min-width: 300px;
 			pointer-events: all;
 			z-index: 100;
-
-
 		}
 	}
 

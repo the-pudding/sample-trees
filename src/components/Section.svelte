@@ -261,12 +261,12 @@
 					<SectionHeader {html} />
 				</div>
 			{:else}
-				<div class="content">
+				<div class="content" tabindex="0">
 					{@html html}
 				</div>
 			{/if}
 		{:else}
-			<div class="content" use:hydrateInlineAudio>
+			<div class="content" use:hydrateInlineAudio tabindex="0">
 				{@html marked(item.text)}
 			</div>
 		{/if}
@@ -345,12 +345,12 @@
 					<SectionHeader {html} />
 				</div>
 			{:else}
-				<div class="content">
+				<div class="content" tabindex="0">
 					{@html html}
 				</div>
 			{/if}
 		{:else}
-			<div class="content" use:hydrateInlineAudio>
+			<div class="content" use:hydrateInlineAudio tabindex="0">
 				{@html marked(item.text)}
 			</div>
 		{/if}

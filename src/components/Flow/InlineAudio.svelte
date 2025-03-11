@@ -62,7 +62,7 @@
 <!-- {#if $isMuted}
 	{text}
 {:else} -->
-	<button class="inline-audio" on:click={togglePlay}>
+	<button class="inline-audio" on:click={togglePlay} aria-label="Play audio sample of {text}.">
 		{#if isToggled}
 			<Pause size={16} color="rgba(0, 0, 0, 0.95)" />
 		{:else}

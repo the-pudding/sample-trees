@@ -1,0 +1,15 @@
+[tabindex="0"]:focus {
+    outline: 2px solid var(--color-pink);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+[tabindex="0"]:focus:not(:focus-visible) {
+    outline: none;
+}
+
+[tabindex="0"]:focus-visible {
+    outline: 2px solid var(--color-pink);
+    outline-offset: 2px;
+    border-radius: 4px;
+} 

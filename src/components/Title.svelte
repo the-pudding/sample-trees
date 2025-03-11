@@ -17,30 +17,38 @@
 	// }
 </script>
 
-<div class="title-screen section" data-id="title" transition:fade>
+<div class="title-screen section" data-id="title" transition:fade role="banner" aria-label="Title screen">
 	<div class="header" style="position: absolute; top: 0; left: 0; right:0;margin: 0 auto; width: 170px;">
 		<Header />
 	</div>
 	
-	<div class="content">
+	<div class="content" role="main">
 		<img 
 			class="title-tree" 
 			src="{base}/assets/tree.jpg" 
-			alt="An illustration showing how songs are connected through shared musical elements, represented as a network of album covers"
+			alt="An illustration of a network visualization showing album covers connected by lines."
 		>
 		<div class="text-content">
-			<h1>This is a project about shared DNA in music.</h1>
+			<h1 tabindex="0">This is a project about shared DNA in music.</h1>
 			{#if isReady}
-				<div class="buttons" role="group" aria-label="Start the experience">
-					<button class="primary noise-overlay" on:click={() => handleStart(false)}>
+				<div class="buttons" role="group" aria-label="Start options">
+					<button 
+						class="primary noise-overlay" 
+						on:click={() => handleStart(false)}
+						aria-label="Begin experience with music enabled"
+					>
 						Begin (with music!)
 					</button>
-					<button class="secondary noise-overlay" on:click={() => handleStart(true)}>
+					<button 
+						class="secondary noise-overlay" 
+						on:click={() => handleStart(true)}
+						aria-label="Begin experience with music disabled"
+					>
 						Stay Muted
 					</button>
 				</div>
 			{:else}
-				<div class="loading" role="status" aria-live="polite">
+				<div class="loading" role="status" aria-live="polite" aria-busy="true">
 					<div class="loader" aria-hidden="true"></div>
 					<span>Loading visualization data...</span>
 				</div>

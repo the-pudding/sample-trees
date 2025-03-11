@@ -10,13 +10,11 @@
 	let sectionId = h1Element?.getAttribute("data-section-header") || "";
 </script>
 
-<div class="section-header">
+<div class="section-header" tabindex="0" role="section-header">
 	<img
 		src="{base}/assets/headers/{sectionId}.png"
 		alt="A stylized title for the {text} section."
-		aria-hidden="true"
 	/>
-	<h1 class="sr-only">{@html text}</h1>
 </div>
 
 <style lang="scss">
