@@ -10,7 +10,7 @@
 	import links from "$data/links.csv";
 	import "@xyflow/svelte/dist/style.css";
 	import { fade } from "svelte/transition";
-	import generateFlow from "$utils/flow/generateFlow";
+
 	import groupBy from "$utils/groupBy";
 	import flatSlides from "$data/slides.csv";
 	import Title from "./Title.svelte";
@@ -66,14 +66,19 @@
 
 	async function handleStart() {
 		hasStarted = true;
-
 		await tick();
 		const el = document.getElementById("scroll-to-start");
 		const y = el.getBoundingClientRect().top - viewportHeight * 0.75;
 
 		window.scrollTo({ top: y, behavior: "smooth" });
 
-		// el.scrollIntoView({ behavior: "smooth", block: "end" });
+		// Wait for scroll animation to complete then focus first focusable element
+		setTimeout(() => {
+			const firstFocusableElement = document.querySelector('#scroll-to-start');
+			if (firstFocusableElement) {
+				firstFocusableElement.focus();
+			}
+		}, 800);
 	}
 
 	function checkSectionVisibility() {
