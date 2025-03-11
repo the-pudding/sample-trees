@@ -60,7 +60,7 @@
 	});
 </script>
 
-<footer class="section" data-id="footer" role="contentinfo" aria-label="Footer">
+<footer class="section" data-id="footer" aria-label="Footer">
 	<div class="c">
 		<div class="top">
 			<section class="text" tabindex="0" >
