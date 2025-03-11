@@ -62,14 +62,22 @@
 <!-- {#if $isMuted}
 	{text}
 {:else} -->
-	<button class="inline-audio" on:click={togglePlay} aria-label="Play audio sample of {text}.">
-		{#if isToggled}
-			<Pause size={16} color="rgba(0, 0, 0, 0.95)" />
-		{:else}
-			<Play size={16} color="rgba(0, 0, 0, 0.95)" />
-		{/if}
-		<span class="text">{text}</span>
-	</button>
+<button
+	class="inline-audio"
+	on:click={togglePlay}
+	aria-label="Play audio sample of {text}."
+	aria-hidden="true"
+	tabindex="-1"
+>
+	{#if isToggled}
+		<Pause size={16} color="rgba(0, 0, 0, 0.95)" />
+	{:else}
+		<Play size={16} color="rgba(0, 0, 0, 0.95)" />
+	{/if}
+	<span class="text">{text}</span>
+</button>
+<span class="sr-only">{text}</span>
+
 <!-- {/if} -->
 
 <style lang="scss">
