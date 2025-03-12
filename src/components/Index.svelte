@@ -10,7 +10,7 @@
 	import links from "$data/links.csv";
 	import "@xyflow/svelte/dist/style.css";
 	import { fade } from "svelte/transition";
-	import generateFlow from "$utils/flow/generateFlow";
+
 	import groupBy from "$utils/groupBy";
 	import flatSlides from "$data/slides.csv";
 	import Title from "./Title.svelte";
@@ -66,11 +66,17 @@
 
 	async function handleStart() {
 		hasStarted = true;
-
 		await tick();
 		const el = document.getElementById("scroll-to-start");
 		const y = el.getBoundingClientRect().top - viewportHeight * 0.75;
 		window.scrollTo({ top: y, behavior: "smooth" });
+
+    // Wait for scroll animation to complete then focus first focusable element
+		setTimeout(() => {
+			if (el) {
+				el.focus();
+			}
+		}, 800);
 	}
 
 	function checkSectionVisibility() {
@@ -137,13 +143,15 @@
 		// Initial check
 		checkSectionVisibility();
 
-		// Add scroll listener
+		// Add scroll and keyboard listeners
 		window.addEventListener("scroll", checkSectionVisibility, {
 			passive: true
 		});
+		window.addEventListener("keydown", handleKeydown);
 
 		return () => {
 			window.removeEventListener("scroll", checkSectionVisibility);
+			window.removeEventListener("keydown", handleKeydown);
 		};
 	});
 
@@ -152,6 +160,30 @@
 	$: if (previousGlobalChangeWatcher !== $globalChangeWatcher) {
 		pauseAllAudio();
 		previousGlobalChangeWatcher = $globalChangeWatcher;
+	}
+
+	function handleKeydown(event) {
+		if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+			event.preventDefault();
+			const focusableElements = [...document.querySelectorAll('[tabindex="0"]')];
+			const currentIndex = focusableElements.findIndex(el => el === document.activeElement);
+			
+			if (currentIndex < focusableElements.length - 1) {
+				const nextElement = focusableElements[currentIndex + 1];
+				nextElement.focus();
+				nextElement.scrollIntoView({ behavior: "smooth", block: "center" });
+			}
+		} else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+			event.preventDefault();
+			const focusableElements = [...document.querySelectorAll('[tabindex="0"]')];
+			const currentIndex = focusableElements.findIndex(el => el === document.activeElement);
+			
+			if (currentIndex > 0) {
+				const prevElement = focusableElements[currentIndex - 1];
+				prevElement.focus();
+				prevElement.scrollIntoView({ behavior: "smooth", block: "center" });
+			}
+		}
 	}
 </script>
 

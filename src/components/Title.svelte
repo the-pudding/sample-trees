@@ -17,28 +17,50 @@
 	// }
 </script>
 
-<div class="title-screen section" data-id="title" transition:fade>
-	<div class="header" style="position: absolute; top: 0; left: 0; right:0;margin: 0 auto; width: 170px;">
+<div
+	class="title-screen section"
+	data-id="title"
+	transition:fade
+	role="banner"
+	aria-label="Title screen"
+>
+	<div
+		class="header"
+		style="position: absolute; top: 0; left: 0; right:0;margin: 0 auto; width: 170px;"
+	>
 		<Header />
 	</div>
-	
-	<div class="content">
-		<img class="title-tree" src="{base}/assets/tree.jpg" alt="">
+
+	<div class="content" role="main">
+		<img
+			class="title-tree"
+			src="{base}/assets/tree.jpg"
+			alt="An illustration of a network visualization showing album covers connected by lines."
+		/>
 		<div class="text-content">
-			<h1>This is a project about shared DNA in music.</h1>
+			<h1 tabindex="0">This is a project about shared DNA in music.</h1>
 			{#if isReady}
-				<div class="buttons">
-					<button class="primary noise-overlay" on:click={() => handleStart(false)}>
+				<div class="buttons" role="group" aria-label="Start options">
+					<button
+						class="primary noise-overlay"
+						on:click={() => handleStart(false)}
+						aria-hidden="true"
+						tabindex="-1"
+					>
 						Begin (with music!)
 					</button>
-					<button class="secondary noise-overlay" on:click={() => handleStart(true)}>
+					<button
+						class="secondary noise-overlay"
+						on:click={() => handleStart(true)}
+						aria-label="Begin experience"
+					>
 						Stay Muted
 					</button>
 				</div>
 			{:else}
-				<div class="loading">
-					<div class="loader"></div>
-					Loading...
+				<div class="loading" role="status" aria-live="polite" aria-busy="true">
+					<div class="loader" aria-hidden="true"></div>
+					<span>Loading visualization data...</span>
 				</div>
 			{/if}
 		</div>
@@ -85,7 +107,6 @@
 		font-weight: 400;
 		margin-top: 0rem;
 		margin-bottom: 1.5rem;
-
 	}
 
 	.loading {
@@ -96,7 +117,7 @@
 		justify-content: center;
 		align-items: center;
 		min-width: 200px;
-        flex-direction: column;
+		flex-direction: column;
 
 		.loader {
 			position: relative;
@@ -185,7 +206,6 @@
 		flex-direction: column;
 		gap: 10px;
 		align-items: center;
-
 	}
 
 	button {

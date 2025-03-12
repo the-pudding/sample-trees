@@ -60,10 +60,10 @@
 	});
 </script>
 
-<footer class="section" data-id="footer">
+<footer class="section" data-id="footer" aria-label="Footer">
 	<div class="c">
 		<div class="top">
-			<section class="text">
+			<section class="text" tabindex="0" >
 				We’ve published <strong>{storyCount}</strong> awesome stories such
 				as
 				{#each stories as { short, url }, i}

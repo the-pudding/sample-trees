@@ -24,6 +24,8 @@
 
 	let fullTrees = ["hit","king_2"];
 
+	$: firstSlide = sectionIndex == 0 && i == 0;
+
 </script>
 
 <section
@@ -38,10 +40,25 @@
 	{#if slide.text}
 		<div
 			class="slide-text noise-overlay"
-			id={sectionIndex == 0 && i == 0 ? "scroll-to-start" : ""}
+			id={firstSlide ? "scroll-to-start" : ""}
 			use:hydrateInlineAudio
+			tabindex="0"
+			role="text"
 		>
+			{#if firstSlide}
+				<div class="sr-only">
+					A quick note, if you are using a screen reader, use the left and right
+					arrow keys to navigate between slides. Now back to the story.
+				</div>
+			{/if}
+
 			{@html processedHtml}
+
+			{#if slide.alt}
+				<div class="sr-only">
+					Visual description: {@html slide.alt}
+				</div>
+			{/if}
 		</div>
 	{/if}
 </section>
@@ -57,7 +74,6 @@
 
 		pointer-events: none;
 		position: relative;
-
 
 		&::after {
 			content: "";
