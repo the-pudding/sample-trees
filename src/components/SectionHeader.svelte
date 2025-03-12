@@ -20,5 +20,13 @@
 <style lang="scss">
 	.section-header {
 		margin-bottom: 2rem;
+		img {
+			width: 100%;
+			height: auto;
+			max-width: calc(100% - 3rem);
+			max-height: 100%;
+			object-fit: contain;
+			margin: 0 auto;
+		}
 	}
 </style>
