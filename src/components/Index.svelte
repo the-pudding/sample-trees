@@ -69,10 +69,9 @@
 		await tick();
 		const el = document.getElementById("scroll-to-start");
 		const y = el.getBoundingClientRect().top - viewportHeight * 0.75;
-
 		window.scrollTo({ top: y, behavior: "smooth" });
 
-		// Wait for scroll animation to complete then focus first focusable element
+    // Wait for scroll animation to complete then focus first focusable element
 		setTimeout(() => {
 			if (el) {
 				el.focus();
@@ -211,8 +210,8 @@
 	>
 		<AudioToggle />
 		{#each Object.entries(groupedSlides) as [key, content], i}
-			<!-- {#if i == 0} -->
-			<Section {key} {content} sectionIndex={i} {viewportHeight} />
+			<!-- {#if i == 3} -->
+				<Section {key} {content} sectionIndex={i} {viewportHeight} />
 			<!-- {/if} -->
 		{/each}
 	</div>
