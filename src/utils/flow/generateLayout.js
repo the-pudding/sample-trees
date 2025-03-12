@@ -29,13 +29,15 @@ export default async function generateLayout(
 
   const viewportWidth = get(viewport).width;
   const viewportHeight = get(viewport).height;
+  const isMobile = viewportWidth < 500;
 
   if (method === "dagreTwo") {
     const dagreGraph = new dagre.graphlib.Graph();
     dagreGraph.setDefaultEdgeLabel(() => ({}));
 
     // Use minimal padding
-    const padding = 20;
+    let padding = isMobile ? 10 : 20;
+    
     const availableWidth = viewportWidth - padding * 2;
     const availableHeight = viewportHeight - padding * 2;
 
@@ -78,10 +80,16 @@ export default async function generateLayout(
     const minCircleSize = 12;
 
     // const circleSize = 1;
-    const circleSize = Math.max(
+    let circleSize = Math.max(
       minCircleSize,
       Math.min(maxCircleSize, availableHeight / (maxDepth + 1) / 4)
     );
+
+    
+
+    if(isMobile && treeKey == "king_2") {
+      circleSize = 10;
+    }
 
     // Calculate spacings to fill width and height
     const verticalSpacing = Math.max(
@@ -104,20 +112,32 @@ export default async function generateLayout(
       ranksep: verticalSpacing,
       marginx: padding,
       marginy: padding * 2,
-      ranker: 'network-simplex', // Changed to network-simplex for better distribution
-      // align: 'UL', // Changed to UL for better width distribution
+      ranker: treeKey == "king_2" ? "longest-path" : 'network-simplex', // Changed to network-simplex for better distribution
+      align: 'UL', // Changed to UL for better width distribution
       acyclicer: 'greedy'
     });
 
-    let bigNodes = [233667,234409]
+    let bigNodes = [233667,234409];
+    let kingNodes = [235321,233262,241459,233265,64739,253610,234409];
+
+    function getNodeSize(node) {
+      let nodeSize = circleSize;
+      if (bigNodes.indexOf(+node.id) > -1 && viewportWidth > 500 && treeKey !== "king_2") {
+        nodeSize = nodeSize*2;
+      }
+      else if(kingNodes.indexOf(+node.id) > -1 && isMobile && treeKey === "king_2") {
+        nodeSize = 30;
+      }
+      return {
+        width: nodeSize,
+        height: nodeSize,
+        level: nodeMap.get(node.id).level
+      }
+    }
 
     // Add nodes with calculated dimensions
     inputNodes.forEach((node) => {
-      dagreGraph.setNode(node.id, {
-        width: bigNodes.indexOf(+node.id) > -1 ? circleSize*2 : circleSize,
-        height: bigNodes.indexOf(+node.id) ? circleSize*2 : circleSize,
-        level: nodeMap.get(node.id).level
-      });
+      dagreGraph.setNode(node.id, getNodeSize(node));
     });
 
     inputEdges.forEach((edge) => {
@@ -163,7 +183,13 @@ export default async function generateLayout(
           let y = (dagreNode.y - minY) * (scaleY * 0.9) + yOffset;
 
           // Force center a specific node (e.g., node with ID 233667)
-          if (node.id === "234409" || node.id === "233667") {
+          if(treeKey !== "king_2"){
+            if (node.id === "234409" || node.id === "233667") {
+              x = viewportWidth / 2;  // Center horizontally
+            }
+          }
+          
+          if(treeKey == "king_2" && node.id == "64739" && viewportWidth < 500) {
             x = viewportWidth / 2;  // Center horizontally
           }
 
@@ -484,6 +510,103 @@ export default async function generateLayout(
       };
     } catch (error) {
       console.error("Error during radial layout:", error);
+      return null;
+    }
+  }
+  else if (method === "elkThree") {
+    const elk = new ELK();
+
+    const padding = 20;
+    const availableWidth = viewportWidth - padding * 2;
+    const availableHeight = viewportHeight - padding * 2;
+
+    const elkOptions = {
+      "elk.direction": "DOWN",
+      // "elk.algorithm": "layered",
+      // "elk.spacing.nodeNode": 100, // Increase node spacing
+      // "elk.spacing.componentComponent": 100, // Increase component spacing
+      // "elk.layered.spacing.nodeNodeBetweenLayers": 150, // Increase spacing between layers
+      // "elk.layered.spacing.edgeNodeBetweenLayers": 100, // Increase edge-node spacing
+      // "elk.layered.nodePlacement.bk.fixedAlignment": "BALANCED",
+      // "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
+      // "elk.layered.nodePlacement.strategy": "BRANDES_KOEPF",
+      // "elk.layered.layering.strategy": "NETWORK_SIMPLEX",
+      // "elk.aspectRatio": availableWidth / availableHeight,
+      // "elk.padding": `[top=${padding}, left=${padding}, bottom=${padding}, right=${padding}]`,
+      // "elk.layered.spacing.baseValue": 150, // Increase base spacing value
+      // "elk.layered.considerModelOrder": true,
+      // "elk.layered.spacing.modifier": 1.0
+    };
+
+    const graph = {
+      id: "root",
+      layoutOptions: elkOptions,
+      children: inputNodes.map((node) => ({
+        ...node,
+        targetPosition: isHorizontal ? Position.Left : Position.Top,
+        sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
+        width: 20,
+        height: 20,
+      })),
+      edges: inputEdges
+    };
+
+    try {
+      const layoutedGraph = await elk.layout(graph);
+
+      // Calculate bounds
+      let minX = Infinity, maxX = -Infinity;
+      let minY = Infinity, maxY = -Infinity;
+      
+      layoutedGraph.children.forEach(node => {
+        minX = Math.min(minX, node.x);
+        maxX = Math.max(maxX, node.x + node.width);
+        minY = Math.min(minY, node.y);
+        maxY = Math.max(maxY, node.y + node.height);
+      });
+
+      const graphWidth = maxX - minX;
+      const graphHeight = maxY - minY;
+
+      // Adjust scaling based on aspect ratio
+
+      // Adjust scaling to use full width
+      const scaleX = availableWidth / graphWidth;
+      const scaleY = (availableHeight * 1.1) / graphHeight;
+      
+      // Prioritize width filling while maintaining aspect ratio
+      const scale = Math.min(scaleX * 0.95, scaleY * 0.8);
+      
+      // Center the graph horizontally
+      const xOffset = (viewportWidth - (graphWidth * scale)) / 2;
+      const yOffset = padding / 2;
+
+      return {
+        nodes: layoutedGraph.children.map((node) => ({
+          ...node,
+          position: {
+            x: (node.x - minX) * scaleX,
+            y: (node.y - minY) * scaleY,
+          },
+          sourcePosition: Position.Bottom,
+          targetPosition: Position.Top,
+          type: 'simple',
+          data: {
+            ...node.data,
+            circleSize: 20
+          }
+        })),
+        edges: layoutedGraph.edges.map(edge => ({
+          ...edge,
+          data: {
+            ...edge.data,
+            method: method  // Add method to edge data
+          },
+          type: "simple"
+        }))
+      };
+    } catch (error) {
+      console.error("Error during ELK layout:", error);
       return null;
     }
   }

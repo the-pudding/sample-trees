@@ -9,14 +9,29 @@
 	export let hydrateInlineAudio;
 	// Process the markdown and then transform audio spans
 	$: processedHtml = slide.text ? marked(slide.text) : "";
+
+	function getPaddingTop(i) {
+		return i == 0 ? viewportHeight * 0.25 : '';
+	}
+
+	function getPaddingBottom(i) {
+		return i == slides.length - 1 ? viewportHeight / 2 : '';
+	}
+
+	function getHeight() {
+		return !slide.text ? viewportHeight * 0.25 : viewportHeight;
+	}
+
+	let fullTrees = ["hit","king_2"];
+
 </script>
 
 <section
-	class="slide"
+	class="slide {fullTrees.indexOf(slide.controller.links) > -1 ? 'full-tree-sizing' : ''}"
 	style="
-		height:{!slide.text ? viewportHeight * 0.25 : viewportHeight}px;
-		padding-top:{i == 0 ? viewportHeight * 0.25 : ''}px;
-		padding-bottom:{i == slides.length - 1 ? viewportHeight / 2 : ''}px;
+		height:{getHeight()}px;
+		padding-top:{getPaddingTop(i)}px;
+		padding-bottom:{getPaddingBottom(i)}px;
 	"
 	class:spacer={!slide.text}
 >
@@ -71,7 +86,17 @@
 			pointer-events: all;
 			z-index: 100;
 
+			@media (max-width: 500px) {
+				max-width: none;
+				margin: 0 auto;
+				width: calc(100vw - 60px);
+			}
+		}
 
+		&.full-tree-sizing {
+			.slide-text {
+				transform: translateY(0);
+			}
 		}
 	}
 
@@ -80,6 +105,15 @@
 			p:first-of-type {
 				margin-top: 0;
 				margin-bottom: 0;
+			}
+
+			p:last-of-type {
+				margin-bottom: 0;
+			}
+			@media (max-width: 500px) {
+				p {
+					line-height: 130%;
+				}
 			}
 
 			a,

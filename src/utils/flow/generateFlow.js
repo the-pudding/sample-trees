@@ -1,5 +1,10 @@
 import generateTree from "./generateTree";
 import generateLayout from "./generateLayout";
+import { get } from "svelte/store";
+
+import viewport from "$stores/viewport.js";
+
+const viewportWidth = get(viewport).width;
 
 import nodes from "$data/nodes.csv";
 import edges from "$data/links.csv";
@@ -32,7 +37,12 @@ export default async function generateFlow(s) {
 			// method = "elk";
 			method = "dagreTwo";
 			if(treeKey == "king_2") {
-				method = "elkTwo";
+				if(viewportWidth > 500) {
+					method = "elkTwo";
+				}
+				else {
+					method = "dagreTwo"
+				}
 			}
 			// if(treeKey == "funky_3") {
 			// 	method = "elk";
