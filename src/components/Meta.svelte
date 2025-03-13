@@ -1,8 +1,8 @@
 <script>
-	export let title = "Title TK";
-	export let description = "Description TK";
-	export let url = "https://pudding.cool";
-	export let keywords = "";
+	export let title = "How Sonic DNA Connects Generations of Music";
+	export let description = "Songs have a far more complex and concealed musical history, spanning genres, cultures, and even centuries.";
+	export let url = "https://pudding.cool/2025/04/music-dna/";
+	export let keywords = "music,dna,samples,family history,ancestral,family tree";
 	export let preloadFont = [];
 </script>
 
