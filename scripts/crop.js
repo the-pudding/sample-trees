@@ -56,7 +56,7 @@ async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp, volu
     return new Promise((resolve, reject) => {
       ffmpeg(inputPath)
         .setStartTime(startInSeconds)     // Start time in seconds
-        .setDuration(duration + 1)        // Duration in seconds
+        .setDuration(duration)        // Duration in seconds
         .audioFilters(`volume=${volume}`) // Set volume level
         .output(outputPath)
         .on('end', () => {

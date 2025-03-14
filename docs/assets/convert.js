@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 // Define source and destination directories
 const sourceDir = path.join(__dirname, 'cover_art');
-const destDir = path.join(__dirname, 'cover_art_jpegs');
+const destDir = path.join(__dirname, 'cover_art_sprite');
 
 // Create destination directory if it doesn't exist
 if (!fs.existsSync(destDir)) {
@@ -27,12 +27,12 @@ async function processFiles() {
         
         try {
             await sharp(sourcePath)
-                .resize(500, 500, {
+                .resize(100, 100, {
                     fit: 'cover',
                     position: 'center'
                 })
                 .toFormat('jpeg', {
-                    quality: 50, // set quality for jpeg format (0-100)
+                    quality: 35, // set quality for jpeg format (0-100)
                     mozjpeg: true, // enable mozjpeg for better compression efficiency
                     chromaSubsampling: '4:4:4' // use less chroma subsampling for better color quality
                 })
