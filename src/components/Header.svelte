@@ -17,8 +17,7 @@
 		max-width: 14em;
 		margin: 0 auto;
 		padding: 32px 0;
-		transform: translateY(-.5rem);
-		/* transform: rotate(-4deg); */
+		transform: translateY(-.5rem) rotate(-1deg);
 	}
 
 	.wordmark a {

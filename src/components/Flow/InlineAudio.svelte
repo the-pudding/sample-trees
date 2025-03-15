@@ -66,8 +66,6 @@
 	class="inline-audio"
 	on:click={togglePlay}
 	aria-label="Play audio sample of {text}."
-	aria-hidden="true"
-	tabindex="-1"
 >
 	{#if isToggled}
 		<Pause size={16} color="rgba(0, 0, 0, 0.95)" />
@@ -95,18 +93,18 @@
 		padding-right: 5px;
 
 		&:hover {
-			color: #cbb600;
+			color: #031e1a;
 		}
 
 		.text {
-			color: rgba(0, 0, 0, 0.95);
+			color: #031e1a;
 		}
 	}
 
 	:global {
 		.lucide-play,
 		.lucide-pause {
-			fill: rgba(0, 0, 0, 0.95);
+			fill: #072b25;
 		}
 	}
 </style>
