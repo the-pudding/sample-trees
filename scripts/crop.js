@@ -50,6 +50,7 @@ async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp, volu
     const duration = endInSeconds - startInSeconds;
   
     if (duration <= 0) {
+      console.log(inputPath, outputPath, startTimestamp, endTimestamp, volume)
       throw new Error('Invalid timestamps: End timestamp must be greater than start timestamp');
     }
     
