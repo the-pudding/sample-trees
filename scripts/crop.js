@@ -93,6 +93,7 @@ async function main() {
     // console.log('JSON Output:', jsonData);
 
     for (let song of jsonData){
+ 
         // Check if the audio file exists in audio_inputs directory
         const audioPathOne = path.resolve(`./audio_inputs/${song.p_id}.mp3`);
         const audioPathTwo = path.resolve(`./audio_inputs/${song.c_id}.mp3`);
@@ -133,6 +134,10 @@ async function main() {
           }
           else if(lowerVolume.includes(parseInt(song.c_id))){
             volumeP = .08;
+          }
+
+          if(song.c_id === '318161'){
+            console.log(inputFileC)
           }
 
           try {
