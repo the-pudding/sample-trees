@@ -3,13 +3,19 @@ import fs from 'fs';
 
 import path from 'path';
 import csvParser from 'csv-parser';
+import { start } from 'repl';
 
-function timeToSeconds(time) {
-const parts = time.split(':').map(Number);
-const hours = parts[0] || 0;
-const minutes = parts[1] || 0;
-const seconds = parts[2] || 0;
-return hours * 3600 + minutes * 60 + seconds;
+function timeToSeconds(time,partialSeconds) {
+  const parts = time.split(':').map(Number);
+  const hours = parts[0] || 0;
+  const minutes = parts[1] || 0;
+  const seconds = parts[2] || 0;
+
+  let partialToAdd = 0;
+  if(partialSeconds !== '' || partialSeconds){
+    partialToAdd = +partialSeconds;
+  }
+  return hours * 3600 + minutes * 60 + (seconds + partialToAdd);
 }
 
 function csvToJson(filePath) {
@@ -20,7 +26,7 @@ function csvToJson(filePath) {
         .pipe(csvParser())
         .on('data', (data) => results.push(data))
         .on('end', () => {
-          console.log('CSV file successfully converted to JSON');
+          // console.log('CSV file successfully converted to JSON');
           resolve(results);  // The results array contains the JSON data
         })
         .on('error', (err) => {
@@ -44,14 +50,16 @@ function csvToJson(filePath) {
 
 
 // Function to crop an MP3 file from a start to end timestamp and set volume level
-async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp, volume = 0.1) {
-    const startInSeconds = timeToSeconds(startTimestamp);
-    const endInSeconds = timeToSeconds(endTimestamp);
+async function cropMp3(inputPath, outputPath, startTimestamp, endTimestamp, volume = 0.1, seconds = [0,0]) {
+    const startInSeconds = timeToSeconds(startTimestamp,seconds[0]);
+    const endInSeconds = timeToSeconds(endTimestamp,seconds[1]);
     const duration = endInSeconds - startInSeconds;
+
+    console.log("start",startInSeconds,endInSeconds)
   
     if (duration <= 0) {
-      console.log(inputPath, outputPath, startTimestamp, endTimestamp, volume)
-      throw new Error('Invalid timestamps: End timestamp must be greater than start timestamp');
+      // console.log(inputPath, outputPath, startTimestamp, endTimestamp, volume)
+      throw new Error(`Invalid timestamps hi: ${endInSeconds}`);
     }
     
     return new Promise((resolve, reject) => {
@@ -94,6 +102,16 @@ async function main() {
 
     for (let song of jsonData){
  
+        let c_end = '';
+        let p_end = '';
+        let c_start = '';
+        let p_start = '';
+
+        c_start = song.c_start_seconds;
+        p_start = song.p_start_seconds;
+        c_end = song.c_end_seconds;
+        p_end = song.p_end_seconds;
+
         // Check if the audio file exists in audio_inputs directory
         const audioPathOne = path.resolve(`./audio_inputs/${song.p_id}.mp3`);
         const audioPathTwo = path.resolve(`./audio_inputs/${song.c_id}.mp3`);
@@ -136,16 +154,12 @@ async function main() {
             volumeP = .08;
           }
 
-          if(song.c_id === '318161'){
-            console.log(inputFileC)
-          }
-
           try {
-              cropMp3(inputFileP, outputFileP, startTimestampP, endTimestampP, volumeP);
-              cropMp3(inputFileC, outputFileC, startTimestampC, endTimestampC, volumeC);
+              cropMp3(inputFileP, outputFileP, startTimestampP, endTimestampP, volumeP,[p_start, p_end]);
+              cropMp3(inputFileC, outputFileC, startTimestampC, endTimestampC, volumeC,[c_start, c_end]);
 
-              cropMp3(inputFileP, outputFilePalt, startTimestampP, endTimestampP,volumeP);
-              cropMp3(inputFileC, outputFileCalt, startTimestampC, endTimestampC,volumeC);
+              cropMp3(inputFileP, outputFilePalt, startTimestampP, endTimestampP,volumeP,[p_start, p_end]);
+              cropMp3(inputFileC, outputFileCalt, startTimestampC, endTimestampC,volumeC,[c_start, c_end]);
           } catch (err) {
               console.error('Failed to crop MP3:', err);
           }
