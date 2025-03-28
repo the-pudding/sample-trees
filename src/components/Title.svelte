@@ -219,6 +219,8 @@
 		font-weight: 600;
 		-webkit-font-smoothing: antialiased;
 		z-index: 100;
+		position: relative;
+	
 
 		&.primary {
 			background: var(--color-pink);
