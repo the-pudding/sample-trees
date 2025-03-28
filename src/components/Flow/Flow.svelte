@@ -32,12 +32,14 @@
 
 	$: hasComponent = activeController?.component;
 
+	$: console.log($viewport);
+
 	$: nodeHeight = Math.min(
 		viewportHeight / 2 - (hasComponent ? textHeight - waveformHeight : 0),
 		hasComponent ? 240 : 300
 	);
 
-	$: nodeWidth = nodeHeight * 0.75;
+	$: nodeWidth = nodeHeight * ($viewport.width > 400 ? 0.75 : 0.6);
 
 	const dimensions = writable({
 		textHeight,
