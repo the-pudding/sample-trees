@@ -25,7 +25,6 @@
 	let viewportHeight = 0;
 	let mounted = false;
 
-
 	let imageUrls;
 
 	// Preload images in batches
@@ -38,8 +37,6 @@
 			.filter((link) => prerenderLinks.includes(link.id))
 			.map((edge) => [edge.start_node_id, edge.end_node_id])
 			.flat();
-
-
 
 		// Create array of image URLs for preloading
 		imageUrls = prerenderNodes.map(
@@ -71,7 +68,7 @@
 		const y = el.getBoundingClientRect().top - viewportHeight * 0.75;
 		window.scrollTo({ top: y, behavior: "smooth" });
 
-    // Wait for scroll animation to complete then focus first focusable element
+		// Wait for scroll animation to complete then focus first focusable element
 		setTimeout(() => {
 			if (el) {
 				el.focus();
@@ -165,9 +162,13 @@
 	function handleKeydown(event) {
 		if (event.key === "ArrowRight" || event.key === "ArrowDown") {
 			event.preventDefault();
-			const focusableElements = [...document.querySelectorAll('[tabindex="0"]')];
-			const currentIndex = focusableElements.findIndex(el => el === document.activeElement);
-			
+			const focusableElements = [
+				...document.querySelectorAll('[tabindex="0"]')
+			];
+			const currentIndex = focusableElements.findIndex(
+				(el) => el === document.activeElement
+			);
+
 			if (currentIndex < focusableElements.length - 1) {
 				const nextElement = focusableElements[currentIndex + 1];
 				nextElement.focus();
@@ -175,9 +176,13 @@
 			}
 		} else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
 			event.preventDefault();
-			const focusableElements = [...document.querySelectorAll('[tabindex="0"]')];
-			const currentIndex = focusableElements.findIndex(el => el === document.activeElement);
-			
+			const focusableElements = [
+				...document.querySelectorAll('[tabindex="0"]')
+			];
+			const currentIndex = focusableElements.findIndex(
+				(el) => el === document.activeElement
+			);
+
 			if (currentIndex > 0) {
 				const prevElement = focusableElements[currentIndex - 1];
 				prevElement.focus();
@@ -193,6 +198,9 @@
 		href="{base}/assets/sprites/spritesheet.jpeg"
 		as="image"
 	/>
+
+	<link rel="preload" href="{base}/assets/noise-light.png" as="image" />
+
 	{#if imageUrls?.length}
 		{#each imageUrls as url}
 			<link rel="preload" href={url} as="image" />
@@ -211,7 +219,7 @@
 		<AudioToggle />
 		{#each Object.entries(groupedSlides) as [key, content], i}
 			<!-- {#if i == 3} -->
-				<Section {key} {content} sectionIndex={i} {viewportHeight} />
+			<Section {key} {content} sectionIndex={i} {viewportHeight} />
 			<!-- {/if} -->
 		{/each}
 	</div>
