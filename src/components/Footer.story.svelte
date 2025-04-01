@@ -17,6 +17,7 @@
 	const youtube = href.includes("youtube") || href.includes("youtu.be");
 	const dir = resource ? "resources" : "screenshots";
 	const imagePath = `${base}/common/assets/thumbnails/${dir}`;
+
 	const style = bgColor ? `--story-bg: ${bgColor};` : "";
 </script>
 
@@ -27,7 +28,7 @@
 			<p class="month">{month}</p>
 		</div>
 	{/if}
-	<a {href} rel="external" target="_blank" class="inner">
+	<a href="{base}/{href}" rel="external" target="_blank" class="inner">
 		<div class="screenshot">
 			<img
 				src="{imagePath}/{slug}.jpg"
