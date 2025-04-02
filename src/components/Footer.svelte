@@ -36,13 +36,17 @@
 		{ name: "RSS", url: "https://pudding.cool/feed/index.xml" }
 	];
 
+  console.log("recirc", recirc);
+
 	onMount(async () => {
 		if (recirc) {
 			const localURL = window.location.href;
 			const response = await fetch(url);
 			const data = await response.json();
 
+
 			const filtered = data.filter((d) => !localURL.includes(d.url));
+
 
 			const withSlug = filtered.map((d) => ({
 				...d,
@@ -67,7 +71,7 @@
 				We’ve published <strong>{storyCount}</strong> awesome stories such
 				as
 				{#each stories as { short, url }, i}
-					<a href={url} target="_blank" rel="noreferrer">{short}</a>,&nbsp;
+					<a href="{base}/{url}" target="_blank" rel="noreferrer">{short}</a>,&nbsp;
 				{/each}and more.
 			</section>
 		</div>
